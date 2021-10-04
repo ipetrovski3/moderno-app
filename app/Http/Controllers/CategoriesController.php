@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class CategoriesController extends Controller
 {
@@ -16,7 +17,7 @@ class CategoriesController extends Controller
     {
        $categories = Category::all();
 
-       return view('welcome');
+       return view('welcome')->with(['categories' => $categories]);
     }
 
     /**
@@ -26,7 +27,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.categories.create');
     }
 
     /**
@@ -37,7 +38,15 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category;
+        $category->name = $request->name;
+        $request->file('image')->store('categories', 'public');
+        $category->image = $request->file('image')->hashName();
+
+        $category->save();
+
+        return $category;
+
     }
 
     /**
@@ -46,9 +55,12 @@ class CategoriesController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
-    {
-        //
+    public function show($id)
+    {   
+        $category = Category::findOrFail($id);
+
+        $products = Product::where('category_id', $category->id)->get();
+        return view('categories.show')->with(['category' => $category, 'products' => $products]);
     }
 
     /**

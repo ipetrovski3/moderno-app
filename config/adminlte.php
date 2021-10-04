@@ -247,7 +247,7 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'Create Product',
+            'text'        => 'All Products',
             'route'         => 'products.index',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
@@ -264,40 +264,16 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text'    => 'multilevel',
+            'text'    => 'Manage',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Create Category',
+                    'route'  => 'categories.create',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text'    => 'Create Products',
+                    'route'   => 'products.create',
                 ],
             ],
         ],

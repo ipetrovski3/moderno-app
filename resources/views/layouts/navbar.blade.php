@@ -3,8 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ ('css/app.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Document</title>
 </head>
 <body>
@@ -43,15 +44,17 @@
               </li>
             </ul>
             <form class="d-flex">
-              <input class="form-control me-sm-2" type="text" placeholder="Search">
-              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+              <p id="currentCart" data-count="{{ session('cart') ? count(session('cart')) : 0 }}"> {{ (session('cart')) ? "cart count:" . count(session('cart')) : "Cart is empty" }}
+              </p>
+              {{-- <input class="form-control me-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> --}}
             </form>
           </div>
         </div>
       </nav>
-      <div class="container">
+
          @yield('content')
-      </div>
+
       <script src="{{ asset('js/app.js') }}"></script>
 
 </body>

@@ -99,4 +99,47 @@ class ProductsController extends Controller
     {
         //
     }
+
+    public function add_to_card(Request $request) {
+        $data = $request->all();
+
+        $product = Product::findOrFail($data['product_id']);
+        $cart_id = $product->id;
+
+        $cart = session()->get('cart');
+
+        if(!$cart) {
+
+            $cart = [
+                'cart_counter' => 1,
+                $cart_id => [
+                    'name' => $product->name,
+                    'quantity' => 1,
+                    'price' => $product->price,
+                    'image' => $product->image
+                ]
+            ];
+            session()->put('cart', $cart);
+            return response()->json(session('cart'));
+        }
+
+        if(isset($cart[$cart_id])) {
+            $cart[$cart_id]['quantity']++;
+            $cart['cart_counter']++;
+            session()->put('cart', $cart);
+            return response()->json(session('cart'));
+
+        }
+        $cart['cart_counter'] = 1;
+
+        // $cart[$cart_id]['quantity']++;
+        $cart[$cart_id] = [
+            "name" => $product->name,
+            "quantity" => 1,
+            "price" => $product->price,
+            "image" => $product->image
+        ];
+        session()->put('cart', $cart);
+        return response()->json(session('cart'));
+    }
 }

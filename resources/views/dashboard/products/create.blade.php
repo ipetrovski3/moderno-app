@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{ route('product.create') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('products.create') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="category">Select Category</label>

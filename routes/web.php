@@ -26,17 +26,27 @@ Route::get('/admin', function() {
   return redirect()->route('dashboard');
 })->middleware('auth');
 
+Route::get('/categories/{id}', [CategoriesController::class, 'show'])->name('categories.show');
+Route::post('/add_to_card', [ProductsController::class, 'add_to_card'])->name('add_to_card');
 
 Auth::routes(['register' => false, 'verfiy' => true]);
 
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
   Route::get('/', [CategoriesController::class, 'index'])->name('homepage');
-  Route::get('/products', [ProductsController::class, 'index'])->name('products.index'); 
-  Route::get('/new', [ProductsController::class, 'create'])->name('product.create');
-  Route::post('/new', [ProductsController::class, 'store'])->name('product.create');
-      
+
+  Route::prefix('products')->group(function (){
+    Route::get('/', [ProductsController::class, 'index'])->name('products.index'); 
+    Route::get('/new', [ProductsController::class, 'create'])->name('products.create');
+    Route::post('/new', [ProductsController::class, 'store'])->name('products.create');
+  });
+
+  Route::prefix('categories')->group(function (){
+    Route::get('/', [CategoriesController::class, 'index'])->name('categories.index'); 
+    Route::get('/new', [CategoriesController::class, 'create'])->name('categories.create');
+    Route::post('/new', [CategoriesController::class, 'store'])->name('categories.create');
+  });      
 });
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\CategoriesController::class, 'index'])->name('home');
