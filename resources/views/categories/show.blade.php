@@ -15,9 +15,24 @@
                             <p>Цена: {{ $product->price }} Ден</p>
                             <p>Опис: {{ $product->description }}</p>
                         </div>
+                        <div class="number text-center">
+                            <span class="minus btn-secondary px-2">-</span>
+                            <input type="text" value="1" class="col-2" />
+                            <span class="plus btn-secondary px-2">+</span>
+                        </div>
+                        <div class="text-center center-block">
+                            <label for="size">Големина</label>
+                            <select name="size" id="" class="form-select col-4">
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
                         <div class="card-footer text-center">
-                          <input type="hidden" name="product_id" value="{{ $product->id }}" >
-                            <p class="ajaxTest"> ВО КОШНИЧКА </p>
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <p class="ajaxTest mt-3"> ВО КОШНИЧКА </p>
                         </div>
                     </div>
                     {{-- </a> --}}
@@ -28,7 +43,31 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.card-footer').css({'cursor': 'pointer'})
+            $('.minus').css({
+                'cursor': 'pointer'
+            })
+            $('.plus').css({
+                'cursor': 'pointer'
+            })
+            $('.minus').click(function() {
+                var $input = $(this).parent().find('input');
+                var count = parseInt($input.val()) - 1;
+                count = count < 1 ? 1 : count;
+                $input.val(count);
+                $input.change();
+                return false;
+            });
+            $('.plus').click(function() {
+                var $input = $(this).parent().find('input');
+                $input.val(parseInt($input.val()) + 1);
+                $input.change();
+                return false;
+            });
+
+
+            $('.card-footer').css({
+                'cursor': 'pointer'
+            })
             $('.card-footer').on('click', this, function(e) {
                 $.ajaxSetup({
                     headers: {
@@ -36,17 +75,19 @@
                     }
                 });
                 e.preventDefault();
-                let product_id = $('input[name=product_id]', this).val()
+                let product_id = $('input[name=product_id]').val()
                 let cart = $('#currentCart')
                 // console.log(cart)
                 $.ajax({
                     type: "POST",
                     url: "{{ route('add_to_card') }}",
-                    data:{ product_id: product_id },
+                    data: {
+                        product_id: product_id
+                    },
                     success: function(data) {
-                      let counter = cart.attr('data-count')
-                      cart.text(counter)
-                      console.log(data['cart_counter'])
+                        let counter = cart.attr('data-count')
+                        cart.text(data['cart_counter'])
+                        console.log(data)
                     },
                     error: function(data) {
                         console.log('error');

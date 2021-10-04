@@ -125,14 +125,12 @@ class ProductsController extends Controller
 
         if(isset($cart[$cart_id])) {
             $cart[$cart_id]['quantity']++;
-            $cart['cart_counter']++;
             session()->put('cart', $cart);
             return response()->json(session('cart'));
 
         }
-        $cart['cart_counter'] = 1;
 
-        // $cart[$cart_id]['quantity']++;
+        $cart[$cart_id]['quantity']++;
         $cart[$cart_id] = [
             "name" => $product->name,
             "quantity" => 1,
