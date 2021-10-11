@@ -18,6 +18,7 @@ class CategorySeeder extends Seeder
         foreach ($names as $name) {
             $category = new Category;
             $category->name = $name;
+            $category->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
             $category->save();
         }
     }

@@ -24,7 +24,7 @@
                     <td>{{ $product->category->name }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
-                    <td><img src=" {{ asset('storage/products'."/".$product->image) }}" height="60" width="60" alt="hello"></td>
+                    <td><img src=" {{ asset('storage/products'."/".$product->image) }}" style="max-height: 80px; max-width: 80px;"' alt="hello"></td>
                 </tr>
             @endforeach
 

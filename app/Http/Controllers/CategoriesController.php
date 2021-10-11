@@ -40,6 +40,7 @@ class CategoriesController extends Controller
     {
         $category = new Category;
         $category->name = $request->name;
+        $category->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name)));
         $request->file('image')->store('categories', 'public');
         $category->image = $request->file('image')->hashName();
 
@@ -57,10 +58,6 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {   
-        $category = Category::findOrFail($id);
-
-        $products = Product::where('category_id', $category->id)->get();
-        return view('categories.show')->with(['category' => $category, 'products' => $products]);
     }
 
     /**

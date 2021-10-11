@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -74,10 +75,11 @@
                 </div>
             </div>
         </nav>
+        @include('includes.cart')
 
-        <main class="py-4">
+        <div class="py-4">
             @yield('content')
-        </main>
+        </div>
     </div>
 </body>
 </html>

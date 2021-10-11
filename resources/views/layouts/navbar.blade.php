@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>Document</title>
+    <title>Moderno MK</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">MODERNO MK</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -44,8 +44,6 @@
               </li>
             </ul>
             <form class="d-flex">
-              <p id="currentCart" data-count="{{ session('cart') ? count(session('cart')) : 0 }}"> {{ (session('cart')) ? "cart count:" . count(session('cart')) : "Cart is empty" }}
-              </p>
               {{-- <input class="form-control me-sm-2" type="text" placeholder="Search">
               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> --}}
             </form>
@@ -56,6 +54,7 @@
          @yield('content')
 
       <script src="{{ asset('js/app.js') }}"></script>
+      @include('includes.cart')
 
 </body>
 </html>
