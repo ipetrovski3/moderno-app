@@ -104,8 +104,8 @@ class ProductsController extends Controller
     public function add_to_cart(Request $request) {
         $data = $request->all();
         $product = Product::findOrFail($data['product_id']);
-        
-        $cartItem = Cart::add($product->id, $product->name, $data['qty'], $product->price);
+
+        $cartItem = Cart::add($product->id, $product->name, $data['qty'], $product->price, ['size' => $data['size']]);
         $cartItem->associate('Product');
         
         return response()->json(Cart::count());

@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container mt-4">
-
   <div class="row">
     <div class="col-md-4 order-md-2 mb-4">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -11,20 +10,20 @@
       </h4>
       <ul class="list-group mb-3">
         @foreach ($cart_items as $item )
-          <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <li class="list-group-item d-flex justify-content-between lh-condensed products">
             <div>
-              <h5 class="my-0">{{ $item->name }}</h6>
+              <h5 class="my-0" data-value="{{ $item->rowId }}">{{ $item->name }}</h6>
               <p>
-                <small class="text-muted">Количина: {{ $item->qty }}</small>
-              </p>
-              <p>
-                <small class="text-muted">Големина: XL</small>
+                <small class="text-muted">Количина: </small> <small>{{ $item->qty }}</small> |
+                <small class="text-muted">Големина: </small> <small> {{ strtoupper($item->options['size']) }}</small>
               </p>
             </div>
-            <span class="text-muted">Износ: {{ $item->price }}</span>
+            <div class="py-3">
+              <span class="text-muted">Износ: </span> <span> {{ $item->price }}</span>
+            </div>
           </li>          
         @endforeach
-        <li class="list-group-item d-flex justify-content-between">
+        <li class="list-group-item d-flex justify-content-between bg-primary" style="color: white">
           <span>Вкупно (MKD)</span>
           <strong>{{ Cart::total() }}</strong>
         </li>
@@ -33,18 +32,19 @@
 
     <div class="col-md-8 order-md-1">
       <h4 class="mb-3">Податоци за нарачката</h4>
-      <form class="needs-validation" novalidate>
+      <form class="needs-validation" action="{{ route('store.order') }}" method="POST">
+        @csrf
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">Име</label>
-            <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+            <input type="text" name="first_name" class="form-control" id="firstName" placeholder="" value="" required>
             <div class="invalid-feedback">
               Valid first name is required.
             </div>
           </div>
           <div class="col-md-6 mb-3">
             <label for="lastName">Презиме</label>
-            <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+            <input type="text" name="last_name" class="form-control" id="lastName" placeholder="" value="" required>
             <div class="invalid-feedback">
               Valid last name is required.
             </div>
@@ -53,12 +53,12 @@
 
         <div class="mb-3">
           <label for="phone"> Телефон </label>
-          <input type="phone" class="form-control" id="phone" placeholder="you@example.com">
+          <input type="phone" name="phone" class="form-control" id="phone" placeholder="+3897">
         </div>       
         
         <div class="mb-3">
           <label for="email">Емаил адреса </label>
-          <input type="email" class="form-control" id="email" placeholder="+3897">
+          <input type="email" name="email" class="form-control" id="email">
           <div class="invalid-feedback">
             Please enter a valid email address for shipping updates.
           </div>
@@ -66,7 +66,7 @@
 
         <div class="mb-3">
           <label for="address">Адреса за испорака</label>
-          <input type="text" class="form-control" id="address" placeholder="Ул. Македонија бр. 33" required>
+          <input type="text" name="address" class="form-control" id="address" placeholder="Ул. Македонија бр. 33" required>
           <div class="invalid-feedback">
             Please enter your shipping address.
           </div>
@@ -75,21 +75,11 @@
         <div class="row">
           <div class="col-md-5 mb-3">
             <label for="town">Град</label>
-            <select class="custom-select d-block w-100" id="town" required>
+            <select class="custom-select d-block w-100" name="town" id="town" required>
               <option value="">Изберете</option>
-              <option>Скопје</option>
-              <option>Берово</option>
-              <option>Битола</option>
-              <option>Богданци</option>
-              <option>Валандово</option>
-              <option>Велес</option>
-              <option>Виница</option>
-              <option>Гевгелија</option>
-              <option>Гостивар</option>
-              <option>Дебар</option>
-              <option>Делчево</option>
-              <option>Демир Капија</option>
-              <option>Кавадарци</option>
+              <option value="skopje">Скопје</option>
+              <option value="berovo">Берово</option>
+              <option value="bitola">Битола</option>
             </select>
             <div class="invalid-feedback">
               Please select a valid country.
@@ -98,12 +88,22 @@
 
           <div class="col-md-3 mb-3">
             <label for="zip">Поштенски број</label>
-            <input type="text" class="form-control" id="zip" placeholder="" required>
+            <input type="text" name="post" class="form-control" id="zip" placeholder="" required>
             <div class="invalid-feedback">
               Zip code required.
             </div>
           </div>
+
+          <div class="mb-3">
+            <label for="note">Забелешка <small class="text-muted"> (Доколку имате дополнителни барања, наведете ги во забелешката)</small> </label>
+            <textarea type="text" name="note" class="form-control" id="note" ></textarea>
+            <div class="invalid-feedback">
+              Please enter your shipping address.
+            </div>
+          </div>
+  
         </div>
+
         <hr class="mb-4">
 
         <h4 class="mb-3">Плаќање</h4>
@@ -178,5 +178,8 @@
   </div>
 </div>
 
-<script></script>
+<script>
+
+
+</script>
 @endsection

@@ -252,6 +252,12 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
+        [
+            'text' => 'All Orders',
+            'route' => 'orders.index',
+            'icon' => 'fas fa-shoppingcart'
+        ],
+        
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

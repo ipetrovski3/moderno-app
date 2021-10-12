@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PublicController;
 
@@ -22,7 +23,7 @@ Route::get('/', [PublicController::class, 'index'])->name('homepage');
 Route::get('categories/{id}', [PublicController::class, 'show'])->name('categories.show');
 Route::post('/add_to_card', [ProductsController::class, 'add_to_cart'])->name('add_to_cart');
 Route::get('/cart', [PublicController::class, 'show_cart'])->name('show.cart');
-// Route::get('igor/{$id}', [PublicController::class, 'show'])->name('categories.show');
+Route::post('/confirm_order', [OrdersController::class, 'store'])->name('store.order');
 
 Route::get('/dasboard', function () {
   return redirect()->route('dashboard');
@@ -47,6 +48,12 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.index');
     Route::get('/new', [CategoriesController::class, 'create'])->name('categories.create');
     Route::post('/new', [CategoriesController::class, 'store'])->name('categories.create');
+  });
+
+  Route::prefix('orders')->group(function () {
+    Route::get('/', [OrdersController::class, 'index'])->name('orders.index');
+    Route::post('/', [OrdersController::class, 'update_status'])->name('status.update');
+    Route::get('/{id}', [OrdersController::class, 'show'])->name('order.show');
   });
 });
 

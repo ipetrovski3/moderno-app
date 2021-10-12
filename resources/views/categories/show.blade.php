@@ -11,15 +11,31 @@
                         <div class="card-header">{{ strtoupper($product->name) }}</div>
                         <div class="card-body">
                             <p class="card-text"><img src="{{ asset('storage/products/' . $product->image) }}"
-                                    height="150" width="250" alt=""></p>
+                                    style="max-height:100%; max-width:100%;" alt=""></p>
                             <p>Цена: {{ $product->price }} Ден</p>
                             <p>Опис: {{ $product->description }}</p>
                         </div>
                         <div class="card-footer text-center">
                             <form class="cart-form" id="cartFrom" action="" method="POST">
-                                <input type="number" name="qty" value="1" placeholder="1">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <button type="submit" class="btn btn-primary"> ВО КОШНИЧКА </button>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label for="qty">Количина</label>
+                                        <input type="number" id="qty" name="qty" value="1" placeholder="1"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="size">Големина</label>
+                                        <select name="size" id="size" class="form-control">
+                                            <option value="s">S</option>
+                                            <option value="m">M</option>
+                                            <option value="l">L</option>
+                                            <option value="xl">XL</option>
+                                            <option value="xxl">XXL</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-outline-light"> ВО КОШНИЧКА </button>
                             </form>
                         </div>
                     </div>
@@ -41,13 +57,15 @@
                 let product_id = $('input[name=product_id]', this).val()
                 let qty = $('input[name=qty]', this).val()
                 let cart = $('#currentCart')
-                console.log(product_id)
+                let size = $('option:selected', this).val()
+                console.log(size)
                 $.ajax({
                     type: "POST",
                     url: "{{ route('add_to_cart') }}",
                     data: {
                         product_id: product_id,
-                        qty: qty
+                        qty: qty,
+                        size: size,
                     },
                     success: function(data) {
                         console.log(data)

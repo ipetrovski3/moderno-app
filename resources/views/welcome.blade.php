@@ -1,6 +1,17 @@
 @extends('layouts.navbar')
 
 @section('content')
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 0; right: 0;">
+        <div class="toast-header">
+        <strong class="me-auto">Известување</strong>
+        <button type="button" class="btn-close ms-2 mb-1" id="btnClose" data-bs-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true"></span>
+        </button>
+        </div>
+        <div class="toast-body">
+        
+        </div>
+    </div>
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -23,7 +34,7 @@
                     <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
                         <div class="card-header">{{ strtoupper($category->name) }}</div>
                         <div class="card-body">
-                            <p class="card-text"><img src="{{ asset('images/1.jpeg') }}" height="150" width="250" alt=""></p>
+                            <p class="card-text"><img src="{{ asset('images/1.jpeg') }}" style="max-height:100%; max-width:100%;" alt=""></p>
                         </div>
                     </div>      
                 </a>     
