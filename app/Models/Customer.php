@@ -13,5 +13,9 @@ class Customer extends Model
     public function full_name() {
         return $this->first_name . " " . $this->last_name;
     }
+
+    public function delivery_address() {
+        return $this->address . ", " . $this->town;
+    }
 }
 

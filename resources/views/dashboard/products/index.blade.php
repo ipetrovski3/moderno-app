@@ -4,9 +4,13 @@
 
 @section('content_header')
     <h1>All Products</h1>
+    <a href="{{ route('products.create') }}" class="btn btn-success">Create new Product</a>
+    <a href="{{ route('categories.create') }}" class="btn btn-warning">Create new Category</a>
 @stop
 
+
 @section('content')
+
     <table class="table">
         <thead>
             <tr>

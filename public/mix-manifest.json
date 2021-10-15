@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/toast.js": "/js/toast.js",
+    "/js/custom.js": "/js/custom.js",
+    "/js/bootstrap.js": "/js/bootstrap.js",
+    "/js/bootstrap.bundle.js": "/js/bootstrap.bundle.js",
     "/css/app.css": "/css/app.css",
     "/webfonts/fa-brands-400.eot": "/webfonts/fa-brands-400.eot",
     "/webfonts/fa-brands-400.svg": "/webfonts/fa-brands-400.svg",

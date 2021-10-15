@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Moderno',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -70,6 +70,7 @@ return [
     'usermenu_image' => false,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
+
 
     /*
     |--------------------------------------------------------------------------
@@ -246,18 +247,14 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        [
+        ['header' => 'Менаџмент'],
+        [   'key' => 'products',
             'text'        => 'All Products',
             'route'         => 'products.index',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
-        [
-            'text' => 'All Orders',
-            'route' => 'orders.index',
-            'icon' => 'fas fa-shoppingcart'
-        ],
-        
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

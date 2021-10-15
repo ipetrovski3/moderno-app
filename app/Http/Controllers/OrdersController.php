@@ -12,13 +12,26 @@ use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
-    public function index() {
-        $orders = Order::all();
+    public function index(Request $request)
+    {
+        if ($request->status == 'all')
+            $orders = Order::all();
+        elseif ($request->status == 'received')
+            $orders = Order::where('status', 'received')->get();
+        elseif ($request->status == 'confirmed')
+            $orders = Order::where('status', 'confirmed')->get();
+        elseif ($request->status == 'in_production')
+            $orders = Order::where('status', 'in_production')->get();
+        elseif ($request->status == 'shipped')
+            $orders = Order::where('status', 'shipped')->get();
+        elseif ($request->status == 'completed')
+            $orders = Order::where('status', 'completed')->get();
 
         return view('dashboard.orders.index', compact('orders'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         if (Cart::count() < 1) {
             return redirect()->back()->with(['errors' => 'Вашата кошничка е празна']);
         }
@@ -36,7 +49,7 @@ class OrdersController extends Controller
         $order = new Order;
         $order->customer_id = $customer->id;
         $order->total_price = Cart::total();
-        
+
         $order->save();
 
 
@@ -48,13 +61,13 @@ class OrdersController extends Controller
         $admins = User::all()->pluck('email');
         Mail::to($admins)
             ->send(new AdminOrderNotification($order));
-                
+
         Cart::destroy();
         return redirect()->route('homepage');
-
     }
 
-    public function update_status(Request $request) {
+    public function update_status(Request $request)
+    {
         $data = $request->all();
 
         $order = Order::findOrFail($data['id']);
@@ -64,10 +77,12 @@ class OrdersController extends Controller
         return response()->json($data);
     }
 
-    public function show($id) {
-      $order = Order::findOrFail($id);
-      $products = $order->products;
+    public function show($id)
+    {
+        $order = Order::findOrFail($id);
+        $customer = $order->customer;
+        $products = $order->products;
 
-      return view('dashboard.orders.show', compact('products'));
+        return view('dashboard.orders.show', compact('products', 'order', 'customer'));
     }
 }

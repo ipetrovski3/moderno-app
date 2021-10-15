@@ -51,7 +51,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
   });
 
   Route::prefix('orders')->group(function () {
-    Route::get('/', [OrdersController::class, 'index'])->name('orders.index');
+    Route::get('/',  [OrdersController::class, 'index'])->name('orders.index');
     Route::post('/', [OrdersController::class, 'update_status'])->name('status.update');
     Route::get('/{id}', [OrdersController::class, 'show'])->name('order.show');
   });
