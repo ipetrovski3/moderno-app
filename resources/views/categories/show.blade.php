@@ -26,7 +26,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="size">Големина</label>
-                                        <select name="size" id="size" class="form-control">
+                                        <select name="size" id="size" class="form-select p-2">
                                             <option value="s">S</option>
                                             <option value="m">M</option>
                                             <option value="l">L</option>
@@ -45,6 +45,7 @@
 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             $('form').submit(this, function(e) {
@@ -58,7 +59,6 @@
                 let qty = $('input[name=qty]', this).val()
                 let cart = $('#currentCart')
                 let size = $('option:selected', this).val()
-                console.log(size)
                 $.ajax({
                     type: "POST",
                     url: "{{ route('add_to_cart') }}",
@@ -68,7 +68,13 @@
                         size: size,
                     },
                     success: function(data) {
-                        console.log(data)
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Успешно додаден продукт во кошничка',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
                         $('form').trigger('reset')
                         $('#cartCounter').text(data)
                     },

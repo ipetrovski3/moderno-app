@@ -33,7 +33,7 @@ class EventServiceProvider extends ServiceProvider
             $orders = Order::all();
             $event->menu->addAfter('products', [
                 'text' => 'Нарачки',
-                'icon' => 'fas fa-shoppingcart',
+                'icon' => 'fas fa-euro-sign',
                 'submenu' => [
                     [
                         'text' => 'Сите Нарачки',
@@ -44,25 +44,25 @@ class EventServiceProvider extends ServiceProvider
                     [
                         'text' => 'Примени',
                         'label' => $orders->where('status', 'received')->count(),
-                        'label_color' => 'success',
+                        'label_color' => 'danger',
                         'url' => route('orders.index', 'status=received' ),
                     ],
                     [
                         'text' => 'Потврдени',
                         'label' => $orders->where('status', 'confirmed')->count(),
-                        'label_color' => 'success',
+                        'label_color' => 'warning',
                         'url' => route('orders.index', 'status=confirmed' ),
                     ],
                     [
                         'text' => 'Во Производство',
                         'label' => $orders->where('status', 'in_production')->count(),
-                        'label_color' => 'success',
+                        'label_color' => 'primary',
                         'url' => route('orders.index', 'status=in_production' ),
                     ],
                     [
                         'text' => 'Испратени',
                         'label' => $orders->where('status', 'shipped')->count(),
-                        'label_color' => 'success',
+                        'label_color' => 'info',
                         'url' => route('orders.index', 'status=shipped' ),
                     ],
                     [

@@ -52,7 +52,7 @@ class ProductsController extends Controller
 
         $product->save();
 
-        return $product;
+        return redirect()->back();
         
     }
 

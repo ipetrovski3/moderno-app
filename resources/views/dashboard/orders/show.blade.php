@@ -59,6 +59,9 @@
                     @endforeach
                 </select>
 
+                <a href="{{ route('label') }}" class="btn btn-success">Label</a>
+
+
             </div>
         </div>
     </div>

@@ -19,3 +19,4 @@ mix
     .js('resources/js/bootstrap.js', 'public/js/bootstrap.js')
     .js('resources/js/bootstrap.bundle.js', 'public/js/bootstrap.bundle.js')
     .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/custom.scss', 'public/css/custom.css')

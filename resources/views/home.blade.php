@@ -259,7 +259,6 @@
         </div>
         <!-- /.container-fluid -->
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
 
 @stop
 
@@ -268,12 +267,11 @@
 @stop
 
 @section('js')
-    <script>
-        console.log('Hi!');
-    </script>
+<script>
+    
+</script>
     <script>
         var ordersData = @json($data);
-        console.log(ordersData)
         var areaChartData = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [{

@@ -9,6 +9,7 @@ use App\Models\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Svg\Tag\Rect;
 
 class OrdersController extends Controller
 {
@@ -84,5 +85,14 @@ class OrdersController extends Controller
         $products = $order->products;
 
         return view('dashboard.orders.show', compact('products', 'order', 'customer'));
+    }
+
+    public function destroy(Request $request) 
+    {
+        
+        $order = Order::findOrFail($request->order_id);
+        $order->delete();
+
+        return redirect()->back()->with(['deleted' => 'Нарачката е успешно избришана']);
     }
 }

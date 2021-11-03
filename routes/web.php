@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PublicController;
 
@@ -54,6 +55,11 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/',  [OrdersController::class, 'index'])->name('orders.index');
     Route::post('/', [OrdersController::class, 'update_status'])->name('status.update');
     Route::get('/{id}', [OrdersController::class, 'show'])->name('order.show');
+    Route::delete('/delete_order', [OrdersController::class, 'destroy'])->name('order.delete');
+  });
+
+  Route::prefix('pdf')->group(function () {
+    Route::get('/label', [PdfController::class, 'create_label'])->name('label');
   });
 });
 
