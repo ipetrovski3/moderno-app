@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CarouselImage;
 use App\Models\Category;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -12,12 +13,14 @@ class PublicController extends Controller
     public function index() {
         $categories = Category::all();
 
-        return view('welcome', compact('categories'));
+        $images = CarouselImage::where('active', true)->get();
+
+        return view('welcome', compact('categories', 'images'));
     }
 
     public function show($id) {
         $category = Category::findOrFail($id);
-        $products = Product::where('category_id', $category->id)->get();
+        $products = Product::where('category_id', $category->id)->where('active', true)->orderBy('created_at', 'DESC')->get();
 
         return view('categories.show', compact('products', 'category'));
     }

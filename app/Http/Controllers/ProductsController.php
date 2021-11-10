@@ -16,7 +16,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::orderBy('created_at', 'DESC')->get();
 
         return view('dashboard.products.index')->with(['products' => $products]);
     }
@@ -40,7 +40,6 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $product = new Product;
         $product->category_id = $request->category;
         $product->name = $request->name;
@@ -50,10 +49,12 @@ class ProductsController extends Controller
         $request->file('image')->store('products', 'public');
         $product->image = $request->file('image')->hashName();
 
+        if ($request->has('sizeable'))
+            $product->sizeable = true;
+
         $product->save();
 
-        return redirect()->back();
-        
+        return redirect()->back()->with(['message' => 'Успешно креиран продукт']);
     }
 
     /**
@@ -64,7 +65,9 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -101,13 +104,35 @@ class ProductsController extends Controller
         //
     }
 
-    public function add_to_cart(Request $request) {
+    public function active_deactive(Request $request)
+    {
+        $product = Product::find($request->product_id);
+        $product->active = $request->status;
+        $product->save();
+
+        if ($product->active == true) {
+            $body = 'Статусот на производот е променет во активен';
+            $class = 'success';
+        } else {
+            $body = 'Статусот на производот е променет во неактивен';
+            $class = 'warning';
+        }
+
+        return response()->json(['body' => $body, 'class' => $class]);
+    }
+
+    public function add_to_cart(Request $request)
+    {
         $data = $request->all();
         $product = Product::findOrFail($data['product_id']);
-
-        $cartItem = Cart::add($product->id, $product->name, $data['qty'], $product->price, ['size' => $data['size']]);
+        if (isset($data['size'])) {
+            $size = $data['size'];
+        } else {
+            $size = 0;
+        }
+        $cartItem = Cart::add($product->id, $product->name, $data['qty'], $product->price, ['size' => $size]);
         $cartItem->associate('Product');
-        
+
         return response()->json(Cart::count());
-    } 
+    }
 }

@@ -234,10 +234,16 @@ return [
         // ],
 
         // Sidebar items:
+        ['header' => 'ИНФОРМАЦИИ'],
         [
             'text' => 'Статистика',
             'route'  => 'home',
             'icon' => 'fas fa-chart-line'
+        ],
+        [
+            'text' => 'База на корисници',
+            'route' => 'customers.index',
+            'icon' => 'fas fa-users',
         ],
 
         ['header' => 'МЕНАЏМЕНТ'],
@@ -247,6 +253,13 @@ return [
             'icon'        => 'fas fa-database',
             'label_color' => 'success',
         ],
+
+        ['header' => 'НАСЛОВНА СТРАНА'],
+        [ 
+            'text' => 'Насловни слики',
+            'route' => 'images.index',
+            'icon' => 'far fa-images'
+        ]
 
         // ['header' => 'account_settings'],
         // [

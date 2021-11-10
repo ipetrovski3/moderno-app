@@ -22,9 +22,13 @@
                 @foreach ($products as $product)
                     <tr class="table-active">
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $product->name . " (" . $product->category->name . ")" }}</td>
+                        <td>{{ $product->name . ' (' . $product->category->name . ')' }}</td>
                         <td>{{ $product->pivot->qty }}</td>
-                        <td>{{ strtoupper($product->pivot->size) }}</td>
+                        @if ($product->sizeable)
+                            <td>{{ strtoupper($product->pivot->size) }}</td>
+                        @else
+                        <td>/</td>
+                        @endif
                         <td>{{ $product->price }} Ден.</td>
                         <td>{{ $product->pivot->qty * $product->price }} Ден.</td>
                     </tr>
@@ -50,7 +54,7 @@
             </div>
             <div class="col-6">
                 <h4>Статус на нарачката</h4>
-                <select name="status" data-value="{{ $order->id }}" class="form-select">
+                <select name="status" data-value="{{ $order->id }}" {{ $order->status == 'completed' ? 'disabled' : '' }} class="form-select">
 
                     @foreach ($order->statuses as $key => $status)
                         <option {{ $key == $order->status ? 'selected' : '' }} value="{{ $key }}">
@@ -96,8 +100,6 @@
                             delay: 1300,
                             body: 'Статусот нарачката е променет!'
                         })
-                        console.log(data)
-
                     },
                     error: function(data) {
                         console.log('error');

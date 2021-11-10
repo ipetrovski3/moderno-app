@@ -6,7 +6,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th id="igor" scope="col">#</th>
                         <th scope="col">Датум</th>
                         <th scope="col">Купувач</th>
                         <th scope="col">Телефон</th>
@@ -47,6 +47,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -71,10 +72,13 @@
 
     <script>
         const queryString = window.location.search;
+
+        $('#rowClass').dblclick( function() {
+            alert("The paragraph was double-clicked");
+        });
         $(document).ready(function() {
             $('.delete').on('click', this, function() {
                 let orderId = $(this).data('id')
-                console.log(orderId)
                 $('#id').val(orderId)
                 $('#showModal').modal('show')
             })
@@ -98,7 +102,6 @@
                     },
                     success: function(data) {
 
-                        console.log(data)
                         if (queryString != '?status=all') {
                             element.hide()
                         }

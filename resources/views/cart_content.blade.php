@@ -14,9 +14,11 @@
                             <div>
                                 <h5 class="my-0" data-value="{{ $item->rowId }}">{{ $item->name }}</h6>
                                     <p>
-                                        <small class="text-muted">Количина: </small> <small>{{ $item->qty }}</small> |
+                                        <small class="text-muted">Количина: </small> <small>{{ $item->qty }}</small> 
+                                        @if ($item->options['size'] != 0)
                                         <small class="text-muted">Големина: </small> <small>
                                             {{ strtoupper($item->options['size']) }}</small>
+                                        @endif
                                     </p>
                             </div>
                             <div class="py-3">

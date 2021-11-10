@@ -17,5 +17,9 @@ class Customer extends Model
     public function delivery_address() {
         return $this->address . ", " . $this->town;
     }
+
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
 }
 

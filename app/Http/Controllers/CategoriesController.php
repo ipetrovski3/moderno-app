@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CarouselImage;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -15,9 +16,12 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-       $categories = Category::all();
+        $categories = Category::all();
 
-       return view('welcome')->with(['categories' => $categories]);
+        return view('welcome')
+            ->with([
+                'categories' => $categories,
+            ]);
     }
 
     /**
@@ -47,7 +51,6 @@ class CategoriesController extends Controller
         $category->save();
 
         return $category;
-
     }
 
     /**
@@ -57,7 +60,7 @@ class CategoriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
+    {
     }
 
     /**

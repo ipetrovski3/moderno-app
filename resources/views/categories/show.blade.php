@@ -1,88 +1,206 @@
-@extends('layouts.navbar')
+@extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1 class="mt-4">{{ $category->name }}</h1>
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Start Content -->
+    <div class="container py-5">
         <div class="row">
-            @foreach ($products as $product)
-                <div class="col-12 col-sm-6 col-md-4">
-                    {{-- <a href="{{ route('categories.show', $category->id) }}"> --}}
-                    <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">{{ strtoupper($product->name) }}</div>
-                        <div class="card-body">
-                            <p class="card-text"><img src="{{ asset('storage/products/' . $product->image) }}"
-                                    style="max-height:100%; max-width:100%;" alt=""></p>
-                            <p>Цена: {{ $product->price }} Ден</p>
-                            <p>Опис: {{ $product->description }}</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <form class="cart-form" id="cartFrom" action="" method="POST">
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <div class="row mb-3">
-                                    <div class="col-6">
-                                        <label for="qty">Количина</label>
-                                        <input type="number" id="qty" name="qty" value="1" placeholder="1"
-                                            class="form-control">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="size">Големина</label>
-                                        <select name="size" id="size" class="form-select p-2">
-                                            <option value="s">S</option>
-                                            <option value="m">M</option>
-                                            <option value="l">L</option>
-                                            <option value="xl">XL</option>
-                                            <option value="xxl">XXL</option>
-                                        </select>
+
+            <div class="col-lg-3">
+                <h1 class="h2 pb-4">{{ $category->name }}</h1>
+            </div>
+
+            <div class="col-lg-9">
+
+                <div class="row">
+                    @foreach ($products as $product)
+                        <div class="col-md-4">
+                            <div class="card mb-4 product-wap rounded-0">
+                                <div class="card rounded-0">
+                                    <img class="card-img rounded-0 img-fluid"
+                                        src="{{ asset('storage/products/' . $product->image) }}">
+                                    <div
+                                        class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                        <ul class="list-unstyled">
+                                            <li><a class="btn btn-success text-white mt-2" href="{{ route('product.show', $product->id) }}"><i
+                                                        class="fas fa-cart-plus"></i></a></li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-outline-light"> ВО КОШНИЧКА </button>
-                            </form>
+                                <div class="card-body">
+                                    <a href="{{ route('product.show', $product->id) }}" class="h3 text-decoration-none">Oupidatat non</a>
+                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                        <li>{{ $product->description }}</li>
+                                        <li class="pt-2">
+                                            <span
+                                                class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                            <span
+                                                class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                            <span
+                                                class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                            <span
+                                                class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                            <span
+                                                class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                        </li>
+                                    </ul>
+
+                                    <p class="text-center mb-0">{{ number_format($product->price, 2) . ' ден' }}</p>
+                                </div>
+                            </div>
                         </div>
+                    @endforeach
+                </div>
+                {{-- <div div="row">
+                <ul class="pagination pagination-lg justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                    </li>
+                </ul>
+            </div> --}}
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->
+
+    <!-- Start Brands -->
+    <section class="bg-light py-5">
+        <div class="container my-4">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Our Brands</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+                <div class="col-lg-9 m-auto tempaltemo-carousel">
+                    <div class="row d-flex flex-row">
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                                <i class="text-light fas fa-chevron-left"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+
+                        <!--Carousel Wrapper-->
+                        <div class="col">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example"
+                                data-bs-ride="carousel">
+                                <!--Slides-->
+                                <div class="carousel-inner product-links-wap" role="listbox">
+
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End First slide-->
+
+                                    <!--Second slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Second slide-->
+
+                                    <!--Third slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png"
+                                                        alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Third slide-->
+
+                                </div>
+                                <!--End Slides-->
+                            </div>
+                        </div>
+                        <!--End Carousel Wrapper-->
+
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                                <i class="text-light fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
-
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function() {
-            $('form').submit(this, function(e) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                e.preventDefault();
-                let product_id = $('input[name=product_id]', this).val()
-                let qty = $('input[name=qty]', this).val()
-                let cart = $('#currentCart')
-                let size = $('option:selected', this).val()
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('add_to_cart') }}",
-                    data: {
-                        product_id: product_id,
-                        qty: qty,
-                        size: size,
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Успешно додаден продукт во кошничка',
-                            showConfirmButton: false,
-                            timer: 1500
-                            })
-                        $('form').trigger('reset')
-                        $('#cartCounter').text(data)
-                    },
-                    error: function(data) {
-                        console.log('error');
-                    }
-                });
-            });
-        })
-    </script>
+    </section>
 @endsection

@@ -22,4 +22,14 @@ class Helper
         break;
     }
   }
+
+  public static function sum_prices($customer)
+  {
+    $customer_orders = $customer->orders->where('status', 'completed')->all();
+    $amounts = [];
+    foreach ($customer_orders as $order) {
+        $amounts[] = intval(str_replace(',', '', $order->total_price));
+    }
+    return number_format(array_sum($amounts), 2);
+  }
 }

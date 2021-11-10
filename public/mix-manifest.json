@@ -1,9 +1,13 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/toast.js": "/js/toast.js",
+    "/js/bootstrap.bundle.min.js": "/js/bootstrap.bundle.min.js",
     "/js/custom.js": "/js/custom.js",
-    "/js/bootstrap.js": "/js/bootstrap.js",
-    "/js/bootstrap.bundle.js": "/js/bootstrap.bundle.js",
+    "/js/jquery-1.11.0.min.js": "/js/jquery-1.11.0.min.js",
+    "/js/slick.min.js": "/js/slick.min.js",
+    "/js/templatemo.js": "/js/templatemo.js",
+    "/js/templatemo.min.js": "/js/templatemo.min.js",
+    "/js/bootstrap4-toggle.min.js": "/js/bootstrap4-toggle.min.js",
     "/css/app.css": "/css/app.css",
-    "/css/custom.css": "/css/custom.css"
+    "/css/fontawesome.min.css": "/css/fontawesome.min.css",
+    "/css/fontawesome.css": "/css/fontawesome.css",
+    "/css/templatemo.css": "/css/templatemo.css"
 }

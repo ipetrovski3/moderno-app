@@ -16,17 +16,17 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         if ($request->status == 'all')
-            $orders = Order::all();
+            $orders = Order::orderBy('created_at', 'DESC')->get();
         elseif ($request->status == 'received')
-            $orders = Order::where('status', 'received')->get();
+            $orders = Order::where('status', 'received')->orderBy('created_at', 'DESC')->get();
         elseif ($request->status == 'confirmed')
-            $orders = Order::where('status', 'confirmed')->get();
+            $orders = Order::where('status', 'confirmed')->orderBy('created_at', 'DESC')->get();
         elseif ($request->status == 'in_production')
-            $orders = Order::where('status', 'in_production')->get();
+            $orders = Order::where('status', 'in_production')->orderBy('created_at', 'DESC')->get();
         elseif ($request->status == 'shipped')
-            $orders = Order::where('status', 'shipped')->get();
+            $orders = Order::where('status', 'shipped')->orderBy('created_at', 'DESC')->get();
         elseif ($request->status == 'completed')
-            $orders = Order::where('status', 'completed')->get();
+            $orders = Order::where('status', 'completed')->orderBy('created_at', 'DESC')->get();
 
         return view('dashboard.orders.index', compact('orders'));
     }
@@ -36,23 +36,25 @@ class OrdersController extends Controller
         if (Cart::count() < 1) {
             return redirect()->back()->with(['errors' => 'Вашата кошничка е празна']);
         }
+        if (Customer::where('email', $request->email)->get()->first() == null) {
+            $customer = new Customer;
+            $customer->first_name = $request->first_name;
+            $customer->last_name = $request->last_name;
+            $customer->phone = $request->phone;
+            $customer->email = $request->email;
+            $customer->address = $request->address;
+            $customer->town = $request->town;
 
-        $customer = new Customer;
-        $customer->first_name = $request->first_name;
-        $customer->last_name = $request->last_name;
-        $customer->phone = $request->phone;
-        $customer->email = $request->email;
-        $customer->address = $request->address;
-        $customer->town = $request->town;
-
-        $customer->save();
+            $customer->save();
+        } else {
+            $customer = Customer::where('email', $request->email)->get()->first();
+        }
 
         $order = new Order;
         $order->customer_id = $customer->id;
         $order->total_price = Cart::total();
 
         $order->save();
-
 
         $cart_items = Cart::content();
         foreach ($cart_items as $item) {
@@ -87,9 +89,9 @@ class OrdersController extends Controller
         return view('dashboard.orders.show', compact('products', 'order', 'customer'));
     }
 
-    public function destroy(Request $request) 
+    public function destroy(Request $request)
     {
-        
+
         $order = Order::findOrFail($request->order_id);
         $order->delete();
 

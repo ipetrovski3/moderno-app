@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $names = ['shits', 'bags', 'bandanas', 'hoodies'];
+        $names = ['shirts', 'bags', 'bandanas', 'hoodies'];
         foreach ($names as $name) {
             $category = new Category;
             $category->name = $name;
