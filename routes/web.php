@@ -28,6 +28,7 @@ Route::post('/add_to_card', [ProductsController::class, 'add_to_cart'])->name('a
 Route::get('/cart', [PublicController::class, 'show_cart'])->name('show.cart');
 Route::post('/confirm_order', [OrdersController::class, 'store'])->name('store.order');
 Route::get('/products/{id}', [ProductsController::class, 'show'])->name('product.show');
+Route::post('/remove-from-cart', [PublicController::class, 'remove_from_cart'])->name('remove_from_cart');
 
 Route::get('/dasboard', function () {
   return redirect()->route('dashboard');

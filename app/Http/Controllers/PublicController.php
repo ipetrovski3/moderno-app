@@ -34,4 +34,11 @@ class PublicController extends Controller
         // return $cart_items;
         return view('cart_content', compact('cart_items'));
     }
+
+    public function remove_from_cart(Request $request) {
+        $rowId = $request->rowId;
+        Cart::remove($rowId);
+
+        return response()->json($request->all());
+    }
 }

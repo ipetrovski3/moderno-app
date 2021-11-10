@@ -49,10 +49,11 @@ class OrdersController extends Controller
         } else {
             $customer = Customer::where('email', $request->email)->get()->first();
         }
-
+        $cart = Cart::total();
+         
         $order = new Order;
         $order->customer_id = $customer->id;
-        $order->total_price = Cart::total();
+        $order->total_price = floatval(str_replace(',', '', $cart));
 
         $order->save();
 

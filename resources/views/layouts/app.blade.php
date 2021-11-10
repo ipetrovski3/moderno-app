@@ -56,7 +56,7 @@
 
                     <a class="nav-icon position-relative text-decoration-none" href="{{ route('show.cart') }}">
                         <i class="fas fa-fw fa-cart-arrow-down fa-2x text-dark mr-1"></i>
-                        <span
+                        <span id="cartCounter"
                             class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">{{ Cart::count() }}</span>
                     </a>
 
