@@ -27,7 +27,7 @@
                         @if ($product->sizeable)
                             <td>{{ strtoupper($product->pivot->size) }}</td>
                         @else
-                        <td>/</td>
+                            <td>/</td>
                         @endif
                         <td>{{ $product->price }} Ден.</td>
                         <td>{{ $product->pivot->qty * $product->price }} Ден.</td>
@@ -54,7 +54,8 @@
             </div>
             <div class="col-6">
                 <h4>Статус на нарачката</h4>
-                <select name="status" data-value="{{ $order->id }}" {{ $order->status == 'completed' ? 'disabled' : '' }} class="form-select">
+                <select name="status" data-value="{{ $order->id }}"
+                    {{ $order->status == 'completed' ? 'disabled' : '' }} class="form-select">
 
                     @foreach ($order->statuses as $key => $status)
                         <option {{ $key == $order->status ? 'selected' : '' }} value="{{ $key }}">
@@ -63,8 +64,17 @@
                     @endforeach
                 </select>
 
-                <a href="{{ route('label') }}" class="btn btn-success">Label</a>
-
+                <a href="{{ route('label', $order->id) }}" class="btn btn-success">Label</a>
+                <form action="{{ route('invoice.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                    <input type="hidden" name="order_id" value="{{ $order->id }}">
+                    @if (isset($order->invoice))
+                        <a href="{{ route('invoices.show', $order->invoice->number) }}" class="btn btn-warning">{{ 'Фактура бр. : ' . $order->invoice->number }}</a>
+                    @else
+                        <button type="submit" class="btn btn-warning">Генерирај Фактура</button>
+                    @endif
+                </form>
 
             </div>
         </div>

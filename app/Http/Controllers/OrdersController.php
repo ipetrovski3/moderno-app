@@ -32,11 +32,11 @@ class OrdersController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
         if (Cart::count() < 1) {
             return redirect()->back()->with(['errors' => 'Вашата кошничка е празна']);
         }
-        if (Customer::where('email', $request->email)->get()->first() == null) {
+        if (is_null(Customer::where('email', $request->email)->get()->first())) {
             $customer = new Customer;
             $customer->first_name = $request->first_name;
             $customer->last_name = $request->last_name;
@@ -44,6 +44,11 @@ class OrdersController extends Controller
             $customer->email = $request->email;
             $customer->address = $request->address;
             $customer->town = $request->town;
+            if (isset($request->receive_promotions)) {
+                $customer->receive_promotions = $request->receive_promotions;
+            } else {
+                $customer->receive_promotions = false;
+            }
 
             $customer->save();
         } else {
@@ -67,7 +72,7 @@ class OrdersController extends Controller
             ->send(new AdminOrderNotification($order));
 
         Cart::destroy();
-        return redirect()->route('homepage');
+        return redirect()->route('homepage')->with(['success' => 'Вашата нарачка е примена и ќе ви биде доставена во краток временски период']);
     }
 
     public function update_status(Request $request)
@@ -92,7 +97,6 @@ class OrdersController extends Controller
 
     public function destroy(Request $request)
     {
-
         $order = Order::findOrFail($request->order_id);
         $order->delete();
 

@@ -19,8 +19,8 @@ mix
     .js('resources/js/templatemo.js', 'public/js/templatemo.js')
     .js('resources/js/templatemo.min.js', 'public/js/templatemo.min.js')
     .js('resources/js/bootstrap4-toggle.min.js', 'public/js/bootstrap4-toggle.min.js')
+    .js('resources/js/activate_deactivate.js', 'public/js/activate_deactivate.js')
 
     .postCss('resources/css/templatemo.css', 'public/css/templatemo.css')
     .postCss('resources/css/fontawesome.css', 'public/css/fontawesome.css')
-    .postCss('resources/css/fontawesome.min.css', 'public/css/fontawesome.min.css')
     .sass('resources/css/app.scss', 'public/css/app.css')

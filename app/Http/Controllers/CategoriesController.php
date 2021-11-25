@@ -2,96 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CarouselImage;
 use App\Models\Category;
+use Helpers;
 use Illuminate\Http\Request;
-use App\Models\Product;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $categories = Category::all();
 
-        return view('welcome')
+        return view('dashboard.categories.index')
             ->with([
                 'categories' => $categories,
             ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('dashboard.categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $category = new Category;
         $category->name = $request->name;
-        $category->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name)));
+        // dd(mb_detect_encoding($request->name));
+        // dd(utf8_encode($request->name));
+        
+        $category->slug = transliterator_transliterate('Any-Latin;Latin-ASCII;', $request->name);
         $request->file('image')->store('categories', 'public');
         $category->image = $request->file('image')->hashName();
 
         $category->save();
 
-        return $category;
+        return redirect()->route('categories.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit(category $category)
     {
-        //
+        return view('dashboard.categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, category $category)
     {
-        //
+        $category->name = $request->name;
+
+        if ($request->has('image')) {
+            $request->file('image')->store('categories', 'public');
+            $category->image = $request->file('image')->hashName();
+        }
+
+        $category->update();
+
+        return redirect()->route('categories.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\category  $category
-     * @return \Illuminate\Http\Response
-     */
+    public function active(Request $request) {
+        $category = Category::findOrFail($request->id);
+        $status = $request->status;
+
+        $response = $this->change_status($category, $status);
+
+        return response()->json($response);
+    }
+
     public function destroy(category $category)
     {
         //

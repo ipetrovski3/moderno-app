@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CarouselImagesController extends Controller
 {
     public function index()
-    {   
+    {
         $images = CarouselImage::all();
 
         return view('dashboard.carousel.index', compact('images'));
@@ -21,14 +21,20 @@ class CarouselImagesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'image' => 'required'
-        ],
-        [
-            'image.required' => 'Глуп еден, слика не си прикачил!'
-        ]);
-        
+        $request->validate(
+            [
+                'image' => 'required',
+                'title' => 'required',
+                'description' => 'required'
+            ],
+            [
+                'image.required' => 'Глуп еден, слика не си прикачил!'
+            ]
+        );
+
         $image = new CarouselImage;
+        $image->title = $request->title;
+        $image->description = $request->description;
 
         $request->file('image')->store('main', 'public');
         $image->image = $request->file('image')->hashName();
@@ -50,20 +56,13 @@ class CarouselImagesController extends Controller
         return redirect()->route('images.index');
     }
 
-    public function activate(Request $request) {
-        $image = CarouselImage::find($request->image_id);
-        $image->active = $request->status;
-        $image->save();
+    public function activate(Request $request)
+    {
+        $image = CarouselImage::find($request->id);
+        $status = $request->status;
 
-        if ($image->active == true) {
-            $body = 'Успешно активирана сликата на насловната страна';
-            $class = 'success';
-        } else {
-            $body = 'Успешно тргната сликата од насловната страна';
-            $class = 'warning';
-        }
+        $response = $this->change_status($image, $status);
 
-        return response()->json(['body' => $body, 'class' => $class]);
+        return response()->json($response);
     }
-
 }

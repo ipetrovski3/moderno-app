@@ -40,13 +40,15 @@
                                     <div
                                         class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                         <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white mt-2" href="{{ route('product.show', $product->id) }}"><i
+                                            <li><a class="btn btn-success text-white mt-2"
+                                                    href="{{ route('product.show', $product->id) }}"><i
                                                         class="fas fa-cart-plus"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ route('product.show', $product->id) }}" class="h3 text-decoration-none">Oupidatat non</a>
+                                    <a href="{{ route('product.show', $product->id) }}"
+                                        class="h3 text-decoration-none">{{ $product->name }}</a>
                                     <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                         <li>{{ $product->description }}</li>
                                         <li class="pt-2">
@@ -93,7 +95,7 @@
         <div class="container my-4">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Our Brands</h1>
+                    <h1 class="h1">Дел од нашите категории</h1>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                         Lorem ipsum dolor sit amet.
@@ -119,22 +121,20 @@
                                     <!--First slide-->
                                     <div class="carousel-item active">
                                         <div class="row">
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
+                                            @foreach ($categories as $key => $category)
+                                            @if ($key == '4')
+                                             @php
+                                                 break;
+                                             @endphp
+                                            @endif
+                                                <div class="col-3 p-md-5">
+                                                    <a href="{{ route('categories.show', $category->slug) }}"><img
+                                                            class="img-fluid brand-img"
+                                                            src="{{ asset('storage/categories/' . $category->image) }}"
+                                                            alt="Brand Logo"></a>
+                                                </div>
+
+                                            @endforeach
                                         </div>
                                     </div>
                                     <!--End First slide-->
@@ -143,48 +143,24 @@
                                     <div class="carousel-item">
                                         <div class="row">
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png"
+                                                <a href="#"><img class="img-fluid brand-img" src="{{ asset('images/brand_01.png') }}"
                                                         alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png"
+                                                <a href="#"><img class="img-fluid brand-img" src="{{ asset('images/brand_02.png') }}"
                                                         alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png"
+                                                <a href="#"><img class="img-fluid brand-img" src="{{ asset('images/brand_03.png') }}"
                                                         alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png"
+                                                <a href="#"><img class="img-fluid brand-img" src="{{ asset('images/brand_04.png') }}"
                                                         alt="Brand Logo"></a>
                                             </div>
                                         </div>
                                     </div>
                                     <!--End Second slide-->
-
-                                    <!--Third slide-->
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png"
-                                                        alt="Brand Logo"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Third slide-->
-
                                 </div>
                                 <!--End Slides-->
                             </div>
@@ -204,5 +180,5 @@
         </div>
     </section>
 
-    
+
 @endsection

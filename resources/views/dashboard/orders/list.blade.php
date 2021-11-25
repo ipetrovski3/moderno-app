@@ -1,5 +1,5 @@
 @foreach ($orders as $order)
-    <tr id="rowClass" class="table-{{ Helper::color($order->status) }}">
+    <tr id="rowClass" class="table-{{ Helpers::color($order->status) }}">
         <th scope="row">{{ $loop->iteration }}</th>
         <td>{{ date('d-m-Y, H:m', strtotime($order->created_at)) }}</td>
         <td>{{ $order->customer->full_name() }}</td>
@@ -15,9 +15,11 @@
                 @endforeach
             </select>
         </td>
-        <td> 
-            <a href="{{ route('order.show', $order->id) }}" class="btn btn-info"> Преглед </a>
-            <button data-id="{{ $order->id }}" class="btn delete btn-danger">Избриши</button>
+        <td>
+            <div class="btn-group">
+                <a href="{{ route('order.show', $order->id) }}" title="Преглед"class="btn btn-secondary"><i class="fas fa-eye"></i></a>
+                <button data-id="{{ $order->id }}" class="btn delete btn-danger" title="Избриши"><i class="fas fa-trash-alt"></i></button>
+            </div>
         </td>
     </tr>
 @endforeach

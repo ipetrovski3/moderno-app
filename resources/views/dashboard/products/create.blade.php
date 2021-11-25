@@ -26,11 +26,11 @@
                 <label class="form-label" for="price">Цена на продуктот</label>
                 <input class="form-control" type="number" name="price" id="">
             </div>
-            <div class="form-check">
-                <input class="form-check-input" name="sizeable" type="checkbox" value="1" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Димензија?
-                </label>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" name="sizeable" type="checkbox" value="1" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">Димензија?</label>
+                </div>
             </div>
             <div class="form-group">
                 <label class="form-label" for="description">Опис</label>
@@ -47,7 +47,7 @@
 @stop
 
 @section('css')
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 @stop
 
 @section('js')
@@ -58,7 +58,7 @@
                 title: 'Известување',
                 autohide: true,
                 delay: 1300,
-                body: '{{ session('message')  }}'
+                body: '{{ session('message') }}'
             })
         </script>
     @endif

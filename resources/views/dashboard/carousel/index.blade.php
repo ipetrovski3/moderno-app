@@ -44,33 +44,13 @@
     </div>
 
     <script>
+        let route = "{{ route('image.activate') }}"
         $('.toggle').on('change', function() {
-            let status = $(this).prop('checked') == true ? 1 : 0;
-            let image_id = $(this).data('id');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('image.activate') }}",
-                data: {
-                    status: status,
-                    image_id: image_id
-                },
-                success: function(data) {
-                    $(document).Toasts('create', {
-                        class: 'bg-' + data['class'],
-                        title: 'Известување',
-                        autohide: true,
-                        delay: 1300,
-                        body: data['body']
-                    })
-
-                }
-            })
-
+            let status = $(this).prop("checked") == true ? 1 : 0;
+            let id = $(this).data("id");
+            activate(route, status, id);
         })
     </script>
+
+    <script src="{{ asset('js/activate_deactivate.js') }}"></script>
 @endsection

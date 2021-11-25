@@ -4,7 +4,7 @@
         <td>{{ $customer->full_name() }}</td>
         <td>{{ $customer->phone }}</td>
         <td><strong>{{ $customer->orders->count() }}</strong></td>
-        <td><strong>{{ Helper::sum_prices($customer) }}</strong></td>
+        <td><strong>{{ Helpers::sum_prices($customer) }}</strong></td>
         <td><button data-id="{{ $customer->id }}" class="btn btn-secondary"><i class="far fa-envelope"></i></button></td>
     </tr>
 @endforeach

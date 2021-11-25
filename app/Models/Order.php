@@ -22,6 +22,11 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
+    }
+
     public $statuses = [
         'received' => ['name' => 'Примена'],
         'confirmed' => ['name' => 'Потврдена'],

@@ -11,18 +11,19 @@ use Illuminate\Http\Request;
 class PublicController extends Controller
 {
     public function index() {
-        $categories = Category::all();
+        $categories = Category::where('active', true)->get();
 
         $images = CarouselImage::where('active', true)->get();
 
         return view('welcome', compact('categories', 'images'));
     }
 
-    public function show($id) {
-        $category = Category::findOrFail($id);
+    public function show($slug) {
+        $category = Category::where('slug', $slug)->first();
         $products = Product::where('category_id', $category->id)->where('active', true)->orderBy('created_at', 'DESC')->get();
+        $categories = Category::where('active', true)->get();
 
-        return view('categories.show', compact('products', 'category'));
+        return view('categories.show', compact('products', 'category', 'categories'));
     }
 
     public function show_cart() {
@@ -37,8 +38,13 @@ class PublicController extends Controller
 
     public function remove_from_cart(Request $request) {
         $rowId = $request->rowId;
+        $cart = Cart::get($rowId);
+        $price = $cart->price * $cart->qty;
+        
         Cart::remove($rowId);
 
-        return response()->json($request->all());
+        $cart_count = Cart::count();
+        
+        return response()->json(['rowId' => $rowId, 'price' => $price, 'count' => $cart_count ]);
     }
 }

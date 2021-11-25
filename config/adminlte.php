@@ -247,11 +247,21 @@ return [
         ],
 
         ['header' => 'МЕНАЏМЕНТ'],
+        [
+            'text' => 'Категории',
+            'route' => 'categories.index',
+            'icon' => 'far fa-folder-open'
+        ],
         [   'key' => 'products',
             'text'        => 'Продукти',
             'route'       => 'products.index',
             'icon'        => 'fas fa-database',
             'label_color' => 'success',
+        ],
+        [
+            'text' => 'Фактури',
+            'route' => 'invoices.index',
+            'icon' => 'fas fa-file-invoice'
         ],
 
         ['header' => 'НАСЛОВНА СТРАНА'],
@@ -395,7 +405,7 @@ return [
             ],
         ],
         'Pace' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'css',

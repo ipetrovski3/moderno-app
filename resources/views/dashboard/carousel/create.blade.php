@@ -10,6 +10,14 @@
             <h3>Прикачи слика за главна страна</h3>
             <form action="{{ route('images.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <div class="form-group">
+                    <label for="title" class="form-label">Наслов</label>
+                    <input type="text" class="form-control" name="title" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="description">Опис</label>
+                    <textarea name="description" class="form-control" id="" cols="30" rows="10"></textarea>
+                </div>
                 <input type="file" class="form-control" name="image">
                 @if ($errors->any())
                     <div class="alert alert-danger">

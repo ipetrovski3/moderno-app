@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $products = Product::orderBy('created_at', 'DESC')->get();
@@ -21,23 +16,12 @@ class ProductsController extends Controller
         return view('dashboard.products.index')->with(['products' => $products]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::all();
         return view('dashboard.products.create')->with(['categories' => $categories]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $product = new Product;
@@ -57,12 +41,6 @@ class ProductsController extends Controller
         return redirect()->back()->with(['message' => 'Успешно креиран продукт']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $product = Product::findOrFail($id);
@@ -70,35 +48,16 @@ class ProductsController extends Controller
         return view('products.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
@@ -106,19 +65,12 @@ class ProductsController extends Controller
 
     public function active_deactive(Request $request)
     {
-        $product = Product::find($request->product_id);
-        $product->active = $request->status;
-        $product->save();
+        $product = Product::find($request->id);
+        $status = $request->status;
 
-        if ($product->active == true) {
-            $body = 'Статусот на производот е променет во активен';
-            $class = 'success';
-        } else {
-            $body = 'Статусот на производот е променет во неактивен';
-            $class = 'warning';
-        }
+        $response = $this->change_status($product, $status);
 
-        return response()->json(['body' => $body, 'class' => $class]);
+        return response()->json($response);
     }
 
     public function add_to_cart(Request $request)

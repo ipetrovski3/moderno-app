@@ -30,7 +30,9 @@ class HomeController extends Controller
         foreach ($orders_total_price as $price) {
             $newArr[] += str_replace(',', '', $price);
         };
-        $total_money = number_format(array_sum($newArr), 2, ',', '.');
+        $total_sum = array_sum($newArr);
+        $total_money = number_format($total_sum, 2, ',', '.');
+        $za_viceto = (( $total_sum * 10 ) / 100);
 
 
         $data = [];
@@ -52,7 +54,8 @@ class HomeController extends Controller
 
         return view('home')->with([
             'data' => $data,
-            'total_money' => $total_money
+            'total_sum' => $total_sum,
+            'za_viceto' => $za_viceto
         ]);
     }
 }

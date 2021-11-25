@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
@@ -7,32 +8,26 @@
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="container">
-                    <div class="row p-5">
-                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="{{ asset('images/banner_img_01.jpg') }}" alt="">
-                        </div>
-                        <div class="col-lg-6 mb-0 d-flex align-items-center">
-                            <div class="text-align-left align-self-center">
-                                <h1 class="h1 text-success"><b>Zay</b> eCommerce</h1>
-                                <h3 class="h2">Tiny and Perfect eCommerce Template</h3>
-                                <p>
-                                    Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5 (beta 1).
-                                    This template is 100% free provided by <a rel="sponsored" class="text-success"
-                                        href="https://templatemo.com" target="_blank">TemplateMo</a> website.
-                                    Image credits go to <a rel="sponsored" class="text-success"
-                                        href="https://stories.freepik.com/" target="_blank">Freepik Stories</a>,
-                                    <a rel="sponsored" class="text-success" href="https://unsplash.com/"
-                                        target="_blank">Unsplash</a> and
-                                    <a rel="sponsored" class="text-success" href="https://icons8.com/"
-                                        target="_blank">Icons 8</a>.
-                                </p>
+            @foreach ($images as $key => $image)
+                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    <div class="container">
+                        <div class="row p-5">
+                            <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                <img class="img-fluid" src="{{ asset('storage/main/' . $image->image) }}" alt="">
+                            </div>
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left align-self-center">
+                                    <h1 class="h1 text-success"><b>{{ $image->title }} </b></h1>
+                                    <p>
+                                        {{ $image->description }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
+
             <div class="carousel-item">
                 <div class="container">
                     <div class="row p-5">
@@ -96,7 +91,8 @@
         <div class="row">
             @foreach ($categories as $category)
                 <div class="col-12 col-md-4 p-5 mt-3">
-                    <a href="{{ route('categories.show', $category->id) }}"><img src="{{ asset('storage/categories/' . $category->image) }}"
+                    <a href="{{ route('categories.show', $category->slug) }}"><img
+                            src="{{ asset('storage/categories/' . $category->image) }}"
                             class="rounded-circle img-fluid border"></a>
                     <h5 class="text-center mt-3 mb-3">{{ $category->name }}</h5>
                 </div>
@@ -198,4 +194,17 @@
             </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    @if (Session::has('success'))
+        <script>
+            Swal.fire({
+                html: "{{ Session::get('success') }}",
+                confirmButtonColor: '#198754'
+            })
+        </script>
+    @endif
+
 @endsection
