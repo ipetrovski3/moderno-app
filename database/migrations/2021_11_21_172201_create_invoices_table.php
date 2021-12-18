@@ -17,7 +17,11 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->integer('invoicable_id');
             $table->string('invoicable_type');
-            $table->foreignId('order_id')->onDelete('cascade')->nullable();
+
+            $table->integer('invoice_number')->default(0);
+            $table->integer('without_vat')->default(0);
+            $table->integer('vat')->default(0);
+            $table->integer('total_price')->default(0);
             $table->timestamps();
         });
     }

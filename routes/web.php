@@ -4,6 +4,7 @@ use App\Http\Controllers\CarouselImagesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\InvoicesController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PublicController;
+use App\Models\Invoice;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +83,11 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/email_all', [CustomersController::class, 'email_all'])->name('email_all');
   });
 
+  Route::prefix('companies')->group( function () {
+    Route::get('/create', [CompaniesController::class, 'create'])->name('companies.create');
+    Route::post('/create', [CompaniesController::class, 'store'])->name('companies.store');
+  });
+
   Route::prefix('images')->group(function () {
     Route::get('/', [CarouselImagesController::class, 'index'])->name('images.index');
     Route::get('/create', [CarouselImagesController::class, 'new'])->name('images.create');
@@ -91,8 +98,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
   Route::prefix('invoices')->group(function ()  {
     Route::get('/', [InvoicesController::class, 'index'])->name('invoices.index');
-    Route::get('/{number}', [InvoicesController::class, 'show'])->name('invoices.show');
+    Route::get('/create', [InvoicesController::class, 'create'])->name('invoice.create');
     Route::post('/store', [InvoicesController::class, 'store_customer_invoice'])->name('invoice.store');
+    Route::get('/show/{uniqid}', [InvoicesController::class, 'show'])->name('invoices.show');
   });
 
   Route::prefix('pdf')->group(function () {

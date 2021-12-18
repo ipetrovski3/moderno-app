@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('customer_id')->onDelete('cascade');
             $table->text('description')->nullable();
             $table->enum('status', ['received', 'confirmed', 'in_production', 'shipped', 'completed' ])->default('received');
+            $table->boolean('invoiced')->default(false);
 
             $table->timestamps();
         });

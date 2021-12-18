@@ -16,8 +16,12 @@ class Invoice extends Model
         return $this->morphTo();
     }
 
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
+
+    public function articles()
+    { 
+        return $this->belongsToMany(Product::class, 'article_invoice', 'invoice_id', 'product_id' )
+            ->withPivot('qty')
+            ->withTimestamps();
     }
+
 }

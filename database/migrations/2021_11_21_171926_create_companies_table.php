@@ -17,8 +17,8 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->integer('tax_number')->nullable();
-            $table->integer('EDB')->nullable();
+            $table->bigInteger('tax_number')->nullable();
+            $table->bigInteger('EDB')->nullable();
             $table->string('phone');
             $table->string('email')->nullable();
             $table->timestamps();

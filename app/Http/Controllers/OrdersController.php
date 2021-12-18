@@ -2,63 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\AdminOrderNotification;
-use App\Models\Customer;
-use App\Models\Order;
 use App\Models\User;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\Order;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Services\Orders\Orders;
+use App\Mail\AdminOrderNotification;
+use App\Services\Customers\CustomersService;
 use Illuminate\Support\Facades\Mail;
-use Svg\Tag\Rect;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class OrdersController extends Controller
 {
+    private $query;
+
+    public function __construct(Orders $query)
+    {
+        $this->query = $query;
+    }
+
     public function index(Request $request)
     {
-        if ($request->status == 'all')
-            $orders = Order::orderBy('created_at', 'DESC')->get();
-        elseif ($request->status == 'received')
-            $orders = Order::where('status', 'received')->orderBy('created_at', 'DESC')->get();
-        elseif ($request->status == 'confirmed')
-            $orders = Order::where('status', 'confirmed')->orderBy('created_at', 'DESC')->get();
-        elseif ($request->status == 'in_production')
-            $orders = Order::where('status', 'in_production')->orderBy('created_at', 'DESC')->get();
-        elseif ($request->status == 'shipped')
-            $orders = Order::where('status', 'shipped')->orderBy('created_at', 'DESC')->get();
-        elseif ($request->status == 'completed')
-            $orders = Order::where('status', 'completed')->orderBy('created_at', 'DESC')->get();
+        $orders = $this->query->orders_query($request->status);
 
         return view('dashboard.orders.index', compact('orders'));
     }
 
-    public function store(Request $request)
-    {   
+    public function store(CustomersService $customer_service, Request $request)
+    {
         if (Cart::count() < 1) {
             return redirect()->back()->with(['errors' => 'Вашата кошничка е празна']);
         }
         if (is_null(Customer::where('email', $request->email)->get()->first())) {
-            $customer = new Customer;
-            $customer->first_name = $request->first_name;
-            $customer->last_name = $request->last_name;
-            $customer->phone = $request->phone;
-            $customer->email = $request->email;
-            $customer->address = $request->address;
-            $customer->town = $request->town;
-            if (isset($request->receive_promotions)) {
-                $customer->receive_promotions = $request->receive_promotions;
-            } else {
-                $customer->receive_promotions = false;
-            }
-
-            $customer->save();
+            $customer = $customer_service->store_customer($request->all());
         } else {
             $customer = Customer::where('email', $request->email)->get()->first();
         }
-        $cart = Cart::total();
-         
         $order = new Order;
         $order->customer_id = $customer->id;
-        $order->total_price = floatval(str_replace(',', '', $cart));
+        $order->total_price = floatval(str_replace(',', '', Cart::total()));
+        $order->uniqid = uniqid();
 
         $order->save();
 
@@ -78,7 +61,6 @@ class OrdersController extends Controller
     public function update_status(Request $request)
     {
         $data = $request->all();
-
         $order = Order::findOrFail($data['id']);
         $order->status = $data['status'];
         $order->save();

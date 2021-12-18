@@ -17,29 +17,34 @@
                 <th scope="col">Купувач</th>
                 <th scope="col">Тип</th>
                 <th scope="col">Број на фактура</th>
+                <th scope="col">Износ Со ДДВ</th>
                 <th scope="col">Акција</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($invoices as $invoice)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $invoice->created_at->format('d.m.Y') }}</td>
-                    <td>{{ $invoice->invoicable->full_name() }}</td>
-                    <td>{{ Helpers::buyer_type($invoice->invoicable_type) }}</td>
-                    <td>{{ $invoice->number }}</td>
-                    <td><a href="{{ route('invoices.show', $invoice->number) }}">{{ 'Ф-ра бр: ' . $invoice->number }}
-                        </a></td>
+                    <th scope="row" class="py-auto">{{ $loop->iteration }}</th>
+                    <td class="py-auto">{{ $invoice->created_at->format('d.m.Y') }}</td>
+                    <td class="py-auto">{{ $invoice->invoicable->full_name() }}</td>
+                    <td class="py-auto">{{ Helpers::buyer_type($invoice->invoicable_type) }}</td>
+                    <td class="py-auto">{{ $invoice->invoice_number }}</td>
+                    <td class="py-auto">{{ number_format($invoice->total_price, 2) }} ден</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{ route('invoices.show', $invoice->uniqid) }}" class="btn btn-success text-white"><i class="fas fa-file-invoice"></i></a>
+                            <a href="{{ route('invoices.show', $invoice->uniqid) }}" class="btn btn-info text-white"><i class="fas fa-print"></i></a>
+                    </td>
+                    </div>
                 </tr>
             @endforeach
-
         </tbody>
     </table>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/bootstrap4-toggle.min.js') }}"></script>
     <script>
-        
+
     </script>
 
 

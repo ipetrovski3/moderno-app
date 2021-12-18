@@ -31,7 +31,7 @@ class Helpers
       case 'App\Models\Customer':
         return 'Физичко Лице';
         break;
-      case 'App\Models\Companies':
+      case 'App\Models\Company':
         return 'Правно Лице';
         break;
     }
@@ -61,4 +61,40 @@ class Helpers
 
     return $towns;
   }
+
+  public static function without_vat($price) {
+    return $price - ($price * 18 / 100);
+  }
+
+  public static function transform_name($name)
+  {
+    switch ($name) {
+      case 'Igor Petrovski':
+        return 'Игор Петровски';
+        break;
+      case 'Bojan Petrovski':
+        return 'Бојан Петровски';
+        break;
+      
+      default:
+        # code...
+        break;
+    }
+  }
+
+  public static function latin_to_cyrillic($latinString) {
+    $cyr = [
+        'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п',
+        'р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',
+        'А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П',
+        'Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ы','Ь','Э','Ю','Я'
+    ];
+    $lat = [
+        'a','b','v','g','d','e','io','zh','z','i','y','k','l','m','n','o','p',
+        'r','s','t','u','f','h','ts','ch','sh','sht','a','i','y','e','yu','ya',
+        'A','B','V','G','D','E','Io','Zh','Z','I','Y','K','L','M','N','O','P',
+        'R','S','T','U','F','H','Ts','Ch','Sh','Sht','A','I','Y','e','Yu','Ya'
+    ];
+    return str_replace($lat, $cyr, $latinString);
+}
 }

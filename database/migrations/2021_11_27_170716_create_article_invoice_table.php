@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddinvoicenumberToInvoices extends Migration
+class CreateArticleInvoiceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class AddinvoicenumberToInvoices extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->integer('number')->default(210000);
+        Schema::create('article_invoice', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('invoice_id');
+            $table->foreignId('product_id');
+            
+            $table->integer('qty');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +31,6 @@ class AddinvoicenumberToInvoices extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('article_invoice');
     }
 }

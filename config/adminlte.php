@@ -252,20 +252,41 @@ return [
             'route' => 'categories.index',
             'icon' => 'far fa-folder-open'
         ],
-        [   'key' => 'products',
+        [
+            'key' => 'products',
             'text'        => 'Продукти',
             'route'       => 'products.index',
             'icon'        => 'fas fa-database',
             'label_color' => 'success',
         ],
         [
+            'text' => 'Компании',
+            'icon' => 'far fa-building',
+            'submenu' => [
+                [
+                    'text' => 'Нова Компанија',
+                    'route' => 'companies.create',
+                    'icon' => 'far fa-plus-square'
+                ]
+            ]
+        ],
+        [
             'text' => 'Фактури',
-            'route' => 'invoices.index',
-            'icon' => 'fas fa-file-invoice'
+            'icon' => 'fas fa-file-invoice',
+            'submenu' => [
+                [
+                    'text' => 'Нова Фактура',
+                    'route' => 'invoice.create'
+                ],
+                [
+                    'text' => 'Сите',
+                    'route' => 'invoices.index'
+                ]
+            ]
         ],
 
         ['header' => 'НАСЛОВНА СТРАНА'],
-        [ 
+        [
             'text' => 'Насловни слики',
             'route' => 'images.index',
             'icon' => 'far fa-images'

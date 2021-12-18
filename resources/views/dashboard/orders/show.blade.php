@@ -54,28 +54,29 @@
             </div>
             <div class="col-6">
                 <h4>Статус на нарачката</h4>
-                <select name="status" data-value="{{ $order->id }}"
+                <select name="status" data-value="{{ $order->id }}" 
                     {{ $order->status == 'completed' ? 'disabled' : '' }} class="form-select">
-
                     @foreach ($order->statuses as $key => $status)
                         <option {{ $key == $order->status ? 'selected' : '' }} value="{{ $key }}">
                             {{ $status['name'] }}
                         </option>
                     @endforeach
                 </select>
+                <div class="btn-group">
 
-                <a href="{{ route('label', $order->id) }}" class="btn btn-success">Label</a>
-                <form action="{{ route('invoice.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="customer_id" value="{{ $customer->id }}">
-                    <input type="hidden" name="order_id" value="{{ $order->id }}">
-                    @if (isset($order->invoice))
-                        <a href="{{ route('invoices.show', $order->invoice->number) }}" class="btn btn-warning">{{ 'Фактура бр. : ' . $order->invoice->number }}</a>
-                    @else
-                        <button type="submit" class="btn btn-warning">Генерирај Фактура</button>
-                    @endif
-                </form>
-
+                    <a href="{{ route('label', $order->id) }}" class="btn btn-success" target="_blank">Испратница</a>
+                    <form action="{{ route('invoice.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                        <input type="hidden" name="order_id" value="{{ $order->id }}">
+                        @if ($order->invoiced == true)
+                            <a href="{{ route('invoices.show', $order->uniqid) }}" class="btn btn-warning"> Преглед на
+                                фактурата</a>
+                        @else
+                            <button type="submit" class="btn btn-warning">Генерирај Фактура</button>
+                        @endif
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -4,182 +4,136 @@
 
 @section('content_header')
     <h1>Фактури</h1>
+    <p><button id="print">Печати</button></p>
 @stop
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
+@stop
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
-    <div class="page-content container">
-        <div class="page-header text-blue-d2">
-            <h1 class="page-title text-secondary-d1">
-                Фактура
-                <small class="page-info">
-                    <i class="fa fa-angle-double-right text-80"></i>
-                    {{ $invoice->number }}
-                </small>
-            </h1>
-
-            <div class="page-tools">
-                <div class="action-buttons">
-                    <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
-                        <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
-                        Печати
-                    </a>
+    <div id="invoice" style="height: 842px;
+    width: 595px;
+    /* to centre page on screen*/
+    margin-left: auto;
+    margin-right: auto;">
+        <div class="card">
+            <div class="card-header p-2">
+                <p class="text-center">
+                    Модерно ДОО, ул. Народни Херои 13б, 1000 Скопје <br>
+                    ЕДБ: МК444546531256 ЕМБ: 431256 <br>
+                    Тел: 070 222 222, Емаил: info@moderno.com.mk <br>
+                    НЛБ Тутунска банка сметка: 3000254564564564565
+                </p>
+            </div>
+            <div class="card-body">
+                <h3 class="text-center">{{ $invoice->invoicable_type == 'App\Models\Customer' ? 'Готовинска' : '' }}
+                    Фактура бр: {{ $invoice->invoice_number }} </h3>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h4></h4>
+                        <div>Датум: {{ $invoice->created_at->format('d.m.Y') }}</div>
+                        @if ($invoice->invoicable_type == 'App\Models\Company')
+                            <div>Рок за плаќање: {{ $invoice->created_at->addDays(60)->format('d.m.Y') }}</div>
+                        @endif
+                    </div>
+                    <div class="col-sm-6 ">
+                        <h4 class="text-dark">До: {{ Helpers::latin_to_cyrillic($invoice->invoicable->full_name()) }}</h4>
+                        <div>{{ Helpers::latin_to_cyrillic($invoice->invoicable->address . ', ' . $invoice->invoicable->town) }}</div>
+                        <div>Емаил: {{ $invoice->invoicable->email }}</div>
+                        <div>Телефон: {{ $invoice->invoicable->phone }}</div>
+                    </div>
+                </div>
+                <div class="table-responsive-sm">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr> 
+                                <th>#</th>
+                                <th class="col-4">Производ</th>
+                                <th class="col-1">Кол.</th>
+                                <th class="col-2">Цена без ДДВ</th>
+                                <th class="col-2">Цена со ДДВ</th>
+                                <th class="col-2">Вкупен Износ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $product)
+                                <tr class="px-0">
+                                    <td class="py-1">{{ $loop->iteration . '.' }}</td>
+                                    <td class="py-1">{{ $product->name }}</td>
+                                    <td class="py-1" class="">{{ number_format($product->pivot->qty, 2) }}</td>
+                                    <td class="py-1">{{ number_format(Helpers::without_vat($product->price), 2) }}</td>
+                                    <td class="py-1">{{ number_format($product->price, 2) }}</td>
+                                    <td class="py-1 float-right">{{ number_format($product->price * $product->pivot->qty, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-5">
+                    </div>
+                    <div class="col-lg-6 col-sm-6 ml-auto">
+                        <table class="table table-clear">
+                            <tbody>
+                                <tr>
+                                    <td class="py-1">
+                                        <strong class="text-dark">Вкупно без ДДВ</strong>
+                                    </td>
+                                    <td class="float-right py-1">{{ number_format($invoice->without_vat, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <strong class="text-dark">ДДВ (18%)</strong>
+                                    </td>
+                                    <td class="float-right py-1">{{ number_format($invoice->vat, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <strong class="text-dark">Вкупно со ДДВ</strong>
+                                    </td>
+                                    <td class="float-right py-1">
+                                        <strong class="text-dark">{{ number_format($invoice->total_price, 2) }}
+                                            ден.</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="container px-0">
-            <div class="row mt-4">
-                <div class="col-12 col-lg-10 offset-lg-1">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="text-center text-150">
-                                <span class="text-default-d3">Модерно МК</span>
-                            </div>
-                        </div>
+            <div class="card-footer bg-white">
+                <div class="row">
+                    <div class="col-3">
+                        <p class="mb-0">_______________</p>
+                        <p class="text-center pt-0 mt-0">Примил</p>
                     </div>
-                    <!-- .row -->
-
-                    <hr class="row brc-default-l1 mx-n1 mb-4" />
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div>
-                                <span class="text-sm text-grey-m2 align-middle">Купувач:</span>
-                                <span
-                                    class="text-600 text-110 align-middle">{{ $invoice->order->customer->full_name() }}</span>
-                            </div>
-                            <div class="text-grey-m2">
-                                <div class="my-1">
-                                    Адреса: {{ $invoice->order->customer->address }}
-                                </div>
-                                <div class="my-1">
-                                    Град: {{ $invoice->order->customer->town }}
-                                </div>
-                                <div class="my-1"><i class="fa fa-phone fa-flip-horizontal"></i>
-                                    <b>{{ $invoice->order->customer->phone }}</b></div>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-
-                        <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
-                            <hr class="d-sm-none" />
-                            <div class="text-grey-m2">
-                                <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-                                    Фактура
-                                </div>
-                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
-                                        class="text-600 text-90">Бр: </span>{{ $invoice->number }}</div>
-                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
-                                        class="text-600 text-90">Датум:</span> {{ $invoice->created_at->format('d.m.Y') }}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.col -->
+                    <div class="col-3">
+                        <p class="mb-0">_______________</p>
+                        <p class="text-center pt-0 mt-0">Издал</p>
                     </div>
-
-                    <div class="mt-4">
-                        <div class="row text-600 text-white bgc-default-tp1 py-25">
-                            <div class="d-none d-sm-block col-1">#</div>
-                            <div class="col-9 col-sm-5">Производ</div>
-                            <div class="d-none d-sm-block col-4 col-sm-2">Кол</div>
-                            <div class="d-none d-sm-block col-sm-2">Ед Цена</div>
-                            <div class="col-2">Износ</div>
-                        </div>
-
-                        <div class="text-95 text-secondary-d3">
-                            @foreach ($products as $product)
-                                <div class="row mb-2 mb-sm-0 py-25">
-                                    <div class="d-none d-sm-block col-1">{{ $loop->iteration }}</div>
-                                    <div class="col-9 col-sm-5">
-                                        {{ $product->name . ' (' . $product->category->name . ')' }}</div>
-                                    <div class="d-none d-sm-block col-2">{{ $product->pivot->qty }}</div>
-                                    <div class="d-none d-sm-block col-2 text-95">{{ $product->price }}</div>
-                                    <div class="col-2 text-secondary-d2">{{ $product->price * $product->pivot->qty }}
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <div class="row border-b-2 brc-default-l2"></div>
-
-                        <!-- or use a table instead -->
-                        <!--
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-borderless border-0 border-b-2 brc-default-l1">
-                                                <thead class="bg-none bgc-default-tp1">
-                                                    <tr class="text-white">
-                                                        <th class="opacity-2">#</th>
-                                                        <th>Description</th>
-                                                        <th>Qty</th>
-                                                        <th>Unit Price</th>
-                                                        <th width="140">Amount</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody class="text-95 text-secondary-d3">
-                                                    <tr></tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Domain registration</td>
-                                                        <td>2</td>
-                                                        <td class="text-95">$10</td>
-                                                        <td class="text-secondary-d2">$20</td>
-                                                    </tr> 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        -->
-                        <hr />
-
-                        <div class="row mt-3">
-                            <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                            </div>
-
-                            <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
-                                <div class="row my-2">
-                                    <div class="col-7 text-right">
-                                        Вкупно (без ДДВ):
-                                    </div>
-                                    <div class="col-5">
-                                        <span
-                                            class="text-120 text-secondary-d1">{{ number_format(intval(str_replace(',', '', $invoice->order->total_price)) - (intval(str_replace(',', '', $invoice->order->total_price)) * 18) / 100, 2) }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="row my-2">
-                                    <div class="col-7 text-right">
-                                        ДДВ (18%)
-                                    </div>
-                                    <div class="col-5">
-                                        <span
-                                            class="text-110 text-secondary-d1">{{ number_format((intval(str_replace(',', '', $invoice->order->total_price)) * 18) / 100, 2) }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                                    <div class="col-5 text-right">
-                                        Вкупно (со ДДВ)
-                                    </div>
-                                    <div class="col-7">
-                                        <span
-                                            class="text-150 text-success-d3 opacity-2">{{ number_format(intval(str_replace(',', '', $invoice->order->total_price)), 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-3">
+                        <p class="mb-0">_______________</p>
+                        <p class="text-center pt-0 mt-0">Фактурирал: {{ Helpers::latin_to_cyrillic(Auth::user()->name) }}
+                        </p>
+                    </div>
+                    <div class="col-3">
+                        <p class="mb-0">_______________</p>
+                        <p class="text-center pt-0 mt-0">Директор</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-      window.print()
-    </script>
-@stop
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap4-toggle.css') }}">
+        $(document).ready(function () {
+            let invoice = $('#invoice')
+            $('#print').on('click', function() {
+                invoice.print()
+            })
+        })
+    </script>
 @stop
