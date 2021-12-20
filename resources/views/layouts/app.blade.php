@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-auto me-auto">
                     <p class="text-left text-light">
-                        Copyright &copy; 2021 Moderno
+                        Copyright &copy; {{ date('Y') }} Moderno
                     </p>
 
                 </div>
