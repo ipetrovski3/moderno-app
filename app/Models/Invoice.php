@@ -11,9 +11,9 @@ class Invoice extends Model
     
     protected $guarded = [];
 
-    public function invoicable()
+    public function company()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Company::class);
     }
 
 
@@ -21,6 +21,7 @@ class Invoice extends Model
     { 
         return $this->belongsToMany(Product::class, 'article_invoice', 'invoice_id', 'product_id' )
             ->withPivot('qty')
+            ->withPivot('single_price')
             ->withTimestamps();
     }
 

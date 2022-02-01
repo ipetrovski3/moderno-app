@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Create Category</h1>
+    <h1>Нов Коминтент</h1>
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@
             <input class="form-control" type="text" name="address" id="address">
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-5">
                 <div class="form-group">
                     <label for="tax_number">Даночен Број</label>
                     <div class="input-group mb-2">
@@ -29,10 +29,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-5">
                 <div class="form-group">
                     <label for="EDB">Матичен Број</label>
                     <input class="form-control" type="number" name="EDB" id="EDB">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="due_days">Валута (денови)</label>
+                    <input class="form-control" type="number" value="{{ $default_due_days }}" name="due_days" id="due_days">
                 </div>
             </div>
         </div>

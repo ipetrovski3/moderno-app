@@ -30,7 +30,7 @@ class CategoriesController extends Controller
         // dd(mb_detect_encoding($request->name));
         // dd(utf8_encode($request->name));
         
-        $category->slug = transliterator_transliterate('Any-Latin;Latin-ASCII;', $request->name);
+        $category->slug = 'develop';
         $request->file('image')->store('categories', 'public');
         $category->image = $request->file('image')->hashName();
 

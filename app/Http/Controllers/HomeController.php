@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use Carbon\Carbon;
+use App\Models\Order;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
+use App\Models\IncomingInvoice;
 
 class HomeController extends Controller
 {
@@ -49,13 +51,16 @@ class HomeController extends Controller
             $data[] = $orders_by_month;
         }
 
+        $incoming = Invoice::all();
+
 
         // return $data;
 
         return view('home')->with([
             'data' => $data,
             'total_sum' => $total_sum,
-            'za_viceto' => $za_viceto
+            'za_viceto' => $za_viceto,
+            'incoming' => $incoming
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tariff;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,12 @@ class ProductsController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('dashboard.products.create')->with(['categories' => $categories]);
+        $tariffs = Tariff::all();
+        return view('dashboard.products.create')
+            ->with([
+                'categories' => $categories,
+                'tariffs' => $tariffs
+            ]);
     }
 
     public function store(Request $request)
@@ -29,6 +35,7 @@ class ProductsController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
+        $product->tariff_id = $request->tariff_id;
 
         $request->file('image')->store('products', 'public');
         $product->image = $request->file('image')->hashName();

@@ -73,13 +73,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($incoming as $invoice )
+                                        
                                     <tr>
                                         <td>
-                                            <img src="dist/img/default-150x150.png" alt="Product 1"
-                                                class="img-circle img-size-32 mr-2">
-                                            Some Product
+                                            {{ $invoice->invoice_number }}
                                         </td>
-                                        <td>$13 USD</td>
+                                        <td><a href="{{ route('invoice.pdf', $invoice->uniqid) }}">download</a></td>
                                         <td>
                                             <small class="text-success mr-1">
                                                 <i class="fas fa-arrow-up"></i>
@@ -93,6 +93,7 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    @endforeach
                                     <tr>
                                         <td>
                                             <img src="dist/img/default-150x150.png" alt="Product 1"

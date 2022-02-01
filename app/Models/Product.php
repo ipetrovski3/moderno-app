@@ -13,15 +13,22 @@ class Product extends Model
         'name',
         'price',
         'category_id',
-        'description'
+        'description',
+        'cost_price'
     ];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function orders() {
+    public function orders()
+    {
         return $this->belongsToMany(Order::class);
     }
 
+    public function tariff()
+    {
+        return $this->belongsTo(Tariff::class);
+    }
 }

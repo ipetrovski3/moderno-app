@@ -105,7 +105,7 @@
 <!-- Close Content -->
 
 <!-- Start Article -->
-<section class="py-5">
+{{-- <section class="py-5">
     <div class="container">
         <div class="row text-left p-2 pb-3">
             <h4>Related Products</h4>
@@ -239,7 +239,7 @@
                     </div>
                 </div>
             </div>
-"
+
             <div class="p-2 pb-3">
                 <div class="product-wap card rounded-0">
                     <div class="card rounded-0">
@@ -283,7 +283,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

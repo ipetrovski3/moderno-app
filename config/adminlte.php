@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => 'MODERNO',
-    'logo_img' => 'images/logo.jpeg',
+    'logo_img' => 'images/moderno-logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-2',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -236,6 +236,10 @@ return [
         // Sidebar items:
         ['header' => 'ИНФОРМАЦИИ'],
         [
+            'text' => 'Документи',
+            'route' => 'documents'
+        ],
+        [
             'text' => 'Статистика',
             'route'  => 'home',
             'icon' => 'fas fa-chart-line'
@@ -260,11 +264,11 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text' => 'Компании',
+            'text' => 'Коминтенти',
             'icon' => 'far fa-building',
             'submenu' => [
                 [
-                    'text' => 'Нова Компанија',
+                    'text' => 'Нов Коминтент',
                     'route' => 'companies.create',
                     'icon' => 'far fa-plus-square'
                 ]
@@ -273,16 +277,7 @@ return [
         [
             'text' => 'Фактури',
             'icon' => 'fas fa-file-invoice',
-            'submenu' => [
-                [
-                    'text' => 'Нова Фактура',
-                    'route' => 'invoice.create'
-                ],
-                [
-                    'text' => 'Сите',
-                    'route' => 'invoices.index'
-                ]
-            ]
+            'route' => 'invoices.index',
         ],
 
         ['header' => 'НАСЛОВНА СТРАНА'],
@@ -371,36 +366,36 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
             ],
@@ -437,6 +432,21 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'JqueryUI' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-ui/jquery-ui.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-ui/jquery-ui.min.js',
                 ],
             ],
         ],

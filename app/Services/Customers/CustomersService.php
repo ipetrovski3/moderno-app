@@ -24,5 +24,6 @@ class CustomersService
 
     $customer->save();
 
+    return $customer;
   }
 }

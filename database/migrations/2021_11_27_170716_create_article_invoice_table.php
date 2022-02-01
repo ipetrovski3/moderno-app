@@ -16,7 +16,7 @@ class CreateArticleInvoiceTable extends Migration
         Schema::create('article_invoice', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('invoice_id');
+            $table->foreignId('invoice_id')->delete('cascade');
             $table->foreignId('product_id');
             
             $table->integer('qty');

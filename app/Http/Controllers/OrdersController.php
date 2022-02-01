@@ -39,7 +39,7 @@ class OrdersController extends Controller
             $customer = Customer::where('email', $request->email)->get()->first();
         }
         $order = new Order;
-        $order->customer_id = $customer->id;
+        $order->customer_id = $customer['id'];
         $order->total_price = floatval(str_replace(',', '', Cart::total()));
         $order->uniqid = uniqid();
 

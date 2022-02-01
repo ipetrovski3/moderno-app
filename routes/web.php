@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PdfController;
@@ -33,8 +34,8 @@ Route::get('/cart', [PublicController::class, 'show_cart'])->name('show.cart');
 Route::post('/confirm_order', [OrdersController::class, 'store'])->name('store.order');
 Route::get('/products/{id}', [ProductsController::class, 'show'])->name('product.show');
 Route::post('/remove-from-cart', [PublicController::class, 'remove_from_cart'])->name('remove_from_cart');
-Route::get('/about_as', function() {
-    return view('about');
+Route::get('/about_as', function () {
+  return view('about');
 })->name('about');
 
 Route::get('/contact', [ContactsController::class, 'new'])->name('contact');
@@ -83,7 +84,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/email_all', [CustomersController::class, 'email_all'])->name('email_all');
   });
 
-  Route::prefix('companies')->group( function () {
+  Route::prefix('companies')->group(function () {
+    Route::get('/', [CompaniesController::class, 'index'])->name('companies.index');
     Route::get('/create', [CompaniesController::class, 'create'])->name('companies.create');
     Route::post('/create', [CompaniesController::class, 'store'])->name('companies.store');
   });
@@ -93,18 +95,33 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/create', [CarouselImagesController::class, 'new'])->name('images.create');
     Route::post('/create', [CarouselImagesController::class, 'store'])->name('images.store');
     Route::post('/activate', [CarouselImagesController::class, 'activate'])->name('image.activate');
-    Route::delete('images/{id}', [CarouselImagesController::class, 'destroy'])->name('image.delete'); 
+    Route::delete('images/{id}', [CarouselImagesController::class, 'destroy'])->name('image.delete');
   });
 
-  Route::prefix('invoices')->group(function ()  {
+  Route::prefix('invoices')->group(function () {
     Route::get('/', [InvoicesController::class, 'index'])->name('invoices.index');
     Route::get('/create', [InvoicesController::class, 'create'])->name('invoice.create');
     Route::post('/store', [InvoicesController::class, 'store_customer_invoice'])->name('invoice.store');
     Route::get('/show/{uniqid}', [InvoicesController::class, 'show'])->name('invoices.show');
+    Route::get('/incoming-invoice', [InvoicesController::class, 'create_incoming_invoice'])->name('create.incoming.invoice');
+    Route::post('/store-incoming-invoice', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
+    Route::post('/select-company', [InvoicesController::class, 'select_company'])->name('select.company');
+    Route::post('/select-product', [InvoicesController::class, 'select_product'])->name('select.product');
+    Route::post('/invoiced-product', [InvoicesController::class, 'invoiced_product'])->name('invoiced.product');
+    Route::post('/store-incoming', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
   });
 
   Route::prefix('pdf')->group(function () {
     Route::get('/label/{id}', [PdfController::class, 'create_label'])->name('label');
+    Route::get('/invoice-create/{uniqid}', [PdfController::class, 'create_invoice'])->name('invoice.pdf');
+  });
+
+  Route::prefix('documents')->group(function () {
+    Route::get('/', [DocumentsController::class, 'index'])->name('documents');
+    Route::post('/select-document', [DocumentsController::class, 'select_document'])->name('document.select');
+    Route::post('/store-document', [DocumentsController::class, 'create_material_document'])->name('store.document');
+    Route::post('remove-article', [DocumentsController::class, 'remove_article'])->name('remove.article');
+
   });
 });
 

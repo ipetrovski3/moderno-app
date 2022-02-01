@@ -15,13 +15,13 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoicable_id');
-            $table->string('invoicable_type');
+            $table->foreignId('company_id')->delete('cascade');
 
             $table->integer('invoice_number')->default(0);
             $table->integer('without_vat')->default(0);
             $table->integer('vat')->default(0);
             $table->integer('total_price')->default(0);
+            $table->date('date');
             $table->timestamps();
         });
     }
