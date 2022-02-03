@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <h3>Профактура бр: {{ $invoice->invoice_number }}</h3>
-    
+
                 <div id="project">
                     <div>ДО: <strong>{{ $customer->name }}</strong></div>
                     <div>АДРЕСА: <strong>{{ $customer->address }}</strong></div>
