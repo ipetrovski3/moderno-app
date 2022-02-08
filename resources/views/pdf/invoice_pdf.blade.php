@@ -1,237 +1,169 @@
-
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Document</title>
-        {{-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"> --}}
-        <style>
-            .clearfix:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-    
-    
-            body {
-                margin: 0px;
-            }
-    
-            a {
-                color: #5D6975;
-                text-decoration: underline;
-            }
-    
-            body {
-                position: relative;
-    
-                font-size: 12px;
-            }
-    
-            header {
-                margin-bottom: 5px;
-            }
-    
-    
-            h3 {
-                border-top: 1px solid #5D6975;
-                border-bottom: 1px solid #5D6975;
-                font-size: 2.4em;
-                line-height: 1.4em;
-                font-weight: normal;
-                text-align: center;
-            }
-    
-            #project {
-                float: left;
-            }
-    
-            #project span {
-                text-align: right;
-                width: 52px;
-                margin-right: 10px;
-                display: inline-block;
-                font-size: 0.8em;
-            }
-    
-            #company {
-                float: right;
-                text-align: right;
-            }
-    
-            #project div,
-            #company div {
-                white-space: nowrap;
-            }
-    
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                border-spacing: 0;
-                margin-bottom: 5px;
-            }
-    
-            table tr:nth-child(2n-1) td {
-                background: #F5F5F5;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Document</title>
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"> --}}
+    <style type="text/css">
+        * {
+            font-family: 'Dejavu Sans', sans-serif;
+        }
 
-            table th {
-                border-bottom: 1px solid #C1CED9;
-                font-weight: bold;
-            }
-    
-            table .service {
-               
-                margin-right: 1px;
-            }
-    
-            table .desc {
-               
-            }
-    
-            table td {
-                padding: 1px;
-                text-align: center;
-            }
-    
-            #notices .notice {
-                color: #5D6975;
-                font-size: 1.2em;
-            }
-    
-    
-            footer {
-                color: #5D6975;
-                width: 100%;
-                height: 30px;
-                position: absolute;
-                bottom: 0;
-                border-top: 1px solid #C1CED9;
-                padding: 8px 0;
-                text-align: center;
-            }
-    
-        </style>
-    </head>
-    
-    <body>
-    
-        <div style="font-family: 'Dejavu Sans', sans-serif;">
-    
-            <header class="clearfix">
-                <div id="logo">
-                    <div style="width: 20%; float:left">
-                        <img src="{{ public_path('images/modernologo.jpg') }}" style="height: 70px; witdh: 70px" alt="">
-                    </div>
-                    <div style="width: 80%; float: right">
-                        Модерно гроуп ДОО, ул. Петар Манџуков бр. 191, 1000 Скопје <br>
-                        ЕДБ: МК4038022518668 ЕМБ: 7563388 <br>
-                        Тел: +38970662266, Емаил: moderno.mk@yahoo.com <br>
-                        Стопанска Банка АД Скопје: 200003931277102
-                    </div>
-                </div>
-                <h3>Профактура бр: {{ $invoice->invoice_number }}</h3>
+        hr.divider {
+            margin: 0em;
+            border-width: 0.7px;
+        }
 
-                <div id="project">
-                    <div>ДО: <strong>{{ $customer->name }}</strong></div>
-                    <div>АДРЕСА: <strong>{{ $customer->address }}</strong></div>
-                    {{-- <div>ЕМАИЛ: <strong>{{ $customer->email }}</strong></div> --}}
-                    <div>ДАТУМ: <strong>{{ $invoice->created_at->format('d.m.Y') }}</strong></div>
-                    {{-- <div>ДОСПЕВА: <strong>{{  $invoice->created_at->addDays($customer->due_days)->format('d.m.Y')  }}</strong></div> --}}
-                </div>
-            </header>
-            <main>
-                <table style="width: 100%">
-                    <col style="width:5%">
-                    <col style="width:50%">
-                    <col style="width:5%">
-                    <col style="width:5%">
-                    <col style="width:15%">
-                    <col style="width:5%">
-                    <col style="width:15%">
-                    <thead>
-                        <tr>
-                            <th>РБ</th>
-                            <th>Артикл</th>
-                            <th>Ед. м</th>
-                            <th>Кол.</th>
-                            <th>Ед. Цена</th>
-                            <th>ДДВ %</th>
-                            <th>Вредност без ДДВ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($products as $product)
-                            <tr>
-                                <td>{{ $loop->iteration }}.</td>
-                                <td>{{ $product->name }}</td>
-                                <td>бр.</td>
-                                <td>{{ number_format($product->pivot->qty) }}</td>
-                                <td>{{ number_format($product->pivot->single_price, 2) }}</td>
-                                <td>{{ $product->tariff->name }}</td>
-                                <td>
-                                    {{ number_format($product->pivot->single_price * $product->pivot->qty, 2) }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{-- <table>
-                    <thead>
-                        <tr>
-                            <th class="service">РБ</th>
-                            <th class="desc">Артикл</th>
-                            <th>Ед. м</th>
-                            <th>Кол.</th>
-                            <th>Ед. Цена без ДДВ</th>
-                            <th>ДДВ %</th>
-                            <th>Вредност без ДДВ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($products as $product)
-                            <tr>
-                                <td class="service">{{ $loop->iteration }}.</td>
-                                <td class="desc">{{ $product->name }}</td>
-                                <td class="desc">бр.</td>
-                                <td class="unit">{{ number_format($product->pivot->qty) }}</td>
-                                <td class="qty">{{ number_format($product->pivot->single_price, 2) }}</td>
-                                <td class="qty">{{ $product->tariff->name }}</td>
-                                <td class="total">
-                                    {{ number_format($product->pivot->single_price * $product->pivot->qty, 2) }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table> --}}
-                <div style="text-align: right; margin-top: 0px; height: 200px;">
-                    <div style="width: 70%; float: left;"></div>
-                    <div style="width: 30%; float: right;">
-                        <p style="border-bottom: 1px solid #C1CED9">Вкупно без ДДВ:
-                            <strong>{{ number_format($invoice->without_vat, 2) }}</strong>
-                        </p>
-                        <p style="border-bottom: 1px solid #C1CED9">ДДВ:
-                            <strong>{{ number_format($invoice->vat, 2) }}</strong>
-                        </p>
-                        <p>Вкупен Износ: <strong>{{ number_format($invoice->total_price, 2) }} ден.</strong></p>
-                    </div>
-                </div>
-                <div>
-                    <div id="notices">
-                        {{-- <div>NOTICE:</div>
-            <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div> --}}
-                    </div>
-                </div>
-            </main>
-            <footer>
-                Рок на плаќање на фактурата е 60 дена. Во Случај на задоцнување ќе пресметаме затезна камата.
-                Рекламации се примаат во рок од 7 дена. Во случај на спор надлежен е судот во Скопје.
-            </footer>
-        </div>
-    
-        {{-- <div id="invoice" style="height: 842px;
+        table.top {
+            margin-top: 0em;
+            margin-bottom: 0em;
+            padding: 0em;
+        }
+
+        th.ddv {
+            padding: 0em;
+            margin: 0em;
+        }
+
+        table.customer {
+            border: 1px solid #000000;
+            border-radius: 5px;
+            float: left;
+            margin-bottom: 2px;
+        }
+
+        table {
+            font-size: x-small;
+        }
+
+        tfoot tr td {
+            font-weight: bold;
+            font-size: x-small;
+        }
+
+        .gray {
+            background-color: lightgray
+        }
+
+        ul {
+            list-style-type: none;
+            font-size: x-small;
+        }
+
+    </style>
+</head>
+
+<body>
+    <table class="top" width="100%">
+        <tr style="margin: 0em; padding: 0em;">
+            <td valign="top"><img src="{{ public_path('images/logo.jpg') }}" alt="" width="150" /></td>
+            <td align="right">
+                <h2 style="margin-top: 2px; margin-bottom: 1px; padding: 0em;">Модерно гроуп ДОО</h2>
+                <pre>
+                    Ул. Петар Манџуков бр. 191, 1000 Скопје 
+                    ЕДБ: МК4038022518668 ЕМБ: 7563388 
+                    Тел: +38970662266, Емаил: moderno.mk@yahoo.com 
+                    Стопанска Банка АД Скопје: 200003931277102
+                </pre>
+            </td>
+        </tr>
+    </table>
+    <hr class="divider">
+    <h4 style="text-align: center; margin: 0em; padding: 0em;"> Бр. {{ $invoice->invoice_number }}</h4>
+    <table class="customer" width="40%">
+        <tr>
+            <td><strong>До:</strong></td>
+        </tr>
+        <tr>
+            <td>{{ $invoice->company->name }}</td>
+        </tr>
+        <tr>
+            <td>{{ $invoice->company->address }}</td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+    <div class="dates">
+        <ul>
+            <li>Датум: {{ date('d.m.Y', strtotime($invoice->date)) }}</li>
+            <li>Рок на плаќање: {{ $due_date }}</li>
+        </ul>
+    </div>
+
+
+    <br />
+
+    <table width="100%" style="margin-top: 5mm;">
+        <thead style="background-color: lightgray;">
+            <tr>
+                <th>Рб</th>
+                <th>Ш.</th>
+                <th width="40%">Артикл</th>
+                <th>Кол.</th>
+                <th width="10%">Ед Цена без ДДВ</th>
+                <th class="ddv">ДДВ %</th>
+                <th>Износ без ДДВ</th>
+                <th width="15%">Цена со ДДВ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($products as $product)
+                <tr style="border-bottom: 1px solid rgb(99, 99, 99);">
+                    <th scope="row">{{ $loop->iteration }}.</th>
+                    <td align="right">{{ sprintf("%'04d", $product->id) }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td align="right">{{ number_format($product->pivot->qty) }}</td>
+                    <td align="right">{{ number_format($product->pivot->single_price, 2) }}</td>
+                    <td align="center">{{ $product->tariff->value }}</td>
+                    <td align="right">{{ number_format($product->pivot->single_price * $product->pivot->qty, 2) }}
+                    <td align="right">
+                        {{ number_format($product->pivot->single_price + ($product->pivot->single_price * $product->tariff->value) / 100, 2) }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6"></td>
+                <td align="right">Вкупно без ДДВ:</td>
+                <td align="right">{{ number_format($invoice->without_vat, 2) }} ден.</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+                <td align="right">ДДВ:</td>
+                <td align="right">{{ number_format($invoice->vat, 2) }} ден.</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+                <td align="right">Вкупен Износ:</td>
+                <td align="right" class="gray">{{ number_format($invoice->total_price, 2) }} ден.</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div
+        style="font-size: x-small; text-align: center; width: 100%; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100; height: 50px; margin-right: 10px">
+
+        <span style="padding: 20px; margin-right: 50px; border-top: 1px solid black;"
+            class="signatures">Примил</span>
+        <span style="padding: 20px; margin-right: 50px; border-top: 1px solid black;"
+            class="signatures">Предал</span>
+        <span style="padding: 20px; margin-right: 50px; border-top: 1px solid black;"
+            class="signatures">Контролирал</span>
+        <span style="padding: 20px; border-top: 1px solid black" class="signatures">Фактурирал</span>
+
+        <hr class="divider">
+
+        <p style="color: #666666">Рекламации се примаат во рок од 3 дена од денот на приемот на стоката со уреден записник. Во случај
+            на спор надлежен е Основниот Суд во Скопје. За ненавремено плаќање пресметуваме законска казнена камата
+            и еднократен надомест согласно со законот за финанскиска дисциплина (3.000,00 ден)
+        </p>
+
+    </div>
+
+    {{-- <div id="invoice" style="height: 842px;
         width: 595px;
         /* to centre page on screen*/
         margin-left: auto;
@@ -356,8 +288,7 @@
                 </div>
             </div>
         </div> --}}
-    
-    </body>
-    
-    </html>
-    
+
+</body>
+
+</html>

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\App;
 
 class DocumentsController extends Controller
 {
-    public function index()
+    public function create()
     {
         // $i = new IncomingInvoice;
         //  dd($i->articles);
@@ -29,7 +29,7 @@ class DocumentsController extends Controller
         // return $request->all();
         $doc_id = $request->doc_id;
         $document = $this->material_document_model($doc_id);
-
+        // return $document;
         $company_id = $request->company_id;
         $company = Company::findOrFail($company_id);
         $document->company_id = $company->id;
@@ -52,12 +52,10 @@ class DocumentsController extends Controller
             $product = Product::findOrFail($item->id);
             if ($doc_id == 3) {
                 $product->increment('stock', $item->qty);
+                $product->update(['cost_price' => $item->price * 1.18]);
             } else {
                 $product->decrement('stock', $item->qty);
-            }
-
-            $product->update(['cost_price' => $item->price * 1.18]);
-                                          
+            }            
             $document->articles()->attach([
                 $item->id => ['qty' => $item->qty, 'single_price' => $item->price]
             ]);
@@ -65,13 +63,13 @@ class DocumentsController extends Controller
         
         $document->save();
         Cart::destroy();
-        $this->generate_pdf($document, $company, $doc_id);
         $url = route('home');
         return $url;
     }
 
     public function create_non_material_document()
     {
+        
     }
 
     public function select_document(Request $request)
@@ -134,6 +132,43 @@ class DocumentsController extends Controller
         }
     }
 
+    public function select_company(Request $request)
+    {
+        $company = Company::find($request->company_id);
+
+        return response()->json($company);
+    }
+
+    public function select_product(Request $request)
+    {
+        $product = Product::findOrFail($request->product);
+        if ($product == null) {
+            return response()->json();
+        } else {
+            return response()->json(['product' => $product->name]);
+        }
+    }
+
+    public function invoiced_product(Request $request)
+    {
+        $ddv = $request->ddv;
+        $price = $request->price;
+        $company = Company::findOrFail($request->company_id);
+        $product = Product::findOrFail($request->product_id);
+        $set_price = $this->handle_ddv($product, $ddv, $price);
+        Cart::add($product->id, $product->name, $request->qty, $set_price, ['company' => $company->name], $product->tariff->value);
+        $total = Cart::total();
+        $subtotal = Cart::subtotal();
+        $all_items = Cart::content();
+        return view('dashboard.invoices.partials.invoice_preview')
+            ->with([
+                'all_items' => $all_items,
+                'company' => $company,
+                'total' => $total,
+                'subtotal' => $subtotal
+            ])->render();
+    }
+
     private function generate_document_number($doc_id)
     {
         return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
@@ -147,5 +182,15 @@ class DocumentsController extends Controller
         $products = $invoice->articles;
         $pdf->loadView($html, ['invoice' => $invoice, 'products' => $products, 'customer' => $customer])->setPaper('a4');
         $pdf->download($doc_id .'/faktura' . $invoice->invoice_number);
+    }
+
+    private function handle_ddv($product, $ddv, $price)
+    {
+        $math = ($product->tariff->value / 100) + 1;
+        if ($ddv == 1) {
+            return floatval($price / $math);
+        } else {
+            return $price;
+        }
     }
 }

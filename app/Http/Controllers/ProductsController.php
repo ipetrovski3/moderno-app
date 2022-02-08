@@ -13,8 +13,20 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::orderBy('created_at', 'DESC')->get();
+        $categories = Category::all();
+        return view('dashboard.products.index')
+            ->with([
+                'products' => $products,
+                'categories' => $categories
+            ]);
+    }
 
-        return view('dashboard.products.index')->with(['products' => $products]);
+    public function select_category(Request $request)
+    {
+        $category = Category::find($request->cat_id);
+        $products = $category->products;
+        // return $products;
+        return view('dashboard.products.render_products')->with(['products' => $products])->render();
     }
 
     public function create()

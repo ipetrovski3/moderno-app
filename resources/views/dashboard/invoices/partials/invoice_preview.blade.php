@@ -7,8 +7,10 @@
             <th>Шифра</th>
             <th>Назив на артикл</th>
             <th>Количина</th>
-            <th>Ед цена</th>
+            <th>Ед цена без ДДВ</th>
             <th>ДДВ</th>
+            <th>Цена со ДДВ</th>
+            <th>Вкупно со ДДВ</th>
             <th> / </th>
         </tr>
     </thead>
@@ -19,7 +21,9 @@
               <td>{{ $item->name }}</td>
               <td>{{ $item->qty }}</td>
               <td>{{ number_format($item->price, 2) }}</td>
-              <td>{{ number_format($item->tax) }}</td>
+              <td>{{ floatval($item->tax) }}</td>
+              <td>{{ number_format($item->price + $item->tax, 2) }}</td>
+              <td>{{ number_format(round(($item->price + $item->tax) * $item->qty), 2) }}</td>
               <td><button type="button" data-product="{{ $item->rowId }}" class="btn btn-danger remove"><i class="fas fa-times"></i></button></td>
             </tr>
         @endforeach

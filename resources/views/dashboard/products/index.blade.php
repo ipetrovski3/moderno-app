@@ -2,6 +2,11 @@
 
 @section('title', 'Dashboard')
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap4-toggle.css') }}">
+@stop
+
 @section('content_header')
     <h1>All Products</h1>
     <a href="{{ route('products.create') }}" class="btn btn-success">Нов Продукт</a>
@@ -10,38 +15,30 @@
 
 
 @section('content')
-
+    <div class="col-4 float-right mb-2">
+        <label for="cat_id">Филтрирај по категорија</label>
+        <select class="form-select" name="cat_id" id="cat_id">
+            <option value="">Избери категорија..</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+    </div>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Шифра</th>
                 <th scope="col">Категорија</th>
                 <th scope="col">Назив</th>
-                <th scope="col">Цена</th>
+                <th scope="col">Залиха</th>
+                <th scope="col">Прод. Цена</th>
+                <th scope="col">Набавна Цена</th>
                 <th scope="col">Слика</th>
                 <th scope="col">Активен</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach ($products as $product)
-                <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $product->category->name }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ number_format($product->price, 2) }} ден</td>
-                    {{-- <td><img src="{{ asset('storage/products' . '/' . $product->image) }}"
-                            style="max-height: 80px; max-width: 80px;" alt="hello"></td> --}}
-                    <td><button class="btn btn-warning img-open"
-                            data-image="{{ asset('storage/products' . '/' . $product->image) }}" data-product="{{ $product->name }}"><i
-                                class="fas fa-eye"></i></button></td>
-                    <td>
-                        <input class="toggle" type="checkbox" {{ $product->active ? 'checked' : '' }}
-                            data-toggle="toggle" data-on="ДА" data-off="НЕ" data-onstyle="success" data-offstyle="danger"
-                            data-id="{{ $product->id }}">
-                    </td>
-                </tr>
-            @endforeach
-
+        <tbody id='render_products'>
+            @include('dashboard.products.render_products')
         </tbody>
     </table>
 
@@ -66,6 +63,24 @@
     <script src="{{ asset('js/bootstrap4-toggle.min.js') }}"></script>
 
     <script>
+        $(document).on('change', '#cat_id', function() {
+            let cat_id = $(this).val()
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('select.category') }}",
+                data: { cat_id },
+                success: function(view) {
+                    $('#render_products').empty()
+                    $('#render_products').append(view)
+                }
+            });
+        })
+
         let route = "{{ route('activate.product') }}"
         $('.toggle').on('change', function() {
             let status = $(this).prop("checked") == true ? 1 : 0;
@@ -84,10 +99,4 @@
         })
     </script>
     <script src="{{ asset('js/activate_deactivate.js') }}"></script>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap4-toggle.css') }}">
-
 @stop

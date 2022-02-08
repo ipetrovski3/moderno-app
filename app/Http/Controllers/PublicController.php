@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 class PublicController extends Controller
 {
     public function index() {
+
+        return view('landing.index-particles');
         $categories = Category::where('active', true)->get();
 
         $images = CarouselImage::where('active', true)->get();

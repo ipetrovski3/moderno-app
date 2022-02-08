@@ -28,6 +28,7 @@
     </div>
 
     <hr>
+    {{-- render create.blade --}}
     <div class="container" id="documents"></div>
 @endsection
 
@@ -82,7 +83,7 @@
             let date = $("#datepicker").val()
             let company_id = $('#company_id').val()
             let doc_id = $('#company_id').data('document')
-
+            console.log(doc_id)
             $.ajax({
                 type: "POST",
                 url: "{{ route('store.document') }}",
@@ -92,12 +93,18 @@
                     date
                 },
                 success: function(data) {
-                    window.location.href = data
+                    log(data)
+                    // window.location.href = data
                 }
             })
 
         })
         $(document).on('click', '#confirm_product', function() {
+            // <input type="checkbox" id="ddv_check" checked aria-label="Checkbox for following text input">
+
+            
+            let ddv = $('#ddv_check').prop("checked") == true ? 1 : 0;
+
             let product_id = $('#product_id').val()
             let qty = $('#qty').val()
             let price = $('#price').val()
@@ -110,7 +117,8 @@
                     product_id,
                     qty,
                     price,
-                    company_id
+                    company_id,
+                    ddv
                 },
                 success: function(data) {
                     $('#invoiced_full').empty()

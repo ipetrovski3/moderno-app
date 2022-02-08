@@ -15,6 +15,12 @@
     <div class="col-2">
         <input type="input" id="datepicker" name="date" class="form-control">
     </div>
+    <div class="col-2">
+        <div class="form-check">
+            <input type="checkbox" id="ddv_check" checked class="form-check-input">
+            <label class="form-check-label" for="ddv_check">ДДВ</label>
+        </div>
+    </div>
 </div>
 <div class="mt-2" id="open_products_panel" hidden>
     <div class="form-group">
@@ -29,16 +35,7 @@
             <div class="col-1">
                 <input type="number" id="qty" class="form-control products" placeholder="Количина">
             </div>
-            <div class="col-2">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <input type="checkbox" aria-label="Checkbox for following text input">
-                      </div>
-                    </div>
-                    <input type="text" disabled placeholder="ДДВ" class="form-control">
-                  </div>
-            </div>
+
             <input type="number" id="price" class="form-control products" placeholder="Цена со ДДВ">
             <button type="button" id="confirm_product" class="btn btn-success"><i class="fas fa-check"></i></button>
         </div>

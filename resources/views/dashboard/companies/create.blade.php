@@ -13,9 +13,25 @@
             <label for="name">Име</label>
             <input class="form-control" type="text" name="name" id="name">
         </div>
-        <div class="form-group">
-            <label for="address">Адреса</label>
-            <input class="form-control" type="text" name="address" id="address">
+        <div class="row">
+            <div class="col-5">
+                <div class="form-group">
+                    <label for="address">Адреса</label>
+                    <input class="form-control" type="text" name="address" id="address">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="town">Град</label>
+                    <input class="form-control" type="text" name="town" id="town">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="post">Поштенски Број</label>
+                    <input class="form-control" type="number" name="post_code" id="post">
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-5">

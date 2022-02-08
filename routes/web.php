@@ -60,6 +60,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/new', [ProductsController::class, 'create'])->name('products.create');
     Route::post('/new', [ProductsController::class, 'store'])->name('product.create');
     Route::post('/activate', [ProductsController::class, 'active_deactive'])->name('activate.product');
+    Route::post('/select-category', [ProductsController::class, 'select_category'])->name('select.category');
   });
 
   Route::prefix('categories')->group(function () {
@@ -106,9 +107,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/incoming-invoice', [InvoicesController::class, 'create_incoming_invoice'])->name('create.incoming.invoice');
     Route::post('/store-incoming-invoice', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
     Route::post('/select-company', [InvoicesController::class, 'select_company'])->name('select.company');
-    Route::post('/select-product', [InvoicesController::class, 'select_product'])->name('select.product');
-    Route::post('/invoiced-product', [InvoicesController::class, 'invoiced_product'])->name('invoiced.product');
-    Route::post('/store-incoming', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
   });
 
   Route::prefix('pdf')->group(function () {
@@ -117,10 +115,14 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
   });
 
   Route::prefix('documents')->group(function () {
-    Route::get('/', [DocumentsController::class, 'index'])->name('documents');
+    Route::get('/new-document', [DocumentsController::class, 'create'])->name('document.create');
     Route::post('/select-document', [DocumentsController::class, 'select_document'])->name('document.select');
     Route::post('/store-document', [DocumentsController::class, 'create_material_document'])->name('store.document');
     Route::post('remove-article', [DocumentsController::class, 'remove_article'])->name('remove.article');
+    Route::post('/select-company', [DocumentsController::class, 'select_company'])->name('select.company');
+    Route::post('/select-product', [DocumentsController::class, 'select_product'])->name('select.product');
+    Route::post('/invoiced-product', [DocumentsController::class, 'invoiced_product'])->name('invoiced.product');
+
 
   });
 });

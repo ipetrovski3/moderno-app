@@ -13,6 +13,7 @@
                 <th scope="col">Шифра</th>
                 <th scope="col">Назив</th>
                 <th scope="col">Опции</th>
+                <th scope="col">Промет</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +21,8 @@
                 <tr>
                     <td>{{ $company->id }}</td>
                     <td>{{ $company->name }}</td>
-                    <td>{{ $company->name }}</td>
+                    <td>{{ $company->address }}</td>
+                    <td>{{ $company->invoices->count() }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -235,10 +235,7 @@ return [
 
         // Sidebar items:
         ['header' => 'ИНФОРМАЦИИ'],
-        [
-            'text' => 'Документи',
-            'route' => 'documents'
-        ],
+
         [
             'text' => 'Статистика',
             'route'  => 'home',
@@ -268,12 +265,28 @@ return [
             'icon' => 'far fa-building',
             'submenu' => [
                 [
+                    'text' => 'Преглед на Коминтенти',
+                    'route' => 'companies.index',
+                    'icon' => 'far fa-building'
+                ],
+                [
                     'text' => 'Нов Коминтент',
                     'route' => 'companies.create',
                     'icon' => 'far fa-plus-square'
                 ]
+
             ]
         ],
+        [
+            'text' => 'Документи',
+            'icon' => 'fas fa-file-invoice',
+            'submenu' => [
+                [
+                'text' => 'Материјални Документи',
+                'route' => 'document.create'
+                ]
+            ]
+            ],
         [
             'text' => 'Фактури',
             'icon' => 'fas fa-file-invoice',

@@ -29,7 +29,6 @@
                         <th scope="col">#</th>
                         <th scope="col">Датум</th>
                         <th scope="col">Купувач</th>
-                        <th scope="col">Тип</th>
                         <th scope="col">Број на фактура</th>
                         <th scope="col">Износ Со ДДВ</th>
                         <th scope="col">Акција</th>
@@ -38,10 +37,10 @@
                 <tbody>
                     @foreach ($invoices as $invoice)
                         <tr>
-                            <th scope="row" class="py-auto">{{ $loop->iteration }}</th>
-                            <td class="py-auto">{{ $invoice->created_at->format('d.m.Y') }}</td>
+                            <th scope="row" class="py-auto">{{ $loop->iteration }}</th>                            {{-- <td class="py-auto">{{ $invoice->date->format('d.m.Y') }}</td> --}}
+                            <td class="py-auto">{{ date('d.m.Y', strtotime($invoice->date)) }}</td>
  
-                            <td class="py-auto">{{ Helpers::buyer_type($invoice->invoicable_type) }}</td>
+                            <td class="py-auto">{{ $invoice->company->name }}</td>
                             <td class="py-auto">{{ $invoice->invoice_number }}</td>
                             <td class="py-auto">{{ number_format($invoice->total_price, 2) }} ден</td>
                             <td>

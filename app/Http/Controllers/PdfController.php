@@ -6,12 +6,14 @@ use App\Models\IncomingInvoice;
 use App\Models\Order;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class PdfController extends Controller
 {
-    public function create_label($id) {
+    public function create_label($id)
+    {
         $order = Order::findOrFail($id);
         $customer = $order->customer;
         $data = $order->products;
@@ -22,16 +24,23 @@ class PdfController extends Controller
         return $pdf->stream();
     }
 
-    public function create_invoice($uniqid) {
+    public function create_invoice($uniqid)
+    {
         $invoice = Invoice::where('uniqid', $uniqid)->first();
         $customer = $invoice->company;
         $html = 'pdf.invoice_pdf';
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         $pdf = App::make('dompdf.wrapper');
         $products = $invoice->articles;
+        $due_date = Carbon::parse($invoice->date)->addDays($customer->due_days)->format('d.m.Y');
         // return $products;
-        $pdf->loadView($html, ['invoice' => $invoice, 'products' => $products, 'customer' => $customer])->setPaper('a4');
+        $pdf->loadView($html, [
+            'invoice' => $invoice,
+            'products' => $products,
+            'customer' => $customer,
+            'due_date' => $due_date
+        ])->setPaper('a4');
         $name = 'Profaktura_' . $invoice->invoice_number . '.pdf';
         return $pdf->download($name);
-    }  
+    }
 }

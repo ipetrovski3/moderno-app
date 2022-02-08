@@ -16,7 +16,7 @@ class IncomingInvoice extends Model
 
     public function articles()
     { 
-        return $this->belongsToMany(Product::class, 'article_invoice', 'invoice_id', 'product_id' )
+        return $this->belongsToMany(Product::class, 'article_incoming_invoice', 'incoming_invoice_id', 'product_id' )
             ->withPivot('qty')
             ->withTimestamps();
     }

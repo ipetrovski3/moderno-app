@@ -13,6 +13,6 @@ class Company extends Model
 
     public function invoices()
     {
-        return $this->morphMany(Invoice::class, 'invoicable');
+        return $this->hasMany(Invoice::class);
     }
 }
