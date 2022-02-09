@@ -52,7 +52,7 @@
             <div class="row home-content__main">
 
                 <div class="col-eight home-content__text pull-right">
-                    <h3>Добро дојдовте на во светот на МОДЕРНО</h3>
+                    <h3>Добро дојдовте во светот на МОДЕРНО</h3>
 
                     <h1>
                     Моментално работиме <br>
