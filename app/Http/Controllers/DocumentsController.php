@@ -39,7 +39,7 @@ class DocumentsController extends Controller
         $document->save();
 
         $document->invoice_number = $this->generate_document_number($document->id);
-        
+
         $total_without_ddv = floatval(str_replace(',', '', Cart::subtotal()));
         $total_with_ddv = floatval(str_replace(',', '', Cart::total()));
 
@@ -49,7 +49,7 @@ class DocumentsController extends Controller
         $document->uniqid = uniqid();
 
         $document_items = Cart::content();
-        
+
         foreach ($document_items as $item) {
             $product = Product::findOrFail($item->id);
             if ($doc_id == 3) {
@@ -57,12 +57,12 @@ class DocumentsController extends Controller
                 $product->update(['cost_price' => $item->price * 1.18]);
             } else {
                 $product->decrement('stock', $item->qty);
-            }            
+            }
             $document->articles()->attach([
                 $item->id => ['qty' => $item->qty, 'single_price' => $item->price]
             ]);
         }
-        
+
         $document->save();
         Cart::destroy();
         $url = route('home');
@@ -71,7 +71,7 @@ class DocumentsController extends Controller
 
     public function create_non_material_document()
     {
-        
+
     }
 
     public function select_document(Request $request)
@@ -137,10 +137,11 @@ class DocumentsController extends Controller
     public function select_company(Request $request)
     {
         if(Session::get('document_id') == 2) {
-            $company = Customer::find($request->company_id);
+            $company = Customer::findOrFail($request->company_id);
         } else {
-            $company = Company::find($request->company_id);
+            $company = Company::findOrFail($request->company_id);
         }
+
         return response()->json($company);
     }
 

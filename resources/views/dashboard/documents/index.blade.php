@@ -102,7 +102,7 @@
         $(document).on('click', '#confirm_product', function() {
             // <input type="checkbox" id="ddv_check" checked aria-label="Checkbox for following text input">
 
-            
+
             let ddv = $('#ddv_check').prop("checked") == true ? 1 : 0;
 
             let product_id = $('#product_id').val()
@@ -178,7 +178,7 @@
                     company_id
                 },
                 success: function(company) {
-                    console.log(company.name);
+                    console.log(company);
                     if (company.name == undefined) {
                         $('#company_name').val('Не постои компанија со таа шифра')
                         $('#open_products_panel').attr('hidden', true)
