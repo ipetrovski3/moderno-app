@@ -34,4 +34,6 @@ class Order extends Model
         'shipped' => ['name' => 'Испратена'],
         'completed' => ['name' => 'Комплетирана']
     ];
+
+    
 }

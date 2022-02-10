@@ -62,16 +62,16 @@
             <td align="right">
                 <h2 style="margin-top: 2px; margin-bottom: 1px; padding: 0em;">Модерно гроуп ДОО</h2>
                 <pre>
-                    Ул. Петар Манџуков бр. 191, 1000 Скопје 
-                    ЕДБ: МК4038022518668 ЕМБ: 7563388 
-                    Тел: +38970662266, Емаил: moderno.mk@yahoo.com 
+                    Ул. Петар Манџуков бр. 191, 1000 Скопје
+                    ЕДБ: МК4038022518668 ЕМБ: 7563388
+                    Тел: +38970662266, Емаил: moderno.mk@yahoo.com
                     Стопанска Банка АД Скопје: 200003931277102
                 </pre>
             </td>
         </tr>
     </table>
     <hr class="divider">
-    <h4 style="text-align: center; margin: 0em; padding: 0em;"> Бр. {{ $invoice->invoice_number }}</h4>
+    <h4 style="text-align: center; margin: 0em; padding: 0em;">Фактура Бр. {{ $invoice->invoice_number }}</h4>
     <table class="customer" width="40%">
         <tr>
             <td><strong>До:</strong></td>

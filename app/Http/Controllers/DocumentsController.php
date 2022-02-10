@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Company;
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -18,21 +19,22 @@ class DocumentsController extends Controller
 {
     public function create()
     {
-        // $i = new IncomingInvoice;
-        //  dd($i->articles);
-        // return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", 1)));
         return view('dashboard.documents.index');
     }
 
     public function create_material_document(Request $request)
     {
-        // return $request->all();
         $doc_id = $request->doc_id;
+
         $document = $this->material_document_model($doc_id);
-        // return $document;
         $company_id = $request->company_id;
-        $company = Company::findOrFail($company_id);
-        $document->company_id = $company->id;
+        if($doc_id == 2){
+            $company = Customer::findOrFail($company_id);
+            $document->customer_id = $company->id;
+        } else {
+            $company = Company::findOrFail($company_id);
+            $document->company_id = $company->id;
+        }
         $document->date = date('Y-m-d', strtotime($request->date));
         $document->save();
 
@@ -134,8 +136,11 @@ class DocumentsController extends Controller
 
     public function select_company(Request $request)
     {
-        $company = Company::find($request->company_id);
-
+        if(Session::get('document_id') == 2) {
+            $company = Customer::find($request->company_id);
+        } else {
+            $company = Company::find($request->company_id);
+        }
         return response()->json($company);
     }
 
@@ -153,7 +158,11 @@ class DocumentsController extends Controller
     {
         $ddv = $request->ddv;
         $price = $request->price;
-        $company = Company::findOrFail($request->company_id);
+        if(Session::get('document_id') == 2) {
+            $company = Customer::find($request->company_id);
+        } else {
+            $company = Company::find($request->company_id);
+        }
         $product = Product::findOrFail($request->product_id);
         $set_price = $this->handle_ddv($product, $ddv, $price);
         Cart::add($product->id, $product->name, $request->qty, $set_price, ['company' => $company->name], $product->tariff->value);

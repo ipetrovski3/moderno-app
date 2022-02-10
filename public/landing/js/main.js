@@ -21,7 +21,7 @@
 
     // svg fallback
     if (!Modernizr.svg) {
-        $(".home-logo img").attr("src", "images/logo.png");
+        $(".home-logo img").attr("src", "images/official_logo.png");
     }
 
 
@@ -99,7 +99,7 @@
                       '%D <span>Денови</span>' + 
                       '</div></div>' +
                       '<div class=\"time hours\">' +
-                      '%H <span>Х</span></div>' +
+                      '%H <span>Ч</span></div>' +
                       '<div class=\"time minutes\">' +
                       '%M <span>М</span></div>' +
                       '<div class=\"time seconds\">' +

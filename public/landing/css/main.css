@@ -1272,8 +1272,7 @@ input::-moz-focus-inner {
 }
 
 .home-logo img {
-    width: 100px;
-    height: 25px;
+    height: 180px;
 }
 
 /* ------------------------------------------------------------------- 
@@ -1990,8 +1989,7 @@ html.no-csstransitions .home-content__main {
     }
 
     .home-logo img {
-        width: 95px;
-        height: 24px;
+        height: 180px;
     }
 
     .home-content h1 {
@@ -2189,7 +2187,7 @@ html.no-csstransitions .home-content__main {
 }
 
 .info-toggle::after {
-    content: "More Info";
+    content: "Повеќе";
     display: block;
     position: absolute;
     top: 0;

@@ -44,8 +44,8 @@
         <div class="home-content">
 
             <div class="home-logo">
-                <a href="index-particles.html">
-                    <img src="images/logo.svg" alt="Homepage">
+                <a href="">
+                    <img src="images/official_logo.png" alt="Homepage">
                 </a>
             </div>
 
@@ -102,10 +102,10 @@
 
             <ul class="home-social">
                 <li>
-                <a href="#0"><i class="fab fa-facebook-f" aria-hidden="true"></i><span>Facebook</span></a>
+                <a href="https://www.facebook.com/Moderno-Store-100966908551283"><i class="fab fa-facebook-f" aria-hidden="true"></i><span>Facebook</span></a>
 
                 <li>
-                <a href="#0"><i class="fab fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
+                <a href="https://www.instagram.com/moderno.mk/"><i class="fab fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
                 </li>
 
             </ul> <!-- end home-social -->
@@ -124,7 +124,7 @@
 
     <!-- info
     ================================================== -->
-    <a class="info-toggle" href="#0">
+    <a class="info-toggle" href="#">
         <span class="info-menu-icon"></span>
     </a>
 
@@ -133,7 +133,7 @@
         <div class="row info-wrapper">
 
             <div class="col-seven tab-full info-main">
-                <h1>We are Count. We make awesome stuff.</h1>
+                {{-- <h1>We are Count. We make awesome stuff.</h1>
                 <p>
                 Quisque velit nisi, pretium ut lacinia in, elementum id enim. Mauris blandit aliquet elit, 
                 eget tincidunt nibh pulvinar a. Quisque velit nisi, pretium ut lacinia in, elementum id enim. 
@@ -146,31 +146,31 @@
                 Dolores ad perspiciatis. Voluptatem et molestiae adipisci laboriosam assumenda. Deleniti vero 
                 labore eos repudiandae. Vel commodi tenetur ex quia. Quisque velit nisi, pretium ut lacinia in, 
                 elementum id enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.
-                </p>
+                </p> --}}
             </div>
 
             <div class="col-four tab-full pull-right info-contact">
 
                 <div class="info-block">
-                    <h3>Start A Conversation</h3>
+                    {{-- <h3>Start A Conversation</h3>
                     <p>
                         <a href="mailto:#0" class="info-email">mailus@ourwebsite.com</a><br>
                         <a href="tel:+18587338912" class="'info-phone">+1.858.733.8912</a>
-                    </p>
+                    </p> --}}
                 </div>
 
                 <div class="info-block">
-                    <h3>Visit Our Office</h3>
+                    {{-- <h3>Visit Our Office</h3>
                     
                     <p class="info-address">
                         1600 Amphitheatre Parkway<br>
                         Mountain View, CA<br>
                         94043 US
-                    </p>
+                    </p> --}}
                 </div>
 
                 <div class="info-block">
-                    <h3>Find Us On</h3>
+                    {{-- <h3>Find Us On</h3>
                     
                     <ul class="info-social">
                         <li>
@@ -193,7 +193,7 @@
                             <a href="#0"><i class="fab fa-dribbble" aria-hidden="true"></i>
                             <span>Dribbble</span></a>
                         </li>
-                    </ul>
+                    </ul> --}}
                 </div>
                 
             </div>  <!-- end info contact -->

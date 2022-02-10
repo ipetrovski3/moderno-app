@@ -11,6 +11,10 @@ class Company extends Model
 
     protected $fillable = ['name', 'address', 'tax_number', 'EDB', 'phone', 'email', 'due_days'];
 
+    public static function find($company_id)
+    {
+    }
+
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
