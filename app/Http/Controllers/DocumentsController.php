@@ -65,8 +65,7 @@ class DocumentsController extends Controller
 
         $document->save();
         Cart::destroy();
-        $url = route('home');
-        return $url;
+        return route('home');
     }
 
     public function create_non_material_document()
@@ -85,7 +84,6 @@ class DocumentsController extends Controller
             'document_id' => $document,
             'document_name' => $document_name
         ]);
-        // return response()->json($view);
     }
 
     public function remove_article(Request $request)
@@ -160,11 +158,12 @@ class DocumentsController extends Controller
         $ddv = $request->ddv;
         $price = $request->price;
         if(Session::get('document_id') == 2) {
-            $company = Customer::find($request->company_id);
+            $company = Customer::findOrFail($request->company_id);
         } else {
-            $company = Company::find($request->company_id);
+            $company = Company::findOrFail($request->company_id);
         }
         $product = Product::findOrFail($request->product_id);
+
         $set_price = $this->handle_ddv($product, $ddv, $price);
         Cart::add($product->id, $product->name, $request->qty, $set_price, ['company' => $company->name], $product->tariff->value);
         $total = Cart::total();

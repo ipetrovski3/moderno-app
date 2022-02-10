@@ -54,7 +54,7 @@
             </div>
             <div class="col-6">
                 <h4>Статус на нарачката</h4>
-                <select name="status" data-value="{{ $order->id }}" 
+                <select name="status" data-value="{{ $order->id }}"
                     {{ $order->status == 'completed' ? 'disabled' : '' }} class="form-select">
                     @foreach ($order->statuses as $key => $status)
                         <option {{ $key == $order->status ? 'selected' : '' }} value="{{ $key }}">
@@ -65,10 +65,11 @@
                 <div class="btn-group">
 
                     <a href="{{ route('label', $order->id) }}" class="btn btn-success" target="_blank">Испратница</a>
-                    <form action="{{ route('invoice.store') }}" method="POST">
+                    <form action="{{ route('store.document') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                        <input type="hidden" name="company_id" value="{{ $customer->id }}">
                         <input type="hidden" name="order_id" value="{{ $order->id }}">
+                        <input type="hidden" name="doc_id" value="3">
                         @if ($order->invoiced == true)
                             <a href="{{ route('invoices.show', $order->uniqid) }}" class="btn btn-warning"> Преглед на
                                 фактурата</a>

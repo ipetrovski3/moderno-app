@@ -12,7 +12,7 @@ class PublicController extends Controller
 {
     public function index() {
 
-        return view('landing.index-particles');
+//        return view('landing.index-particles');
         $categories = Category::where('active', true)->get();
 
         $images = CarouselImage::where('active', true)->get();
@@ -42,11 +42,11 @@ class PublicController extends Controller
         $rowId = $request->rowId;
         $cart = Cart::get($rowId);
         $price = $cart->price * $cart->qty;
-        
+
         Cart::remove($rowId);
 
         $cart_count = Cart::count();
-        
+
         return response()->json(['rowId' => $rowId, 'price' => $price, 'count' => $cart_count ]);
     }
 }

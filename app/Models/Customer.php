@@ -9,7 +9,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    
+
     public function full_name() {
         return $this->first_name . " " . $this->last_name;
     }
@@ -24,7 +24,7 @@ class Customer extends Model
 
     public function invoices()
     {
-        return $this->morphMany(Invoice::class, 'invoicable');
+        return $this->hasMany(CustomerInvoice::class);
     }
 }
 

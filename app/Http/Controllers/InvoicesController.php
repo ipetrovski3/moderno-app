@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Customer;
+use App\Models\CustomerInvoice;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Product;
@@ -29,14 +30,48 @@ class InvoicesController extends Controller
 
     public function store_customer_invoice(Request $request)
     {
+        $document = new CustomerInvoice;
+        $document->customer_id = $request->customer_id;
+
+        $document->date = Carbon::now();
+
+        $document->save();
+
+        $document->invoice_number = $this->generate_document_number($document->id);
+
+        $total_without_ddv = floatval(str_replace(',', '', Cart::subtotal()));
+        $total_with_ddv = floatval(str_replace(',', '', Cart::total()));
+
+        $document->total_price = $total_with_ddv;
+        $document->vat = intval($total_with_ddv - $total_without_ddv);
+        $document->without_vat = $total_without_ddv;
+        $document->uniqid = uniqid();
+
+        $document_items = Cart::content();
+
+        foreach ($document_items as $item) {
+            $product = Product::findOrFail($item->id);
+            if ($doc_id == 3) {
+                $product->increment('stock', $item->qty);
+                $product->update(['cost_price' => $item->price * 1.18]);
+            } else {
+                $product->decrement('stock', $item->qty);
+            }
+            $document->articles()->attach([
+                $item->id => ['qty' => $item->qty, 'single_price' => $item->price]
+            ]);
+        }
+
+        $document->save();
+        Cart::destroy();
+        return route('home');
 
         $customer = Customer::findOrFail($request->customer_id);
 
         $order = Order::findOrFail($request->order_id);
         $price = $order->total_price;
         $order_products = $order->products;
-        $order->invoiced = true;
-        $order->save();
+        $order->update(['invoiced' => true]);
 
         $invoice = $customer->invoices()->create();
         $invoice_number = sprintf("%'03d", $invoice->id);
@@ -47,13 +82,14 @@ class InvoicesController extends Controller
         $invoice->without_vat = $price - ($price * 18 / 100);
         $invoice->type = 'outgoing';
         $invoice->uniqid = $order->uniqid;
+        $invoice->date = Carbon::now();
 
         $invoice->save();
-
+        dd($invoice);
         foreach ($order_products as $order_product) {
             $product = Product::findOrFail($order_product->id);
-            $product->stock -= $order_product->qty;
-            $product->save();
+            $product->decrement('stock', $order_product->qty);
+
             $invoice->articles()->attach([
                 $order_product->pivot->product_id =>
                 ['qty' => $order_product->pivot->qty]
@@ -113,19 +149,19 @@ class InvoicesController extends Controller
         $invoice->type = 'incoming';
         $invoice->uniqid = uniqid();
 
-        
+
         $invoice_items = Cart::content();
-        
+
         foreach ($invoice_items as $item) {
             $product = Product::findOrFail($item->id);
             $product->increment('stock', $item->qty);
             $product->update(['cost_price' => $item->price * 1.18]);
-            
+
             $invoice->articles()->attach([
                 $item->id => ['qty' => $item->qty, 'single_price' => $item->price * 1.18]
             ]);
         }
-        
+
         $invoice->save();
         Cart::destroy();
     }
