@@ -83,6 +83,7 @@
             <td>{{ $invoice->company->address }}</td>
         </tr>
         <tr>
+            <td>{{ $invoice->company->post_code . ',' . $invoice->copmany->town }}</td>
         </tr>
     </table>
     <div class="dates">
