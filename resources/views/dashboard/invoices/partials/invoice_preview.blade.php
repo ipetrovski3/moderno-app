@@ -22,7 +22,7 @@
               <td>{{ $item->qty }}</td>
               <td>{{ number_format($item->price, 2) }}</td>
               <td>{{ floatval($item->tax) }}</td>
-              <td>{{ number_format($item->price + $item->tax, 2) }}</td>
+              <td>{{ number_format($item->price + $item->tax, 3) }}</td>
               <td>{{ number_format(round(($item->price + $item->tax) * $item->qty), 2) }}</td>
               <td><button type="button" data-product="{{ $item->rowId }}" class="btn btn-danger remove"><i class="fas fa-times"></i></button></td>
             </tr>

@@ -11,7 +11,7 @@ use App\Models\Product;
 use Carbon\Carbon;
 use FontLib\Table\Type\name;
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Overrides\Facades\Cart;
 
 
 class InvoicesController extends Controller

@@ -12,8 +12,9 @@ class PublicController extends Controller
 {
     public function index() {
 
-//        return view('landing.index-particles');
+        return view('landing.index-particles');
         $categories = Category::where('active', true)->get();
+        return view('shop.index', compact('categories'));
 
         $images = CarouselImage::where('active', true)->get();
 
@@ -25,7 +26,7 @@ class PublicController extends Controller
         $products = Product::where('category_id', $category->id)->where('active', true)->orderBy('created_at', 'DESC')->get();
         $categories = Category::where('active', true)->get();
 
-        return view('categories.show', compact('products', 'category', 'categories'));
+        return view('shop.categorie', compact('products', 'category', 'categories'));
     }
 
     public function show_cart() {
@@ -35,7 +36,7 @@ class PublicController extends Controller
         // return Cart::content();
         $cart_items = Cart::content();
         // return $cart_items;
-        return view('cart_content', compact('cart_items'));
+        return view('shop.cart', compact('cart_items'));
     }
 
     public function remove_from_cart(Request $request) {
@@ -48,5 +49,10 @@ class PublicController extends Controller
         $cart_count = Cart::count();
 
         return response()->json(['rowId' => $rowId, 'price' => $price, 'count' => $cart_count ]);
+    }
+
+    public function clear_cart() {
+        Cart::destroy();
+        return redirect()->route('shop.index');
     }
 }

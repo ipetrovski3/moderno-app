@@ -36,9 +36,17 @@ class DocumentsController extends Controller
             $document->company_id = $company->id;
         }
         $document->date = date('Y-m-d', strtotime($request->date));
+
+
+        $class_name = get_class($document);
+        $instance = new \ReflectionClass($class_name);
+        $all = $instance->newInstance()->all();
+        $document->invoice_number = $all->last()->invoice_number;
+
         $document->save();
 
-        $document->invoice_number = $this->generate_document_number($document->id);
+
+        $document->invoice_number = $this->generate_document_number($document, $document->id);
 
         $total_without_ddv = floatval(str_replace(',', '', Cart::subtotal()));
         $total_with_ddv = floatval(str_replace(',', '', Cart::total()));
@@ -165,7 +173,15 @@ class DocumentsController extends Controller
         $product = Product::findOrFail($request->product_id);
 
         $set_price = $this->handle_ddv($product, $ddv, $price);
-        Cart::add($product->id, $product->name, $request->qty, $set_price, ['company' => $company->name], $product->tariff->value);
+//        return $set_price;
+        Cart::add(
+            $product->id,
+            $product->name,
+            $request->qty,
+            $set_price,
+            ['company' => $company->name],
+            $product->tariff->value
+        );
         $total = Cart::total();
         $subtotal = Cart::subtotal();
         $all_items = Cart::content();
@@ -178,9 +194,18 @@ class DocumentsController extends Controller
             ])->render();
     }
 
-    private function generate_document_number($doc_id)
+    private function generate_document_number($document, $doc_id)
     {
-        return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
+        $class_name = get_class($document);
+        $instance = new \ReflectionClass($class_name);
+        $all = $instance->newInstance()->all();
+        $count = $all->count();
+        return $all->last()->invoice_number + 1;
+
+        if ($count == 1) {
+            return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
+        } else {
+        }
     }
 
     private function generate_pdf($invoice, $customer, $doc_id)
@@ -197,7 +222,7 @@ class DocumentsController extends Controller
     {
         $math = ($product->tariff->value / 100) + 1;
         if ($ddv == 1) {
-            return floatval($price / $math);
+            return floatval($price) / floatval($math);
         } else {
             return $price;
         }

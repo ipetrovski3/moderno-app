@@ -286,44 +286,6 @@
 </section> --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    $(document).ready(function() {
-            $('#add_to_cart').submit(this, function(e) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('input[name=_token]').val()
-                    }
-                });
-                e.preventDefault();
-                let product_id = $('input[name=product_id]', this).val()
-                let qty = $('input[name=product-quanity]', this).val()
-                let size = $('input[name=product-size]', this).val()
-                console.log(product_id, qty, size)
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('add_to_cart') }}",
-                    data: {
-                        product_id: product_id,
-                        qty: qty,
-                        size: size,
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Успешно додаден продукт во кошничка',
-                            showConfirmButton: false,
-                            timer: 1500
-                            })
-                        $('form').trigger('reset')
-                        $('#cartCounter').text(data)
-                    },
-                    error: function(data) {
-                        console.log('error');
-                    }
-                });
-            });
-        })
-</script>
+
 
 @endsection

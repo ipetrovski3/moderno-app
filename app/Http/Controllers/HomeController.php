@@ -27,6 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $total_invoices = Invoice::all()->pluck('total_price')->toArray();
+        $total_incoming = IncomingInvoice::all()->pluck('total_price')->toArray();
+        $money_owed = array_sum($total_incoming);
+        $money = array_sum($total_invoices);
         $newArr = [];
         $orders_total_price = Order::where('status', 'completed')->pluck('total_price');
         foreach ($orders_total_price as $price) {
@@ -60,7 +64,9 @@ class HomeController extends Controller
             'data' => $data,
             'total_sum' => $total_sum,
             'za_viceto' => $za_viceto,
-            'incoming' => $incoming
+            'incoming' => $incoming,
+            'total_money' => $money,
+            'total_owed' => $money_owed
         ]);
     }
 }

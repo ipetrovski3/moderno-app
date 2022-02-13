@@ -12,6 +12,8 @@ class ProductsController extends Controller
 {
     public function index()
     {
+        return 17.3 + (17.3 * 18 / 100);
+
         $products = Product::orderBy('created_at', 'DESC')->get();
         $categories = Category::all();
         return view('dashboard.products.index')
@@ -64,17 +66,20 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return view('products.show', compact('product'));
+        return view('shop.product', compact('product'));
     }
 
     public function edit($id)
     {
-        //
+        $product = Product::findOrfail($id);
+
+        return view('products.edit', compact('product'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
     }
 
     public function destroy($id)
@@ -84,7 +89,7 @@ class ProductsController extends Controller
 
     public function active_deactive(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::findOrFail($request->id);
         $status = $request->status;
 
         $response = $this->change_status($product, $status);
@@ -94,14 +99,12 @@ class ProductsController extends Controller
 
     public function add_to_cart(Request $request)
     {
-        $data = $request->all();
-        $product = Product::findOrFail($data['product_id']);
-        if (isset($data['size'])) {
-            $size = $data['size'];
-        } else {
-            $size = 0;
-        }
-        $cartItem = Cart::add($product->id, $product->name, $data['qty'], $product->price, ['size' => $size]);
+        $product = Product::findOrFail($request->product_id);
+        $ddv = $product->tariff->value;
+        $new_price = $product->price - ( $ddv / 100 + 1);
+        $size = $request->size ?? 0;
+
+        $cartItem = Cart::add($product->id, $product->name, 1, $new_price, ['size' => $size], $ddv);
         $cartItem->associate('Product');
 
         return response()->json(Cart::count());
