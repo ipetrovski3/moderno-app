@@ -93,8 +93,11 @@
                     date
                 },
                 success: function(data) {
-                    console.log(data)
-                    // window.location.href = data
+                    Swal.fire({
+                        html: "Успешно креиран документ!",
+                        confirmButtonColor: '#198754'
+                    })
+                    $('#invoiced_full').empty()
                 }
             })
 

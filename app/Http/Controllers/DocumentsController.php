@@ -25,6 +25,8 @@ class DocumentsController extends Controller
     public function create_material_document(Request $request)
     {
         $doc_id = $request->doc_id;
+        $document = $this->material_document_model($doc_id);
+//        return $document;
 
         $company_id = $request->company_id;
         if($doc_id == 2){
@@ -113,8 +115,7 @@ class DocumentsController extends Controller
         switch ($number) {
 
             case 1:
-                $doc = new Invoice;
-                return ['doc' => $doc, 'last_number' => $doc->all()->last()->invoice_number] ;
+                return new Invoice;
                 break;
             case 2:
                 return new CustomerInvoice;
