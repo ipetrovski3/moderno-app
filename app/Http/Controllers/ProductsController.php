@@ -12,8 +12,6 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        return 17.3 + (17.3 * 18 / 100);
-
         $products = Product::orderBy('created_at', 'DESC')->get();
         $categories = Category::all();
         return view('dashboard.products.index')
@@ -44,6 +42,19 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'image' => 'required'
+        ],
+        [
+            'name.required' => 'Задолжително поле! Немаш внесено име',
+            'price.required' => 'Задолжително поле! Немаш внесено цена',
+            'description.required' => 'Задолжително поле! Немаш внесено опис',
+            'image.required' => 'Задолжително поле! Немаш внесено слика'
+        ]);
+
         $product = new Product;
         $product->category_id = $request->category;
         $product->name = $request->name;

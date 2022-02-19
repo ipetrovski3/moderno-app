@@ -131,11 +131,13 @@
                 <td align="right">Вкупно без ДДВ:</td>
                 <td align="right">{{ number_format($invoice->without_vat, 2) }} ден.</td>
             </tr>
+            @foreach($vats as $key => $vat)
             <tr>
                 <td colspan="6"></td>
-                <td align="right">ДДВ:</td>
-                <td align="right">{{ number_format($invoice->vat, 2) }} ден.</td>
+                <td align="right">ДДВ {{ $key == 'five' ? '5%' : '18%' }}:</td>
+                <td align="right">{{ $vat }} ден.</td>
             </tr>
+            @endforeach
             <tr>
                 <td colspan="6"></td>
                 <td align="right">Вкупен Износ:</td>

@@ -123,6 +123,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/select-company', [DocumentsController::class, 'select_company'])->name('select.company');
     Route::post('/select-product', [DocumentsController::class, 'select_product'])->name('select.product');
     Route::post('/invoiced-product', [DocumentsController::class, 'invoiced_product'])->name('invoiced.product');
+    Route::get('/invoice-cost/{id}', [DocumentsController::class, 'cost_price_per_invoice'])->name('invoice.cost');
 
 
   });

@@ -32,6 +32,7 @@
                         <th scope="col">Број на фактура</th>
                         <th scope="col">Износ Со ДДВ</th>
                         <th scope="col">Акција</th>
+                        <th scope="col">Наб. цени</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +40,7 @@
                         <tr>
                             <th scope="row" class="py-auto">{{ $loop->iteration }}</th>                            {{-- <td class="py-auto">{{ $invoice->date->format('d.m.Y') }}</td> --}}
                             <td class="py-auto">{{ date('d.m.Y', strtotime($invoice->date)) }}</td>
- 
+
                             <td class="py-auto">{{ $invoice->company->name }}</td>
                             <td class="py-auto">{{ $invoice->invoice_number }}</td>
                             <td class="py-auto">{{ number_format($invoice->total_price, 2) }} ден</td>
@@ -51,6 +52,7 @@
                                         class="btn btn-info text-white"><i class="fas fa-print"></i></a>
                                 </div>
                             </td>
+                            <td><a href="{{ route('invoice.cost', $invoice->id) }}">Набавни цени</a> </td>
                         </tr>
                     @endforeach
                 </tbody>

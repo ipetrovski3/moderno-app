@@ -93,7 +93,7 @@
                     date
                 },
                 success: function(data) {
-                    log(data)
+                    console.log(data)
                     // window.location.href = data
                 }
             })

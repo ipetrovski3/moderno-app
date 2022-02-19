@@ -32,7 +32,8 @@
 
                     <tr>
                         <td class="product-col">
-                            <img src="img/product/cart.jpg" alt="">
+                            {{ dd($item) }}
+                            <img src="{{ asset('storage/products/' . $item->image) }}" alt="">
                             <div class="pc-title">
                                 <h4>{{ $item->name }}</h4>
                             </div>

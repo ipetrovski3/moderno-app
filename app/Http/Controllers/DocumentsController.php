@@ -26,7 +26,6 @@ class DocumentsController extends Controller
     {
         $doc_id = $request->doc_id;
 
-        $document = $this->material_document_model($doc_id);
         $company_id = $request->company_id;
         if($doc_id == 2){
             $company = Customer::findOrFail($company_id);
@@ -36,7 +35,6 @@ class DocumentsController extends Controller
             $document->company_id = $company->id;
         }
         $document->date = date('Y-m-d', strtotime($request->date));
-
 
         $class_name = get_class($document);
         $instance = new \ReflectionClass($class_name);
@@ -113,8 +111,10 @@ class DocumentsController extends Controller
     private function material_document_model($number)
     {
         switch ($number) {
+
             case 1:
-                return new Invoice;
+                $doc = new Invoice;
+                return ['doc' => $doc, 'last_number' => $doc->all()->last()->invoice_number] ;
                 break;
             case 2:
                 return new CustomerInvoice;
@@ -226,5 +226,12 @@ class DocumentsController extends Controller
         } else {
             return $price;
         }
+    }
+
+    public function cost_price_per_invoice($id)
+    {
+        $invoice = Invoice::findOrFail($id);
+
+        return view('dashboard.documents.invoice_cost_price', compact('invoice'));
     }
 }

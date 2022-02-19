@@ -12,7 +12,7 @@ class PublicController extends Controller
 {
     public function index() {
 
-        return view('landing.index-particles');
+//        return view('landing.index-particles');
         $categories = Category::where('active', true)->get();
         return view('shop.index', compact('categories'));
 

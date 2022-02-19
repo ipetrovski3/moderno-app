@@ -35,6 +35,9 @@
             <div class="form-group">
                 <label class="form-label" for="name">Назив на продуктот</label>
                 <input class="form-control" type="text" name="name">
+                @error('name')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
             <div class="form-group">
                 <label class="form-label" for="price">Цена на продуктот</label>
@@ -49,10 +52,16 @@
             <div class="form-group">
                 <label class="form-label" for="description">Опис</label>
                 <textarea class="form-control" name="description" id=""></textarea>
+                @error('description')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="image">Слика</label>
                 <input class="form-control" type="file" name="image" id="">
+                @error('image')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
             <button type="submit" class="btn btn-success">Потврди</button>
         </form>
