@@ -8,15 +8,11 @@
 
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <a href="{{ route('invoice.create') }}" class="btn btn-success"> Нова Фактура</a>
-        </div>
-    </div>
+
 
     <div class="card">
         <div class="card-body">
-            <a href="{{ route('create.incoming.invoice') }}" class="btn btn-warning">Влезна Фактура</a>
+            <a href="{{ route('incoming.invoices') }}" class="btn btn-warning">Влезни Фактури</a>
         </div>
     </div>
 

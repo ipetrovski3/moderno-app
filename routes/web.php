@@ -102,7 +102,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
   Route::prefix('invoices')->group(function () {
     Route::get('/', [InvoicesController::class, 'index'])->name('invoices.index');
-    Route::get('/create', [InvoicesController::class, 'create'])->name('invoice.create');
+    Route::get('/incoming-invoices', [InvoicesController::class, 'incoming_invoices'])->name('incoming.invoices');
     Route::post('/store', [InvoicesController::class, 'store_customer_invoice'])->name('invoice.store');
     Route::get('/show/{uniqid}', [InvoicesController::class, 'show'])->name('invoices.show');
     Route::get('/incoming-invoice', [InvoicesController::class, 'create_incoming_invoice'])->name('create.incoming.invoice');

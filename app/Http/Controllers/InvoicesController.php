@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\CustomerInvoice;
+use App\Models\IncomingInvoice;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Product;
@@ -23,10 +24,13 @@ class InvoicesController extends Controller
         return view('dashboard.invoices.index', compact('invoices'));
     }
 
-    public function create()
+    public function incoming_invoices()
     {
-        return view('dashboard.invoices.create');
+        $invoices = IncomingInvoice::all();
+        return view('dashboard.invoices.incoming', compact('invoices'));
     }
+
+
 
     public function store_customer_invoice(Request $request)
     {
@@ -85,7 +89,6 @@ class InvoicesController extends Controller
         $invoice->date = Carbon::now();
 
         $invoice->save();
-        dd($invoice);
         foreach ($order_products as $order_product) {
             $product = Product::findOrFail($order_product->id);
             $product->decrement('stock', $order_product->qty);
