@@ -30,7 +30,7 @@ class PdfController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $products = $invoice->articles;
 
-        $vats = array_sum($this->separate_vat($products));
+        $vats = $this->separate_vat($products);
         $due_date = Carbon::parse($invoice->date)->addDays($customer->due_days)->format('d.m.Y');
         // return $products;
         $pdf->loadView($html, [
@@ -59,7 +59,6 @@ class PdfController extends Controller
                 $five[] += (($article->pivot->single_price * 1.05) - $article->pivot->single_price) * $article->pivot->qty;
             }
         }
-        return $test;
         return ['five' => array_sum($five), 'eighteen' => array_sum($eighteen)];
     }
 }

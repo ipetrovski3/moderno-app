@@ -135,7 +135,7 @@
             <tr>
                 <td colspan="6"></td>
                 <td align="right">ДДВ {{ $key == 'five' ? '5%' : '18%' }}:</td>
-                <td align="right">{{ $vat }} ден.</td>
+                <td align="right">{{ number_format($vat, 2, ',' , '.') }} ден.</td>
             </tr>
             @endforeach
             <tr>
