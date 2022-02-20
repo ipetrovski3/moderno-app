@@ -45,10 +45,10 @@ return [
     |
     */
 
-    'logo' => 'MODERNO',
-    'logo_img' => 'images/moderno-logo.png',
+    'logo' => 'МОДЕРНО',
+    'logo_img' => 'images/logoico.png',
     'logo_img_class' => 'brand-image img-circle elevation-2',
-    'logo_img_xl' => null,
+    'logo_img_xl' => true,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Moderno',
 
