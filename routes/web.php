@@ -117,7 +117,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
   Route::prefix('documents')->group(function () {
     Route::get('/new-document', [DocumentsController::class, 'create'])->name('document.create');
-    Route::post('/select-document', [DocumentsController::class, 'select_document'])->name('document.select');
+    Route::get('/select-document', [DocumentsController::class, 'select_document'])->name('document.select');
     Route::post('/store-document', [DocumentsController::class, 'create_material_document'])->name('store.document');
     Route::post('remove-article', [DocumentsController::class, 'remove_article'])->name('remove.article');
     Route::post('/select-company', [DocumentsController::class, 'select_company'])->name('select.company');

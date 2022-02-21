@@ -1,5 +1,5 @@
 <div>
-    <h4 id="company_title"> Добавувач: {{ $company->name }}</h4>
+    <h4 id="company_title"> {{ $doc_id == 3 ? 'Добавувач:' : 'Купувач'}} {{ $company->name }}</h4>
 </div>
 <table class="table">
     <thead>
@@ -20,10 +20,10 @@
               <td>{{ $item->id }}</td>
               <td>{{ $item->name }}</td>
               <td>{{ $item->qty }}</td>
-              <td>{{ number_format($item->price, 2) }}</td>
+              <td>{{ number_format($item->price, 2, ',', '.') }}</td>
               <td>{{ floatval($item->tax) }}</td>
-              <td>{{ number_format($item->price + $item->tax, 3) }}</td>
-              <td>{{ number_format(round(($item->price + $item->tax) * $item->qty), 2) }}</td>
+              <td>{{ number_format($item->price + $item->tax, 2, ',', '.') }}</td>
+              <td>{{ number_format(round(($item->price + $item->tax) * $item->qty), 2, ',', '.') }}</td>
               <td><button type="button" data-product="{{ $item->rowId }}" class="btn btn-danger remove"><i class="fas fa-times"></i></button></td>
             </tr>
         @endforeach
@@ -32,7 +32,7 @@
   <div class="float-right mt-2">
     <p class="my-0"> Вкупна Цена без ДДВ: <strong>{{ $subtotal }} ден.</strong></p>
     <hr>
-    <p class="my-0">ДДВ: <strong>{{ number_format(intval(str_replace(',', '', $total)) - intval(str_replace(',', '', $subtotal)), 2) }} ден.</strong></p>
+    <p class="my-0">ДДВ: <strong>{{ $tax }} ден.</strong></p>
     <hr>
     <p class="my-0">Вкупно: <strong>{{ $total }} ден.</strong></p>
   </div>

@@ -60,7 +60,7 @@
         <tr style="margin: 0em; padding: 0em;">
             <td valign="top"><img src="{{ public_path('images/logo.jpg') }}" alt="" width="150" /></td>
             <td align="right">
-                <h2 style="margin-top: 2px; margin-bottom: 1px; padding: 0em;">Модерно гроуп ДОО</h2>
+                <h2 style="margin-top: 2px; margin-bottom: 1px; padding: 0em;">МОДЕРНО ГРОУП ДОО</h2>
                 <pre>
                     Ул. Петар Манџуков бр. 191, 1000 Скопје
                     ЕДБ: МК4038022518668 ЕМБ: 7563388
@@ -129,7 +129,7 @@
             <tr>
                 <td colspan="6"></td>
                 <td align="right">Вкупно без ДДВ:</td>
-                <td align="right">{{ number_format($invoice->without_vat, 2) }} ден.</td>
+                <td align="right">{{ number_format($invoice->without_vat, 2, ',', '.') }} ден.</td>
             </tr>
             @foreach($vats as $key => $vat)
             <tr>
@@ -141,7 +141,7 @@
             <tr>
                 <td colspan="6"></td>
                 <td align="right">Вкупен Износ:</td>
-                <td align="right" class="gray">{{ number_format($invoice->total_price, 2) }} ден.</td>
+                <td align="right" class="gray">{{ number_format($invoice->total_price, 2, ',', '.') }} ден.</td>
             </tr>
         </tfoot>
     </table>

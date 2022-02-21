@@ -85,12 +85,21 @@ class DocumentsController extends Controller
     {
         $document = $request->document;
         $document_name = $this->material_document_type($document);
+        $products = Product::all();
+        if ($document == 2) {
+            $companies = Customer::all();
+        } else {
+            $companies = Company::all();
+        }
+
         Cart::destroy();
         Session::put('document_id', $document);
 
         return view('dashboard.documents.create')->with([
             'document_id' => $document,
-            'document_name' => $document_name
+            'document_name' => $document_name,
+            'companies' => $companies,
+            'products' => $products
         ]);
     }
 
@@ -166,7 +175,8 @@ class DocumentsController extends Controller
     {
         $ddv = $request->ddv;
         $price = $request->price;
-        if(Session::get('document_id') == 2) {
+        $doc_id = Session::get('document_id');
+        if($doc_id == 2) {
             $company = Customer::findOrFail($request->company_id);
         } else {
             $company = Company::findOrFail($request->company_id);
@@ -185,13 +195,16 @@ class DocumentsController extends Controller
         );
         $total = Cart::total();
         $subtotal = Cart::subtotal();
+        $tax = Cart::tax();
         $all_items = Cart::content();
         return view('dashboard.invoices.partials.invoice_preview')
             ->with([
                 'all_items' => $all_items,
                 'company' => $company,
                 'total' => $total,
-                'subtotal' => $subtotal
+                'subtotal' => $subtotal,
+                'doc_id' => $doc_id,
+                'tax' => $tax
             ])->render();
     }
 
@@ -203,10 +216,10 @@ class DocumentsController extends Controller
         $count = $all->count();
         return $all->last()->invoice_number + 1;
 
-        if ($count == 1) {
-            return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
-        } else {
-        }
+//        if ($count == 1) {
+//            return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
+//        } else {
+//        }
     }
 
     private function generate_pdf($invoice, $customer, $doc_id)
