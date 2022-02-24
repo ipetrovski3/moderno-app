@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTitleAndDescriptionToCarouselImage extends Migration
+class CreateSubscribersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddTitleAndDescriptionToCarouselImage extends Migration
      */
     public function up()
     {
-        Schema::table('carousel_images', function (Blueprint $table) {
-            $table->string('title')->default('Наслов');
-            $table->text('description');
+        Schema::create('subscribers', function (Blueprint $table) {
+            $table->id();
+            $table->string('email');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +27,6 @@ class AddTitleAndDescriptionToCarouselImage extends Migration
      */
     public function down()
     {
-        Schema::table('carousel_images', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('subscribers');
     }
 }

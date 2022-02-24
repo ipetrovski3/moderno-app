@@ -12,11 +12,11 @@ class PublicController extends Controller
 {
     public function index() {
 
-//        return view('landing.index-particles');
+        return view('landing.index-particles');
         $categories = Category::where('active', true)->get();
-        return view('shop.index', compact('categories'));
-
         $images = CarouselImage::where('active', true)->get();
+        return view('public.index', compact('categories'));
+
 
         return view('welcome', compact('categories', 'images'));
     }
@@ -54,5 +54,10 @@ class PublicController extends Controller
     public function clear_cart() {
         Cart::destroy();
         return redirect()->route('shop.index');
+    }
+
+    public function subscribe(Request $request)
+    {
+
     }
 }

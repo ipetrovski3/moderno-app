@@ -48,8 +48,8 @@ class DocumentsController extends Controller
 
         $document->invoice_number = $this->generate_document_number($document, $document->id);
 
-        $total_without_ddv = floatval(str_replace(',', '', Cart::subtotal()));
-        $total_with_ddv = floatval(str_replace(',', '', Cart::total()));
+        $total_without_ddv = floatval(str_replace('.', '', Cart::subtotal()));
+        $total_with_ddv = floatval(str_replace('.', '', Cart::total()));
 
         $document->total_price = $total_with_ddv;
         $document->vat = intval($total_with_ddv - $total_without_ddv);

@@ -6,11 +6,8 @@
 (function($) {
 
     "use strict";
-    
-    var cfg = {
-        scrollDuration : 800, // smoothscroll duration
-        mailChimpURL   : 'https://facebook.us8.list-manage.com/subscribe/post?u=cdb7b577e41181934ed6a6a44&amp;id=e6957d85dc'   // mailchimp url
-    },
+
+
 
     $WIN = $(window);
 
@@ -28,21 +25,21 @@
    /* Preloader
     * -------------------------------------------------- */
     var ssPreloader = function() {
-        
+
         $("html").addClass('ss-preload');
 
         $WIN.on('load', function() {
 
-            // will first fade out the loading animation 
+            // will first fade out the loading animation
             $("#loader").fadeOut("slow", function() {
                 // will fade out the whole DIV that covers the website.
                 $("#preloader").delay(300).fadeOut("slow");
-            }); 
-            
-            // for hero content animations 
+            });
+
+            // for hero content animations
             $("html").removeClass('ss-preload');
             $("html").addClass('ss-loaded');
-        
+
         });
     };
 
@@ -65,7 +62,7 @@
    /* slick slider
     * ------------------------------------------------------ */
     var ssSlickSlider = function() {
-        
+
         $('.home-slider').slick({
             arrows: false,
             dots: false,
@@ -96,7 +93,7 @@
         .on('update.countdown finish.countdown', function(event) {
 
             var str = '<div class=\"top\"><div class=\"time days\">' +
-                      '%D <span>Денови</span>' + 
+                      '%D <span>Денови</span>' +
                       '</div></div>' +
                       '<div class=\"time hours\">' +
                       '%H <span>Ч</span></div>' +
@@ -115,7 +112,7 @@
    /* AjaxChimp
     * ------------------------------------------------------ */
     var ssAjaxChimp = function() {
-        
+
         $('#mc-form').ajaxChimp({
             language: 'es',
             url: cfg.mailChimpURL
@@ -133,7 +130,7 @@
         //  5: 'This email address looks fake or invalid. Please enter a real email address'
 
         $.ajaxChimp.translations.es = {
-            'submit': 'Submitting...',
+            'submit': 'Се испраќа...',
             0: '<i class="fas fa-check"></i> We have sent you a confirmation email',
             1: '<i class="fas fa-exclamation-triangle"></i> You must enter a valid e-mail address.',
             2: '<i class="fas fa-exclamation-triangle"></i> E-mail address is not valid.',
@@ -147,7 +144,7 @@
    /* initialize
     * ------------------------------------------------------ */
     (function ssInit() {
-        
+
         ssPreloader();
         ssInfoToggle();
         ssSlickSlider();

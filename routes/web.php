@@ -26,7 +26,7 @@ use App\Models\Invoice;
 |
 */
 
-
+Route::post('subscribe', [PublicController::class, 'subscribe'])->name('subscribe');
 Route::get('/', [PublicController::class, 'index'])->name('homepage');
 Route::get('categories/{slug}', [PublicController::class, 'show'])->name('categories.show');
 Route::post('/add_to_card', [ProductsController::class, 'add_to_cart'])->name('add_to_cart');

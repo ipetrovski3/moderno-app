@@ -38,7 +38,7 @@
     <main class="s-home s-home--particles">
 
         <div id="particles-js" class="home-particles"></div>
-        
+
         <div class="gradient-overlay"></div>
 
         <div class="home-content">
@@ -82,7 +82,7 @@
                                 325
                                 <span>Days</span>
                             </div>
-                        </div>    
+                        </div>
                         <div class="time hours">
                             09
                             <span>H</span>
@@ -135,16 +135,16 @@
             <div class="col-seven tab-full info-main">
                 {{-- <h1>We are Count. We make awesome stuff.</h1>
                 <p>
-                Quisque velit nisi, pretium ut lacinia in, elementum id enim. Mauris blandit aliquet elit, 
-                eget tincidunt nibh pulvinar a. Quisque velit nisi, pretium ut lacinia in, elementum id enim. 
-                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; 
+                Quisque velit nisi, pretium ut lacinia in, elementum id enim. Mauris blandit aliquet elit,
+                eget tincidunt nibh pulvinar a. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
+                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
                 Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
                 </p>
 
                 <p>
-                Officiis nostrum adipisci minima. Enim tenetur animi ipsum a itaque temporibus necessitatibus. 
-                Dolores ad perspiciatis. Voluptatem et molestiae adipisci laboriosam assumenda. Deleniti vero 
-                labore eos repudiandae. Vel commodi tenetur ex quia. Quisque velit nisi, pretium ut lacinia in, 
+                Officiis nostrum adipisci minima. Enim tenetur animi ipsum a itaque temporibus necessitatibus.
+                Dolores ad perspiciatis. Voluptatem et molestiae adipisci laboriosam assumenda. Deleniti vero
+                labore eos repudiandae. Vel commodi tenetur ex quia. Quisque velit nisi, pretium ut lacinia in,
                 elementum id enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.
                 </p> --}}
             </div>
@@ -161,7 +161,7 @@
 
                 <div class="info-block">
                     {{-- <h3>Visit Our Office</h3>
-                    
+
                     <p class="info-address">
                         1600 Amphitheatre Parkway<br>
                         Mountain View, CA<br>
@@ -171,7 +171,7 @@
 
                 <div class="info-block">
                     {{-- <h3>Find Us On</h3>
-                    
+
                     <ul class="info-social">
                         <li>
                             <a href="#0"><i class="fab fa-facebook" aria-hidden="true"></i>
@@ -195,7 +195,7 @@
                         </li>
                     </ul> --}}
                 </div>
-                
+
             </div>  <!-- end info contact -->
 
         </div>  <!-- end info wrapper -->
@@ -217,8 +217,6 @@
         </div>
     </div>
 
-    <!-- Java Script
-    ================================================== -->
     <script src="{{ asset('landing/js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('landing/js/plugins.js') }}"></script>
     <script src="{{ asset('landing/js/polygons.js') }}"></script>
