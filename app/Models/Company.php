@@ -9,7 +9,17 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'tax_number', 'EDB', 'phone', 'email', 'due_days'];
+    protected $fillable = [
+        'name',
+        'address',
+        'tax_number',
+        'EDB',
+        'phone',
+        'email',
+        'due_days',
+        'town',
+        'post_code'
+    ];
 
     public static function find($company_id)
     {

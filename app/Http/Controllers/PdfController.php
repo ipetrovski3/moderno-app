@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Invoice;
+use App\Models\Proforma;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
@@ -40,7 +41,30 @@ class PdfController extends Controller
             'due_date' => $due_date,
             'vats' => $vats
         ])->setPaper('a4');
-        $name = 'Profaktura_' . $invoice->invoice_number . '.pdf';
+        $name = 'Faktura-' . $invoice->invoice_number . '.pdf';
+        return $pdf->download($name);
+    }
+
+    public function create_proforma($id)
+    {
+        $invoice = Proforma::findOrFail($id);
+        $customer = $invoice->company;
+        $html = 'pdf.proforma_pdf';
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+        $pdf = App::make('dompdf.wrapper');
+        $products = $invoice->articles;
+
+        $vats = $this->separate_vat($products);
+        $due_date = Carbon::parse($invoice->date)->addDays($customer->due_days)->format('d.m.Y');
+        // return $products;
+        $pdf->loadView($html, [
+            'invoice' => $invoice,
+            'products' => $products,
+            'customer' => $customer,
+            'due_date' => $due_date,
+            'vats' => $vats
+        ])->setPaper('a4');
+        $name = 'Profaktura-' . $invoice->proforma_number . '.pdf';
         return $pdf->download($name);
     }
 

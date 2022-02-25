@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarouselImagesController;
+use App\Http\Controllers\ProformasController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoriesController;
@@ -113,9 +114,22 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
   Route::prefix('pdf')->group(function () {
     Route::get('/label/{id}', [PdfController::class, 'create_label'])->name('label');
     Route::get('/invoice-create/{uniqid}', [PdfController::class, 'create_invoice'])->name('invoice.pdf');
+    Route::get('/proforma-create/{id}', [PdfController::class, 'create_proforma'])->name('proforma.pdf');
   });
 
-  Route::prefix('documents')->group(function () {
+    Route::prefix('proformas')->group(function() {
+        Route::get('/', [ProformasController::class, 'index'])->name('proformas.index');
+        Route::get('/create', [ProformasController::class, 'create'])->name('proforma.create');
+        Route::post('/store-proforma', [ProformasController::class, 'store_proforma'])->name('store.proforma');
+        Route::post('remove-article', [ProformasController::class, 'remove_article'])->name('remove.article');
+        Route::post('/select-company', [ProformasController::class, 'select_company'])->name('select.company');
+        Route::post('/select-product', [ProformasController::class, 'select_product'])->name('select.product');
+        Route::post('/invoiced-product', [ProformasController::class, 'invoiced_product'])->name('proforma.product');
+
+    });
+
+
+    Route::prefix('documents')->group(function () {
     Route::get('/new-document', [DocumentsController::class, 'create'])->name('document.create');
     Route::get('/select-document', [DocumentsController::class, 'select_document'])->name('document.select');
     Route::post('/store-document', [DocumentsController::class, 'create_material_document'])->name('store.document');

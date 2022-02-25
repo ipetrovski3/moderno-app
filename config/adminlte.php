@@ -284,6 +284,10 @@ return [
                 [
                 'text' => 'Материјални Документи',
                 'route' => 'document.create'
+                ],
+                [
+                    'text' => 'Профактури Испратници',
+                    'route' => 'proformas.index'
                 ]
             ]
             ],
