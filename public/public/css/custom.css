@@ -1,2 +1,9 @@
 
 /** ADD YOUR AWESOME CODES HERE **/
+.badge {
+    font-size: xx-large;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.28);
+    text-align: center;
+    color: white;
+}

@@ -30,6 +30,22 @@ class OrdersController extends Controller
 
     public function store(CustomersService $customer_service, Request $request)
     {
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'town' => 'required'
+        ], [
+            'first_name.required' => 'Задолжително поле',
+            'last_name.required' => 'Задолжително поле',
+            'phone.required' => 'Задолжително поле',
+            'address.required' => 'Задолжително поле',
+            'email.required' => 'Задолжително поле',
+            'town.required' => 'Задолжително поле'
+        ]);
+
         if (Cart::count() < 1) {
             return redirect()->back()->with(['errors' => 'Вашата кошничка е празна']);
         }
@@ -40,7 +56,7 @@ class OrdersController extends Controller
         }
         $order = new Order;
         $order->customer_id = $customer['id'];
-        $order->total_price = floatval(str_replace(',', '', Cart::total()));
+        $order->total_price = floatval(str_replace('.', '', Cart::total()));
         $order->uniqid = uniqid();
 
         $order->save();

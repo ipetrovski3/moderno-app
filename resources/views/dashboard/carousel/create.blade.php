@@ -15,6 +15,14 @@
                     <input type="text" class="form-control" name="title" id="title">
                 </div>
                 <div class="form-group">
+                    <label for="url">Линк</label>
+                    <select name="url" class="form-select" id="">
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="description">Опис</label>
                     <textarea name="description" class="form-control" id="" cols="30" rows="10"></textarea>
                 </div>

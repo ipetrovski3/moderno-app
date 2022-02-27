@@ -182,7 +182,9 @@
                                 </li>
                                 <li class="text-muted text-right">$360.00</li>
                             </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Summer Addides Shoes</a>
+                            <a href="
+
+                            shop-single.html" class="h2 text-decoration-none text-dark">Summer Addides Shoes</a>
                             <p class="card-text">
                                 Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque
                                 ipsum lobortis nec.

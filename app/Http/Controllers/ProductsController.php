@@ -77,7 +77,7 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return view('shop.product', compact('product'));
+        return view('public.shop-detail', compact('product'));
     }
 
     public function edit($id)
@@ -112,12 +112,13 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($request->product_id);
         $ddv = $product->tariff->value;
-        $new_price = $product->price - ( $ddv / 100 + 1);
+        $new_price = $product->price / ($ddv / 100 + 1);
         $size = $request->size ?? 0;
 
-        $cartItem = Cart::add($product->id, $product->name, 1, $new_price, ['size' => $size], $ddv);
+        $cartItem = Cart::add($product->id, $product->name, $request->qty, $new_price, ['size' => $size], $ddv);
         $cartItem->associate('Product');
+        $view = view('public.sidemenu')->render();
 
-        return response()->json(Cart::count());
+        return response()->json(['count' => Cart::count(), 'view' => $view ]);
     }
 }

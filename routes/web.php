@@ -36,6 +36,7 @@ Route::post('/confirm_order', [OrdersController::class, 'store'])->name('store.o
 Route::get('/products/{id}', [ProductsController::class, 'show'])->name('product.show');
 Route::post('/remove-from-cart', [PublicController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::post('/clear-cart', [PublicController::class, 'clear_cart'])->name('clear_cart');
+Route::get('checkout', [PublicController::class, 'checkout'])->name('checkout');
 Route::get('/about_as', function () {
   return view('about');
 })->name('about');

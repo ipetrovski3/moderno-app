@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CarouselImage;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CarouselImagesController extends Controller
@@ -16,7 +17,8 @@ class CarouselImagesController extends Controller
 
     public function new()
     {
-        return view('dashboard.carousel.create');
+        $categories = Category::where('active', true)->get();
+        return view('dashboard.carousel.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -25,7 +27,8 @@ class CarouselImagesController extends Controller
             [
                 'image' => 'required',
                 'title' => 'required',
-                'description' => 'required'
+                'description' => 'required',
+                'url' => 'required'
             ],
             [
                 'image.required' => 'Глуп еден, слика не си прикачил!'
@@ -38,6 +41,9 @@ class CarouselImagesController extends Controller
 
         $request->file('image')->store('main', 'public');
         $image->image = $request->file('image')->hashName();
+
+        $category_url = route('categories.show', $request->url);
+        $image->url = $category_url;
 
         $image->save();
 
