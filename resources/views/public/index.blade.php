@@ -69,26 +69,28 @@
         </div>
 
         <div class="row special-list">
-            <div class="col-lg-3 col-md-6 special-grid best-seller">
+            @foreach($products as $key => $product)
+            <div class="col-lg-3 col-md-6 special-grid {{ $key == 2 ? 'best-seller' : 'top-featured' }}">
                 <div class="products-single fix">
                     <div class="box-img-hover">
                         <div class="type-lb">
-                            <p class="sale">Sale</p>
+{{--                            <p class="sale">Sale</p>--}}
                         </div>
-                        <img src="/public/images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                        <img src="{{ asset('storage/products/' . $product->image) }}" class="img-fluid" alt="Image">
                         <div class="mask-icon">
                             <ul>
                                 <li><a href="#" data-toggle="tooltip" data-placement="right" title="Преглед"><i class="fas fa-eye"></i></a></li>
                             </ul>
-                            <a class="cart" href="#">Add to Cart</a>
+                            <a class="cart" href="#">Во кошничка</a>
                         </div>
                     </div>
                     <div class="why-text">
-                        <h4>Lorem ipsum dolor sit amet</h4>
-                        <h5> $7.79</h5>
+                        <h4>{{ $product->name }}</h4>
+                        <h5>{{ number_format($product->price, 2, ',', '.') }}</h5>
                     </div>
                 </div>
             </div>
+            @endforeach
 
             <div class="col-lg-3 col-md-6 special-grid top-featured">
                 <div class="products-single fix">

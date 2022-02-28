@@ -43,13 +43,10 @@ class DocumentsController extends Controller
         $all = $instance->newInstance()->all();
         $document->invoice_number = $all->last()->invoice_number;
 
-        $document->save();
-
-
         $document->invoice_number = $this->generate_document_number($document, $document->id);
 
-        $total_without_ddv = floatval(str_replace('.', '', Cart::subtotal()));
-        $total_with_ddv = floatval(str_replace('.', '', Cart::total()));
+        $total_without_ddv = floatval(str_replace(',', '', Cart::subtotal()));
+        $total_with_ddv = floatval(str_replace(',', '', Cart::total()));
 
         $document->total_price = $total_with_ddv;
         $document->vat = intval($total_with_ddv - $total_without_ddv);
@@ -57,6 +54,8 @@ class DocumentsController extends Controller
         $document->uniqid = uniqid();
 
         $document_items = Cart::content();
+
+        $document->save();
 
         foreach ($document_items as $item) {
             $product = Product::findOrFail($item->id);
@@ -74,11 +73,6 @@ class DocumentsController extends Controller
         $document->save();
         Cart::destroy();
         return route('home');
-    }
-
-    public function create_non_material_document()
-    {
-
     }
 
     public function select_document(Request $request)

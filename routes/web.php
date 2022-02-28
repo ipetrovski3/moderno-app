@@ -38,11 +38,11 @@ Route::post('/remove-from-cart', [PublicController::class, 'remove_from_cart'])-
 Route::post('/clear-cart', [PublicController::class, 'clear_cart'])->name('clear_cart');
 Route::get('checkout', [PublicController::class, 'checkout'])->name('checkout');
 Route::get('/about_as', function () {
-  return view('about');
+  return view('public.about');
 })->name('about');
 
 Route::get('/contact', [ContactsController::class, 'new'])->name('contact');
-Route::post('/contact', [ContactsController::class, 'store'])->name('store.contact');
+Route::post('/contact-us', [ContactsController::class, 'store'])->name('store.contact');
 
 
 Route::get('/dasboard', function () {

@@ -12,10 +12,11 @@ use Illuminate\Support\Facades\Route;
 class PublicController extends Controller
 {
     public function index() {
-
+        return view('landing.index-particles');
+        $products = Product::all()->random(4);
         $categories = Category::where('active', true)->get();
         $images = CarouselImage::where('active', true)->get();
-        return view('public.index', compact('categories', 'images'));
+        return view('public.index', compact('categories', 'images', 'products'));
     }
 
     public function show($id) {

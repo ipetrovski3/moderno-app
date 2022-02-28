@@ -12,7 +12,7 @@
 
     <!-- Site Metas -->
     <title>Moderno MK</title>
-    <meta name="keywords" content="">
+    <meta name="keywords" content="eshop moderno skopje maicki dukseri print">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -50,7 +50,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="{{ asset('/images/official_logo.png') }}" style="width: 108px" class="logo" alt=""></a>
+                <a class="navbar-brand" href="{{ route('homepage') }}"><img src="{{ asset('/images/official_logo.png') }}" style="width: 108px" class="logo" alt=""></a>
             </div>
             <!-- End Header Navigation -->
 
@@ -59,18 +59,18 @@
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                     <li class="nav-item active"><a class="nav-link" href="{{ route('homepage') }}">ДОМА</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">ЗА НАС</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">ПРОДАВНИЦА</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="shop.html">Sidebar Shop</a></li>
-                            <li><a href="shop-detail.html">Shop Detail</a></li>
-                            <li><a href="cart.html">Cart</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="my-account.html">My Account</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.html">КОНТАКТ</a></li>
+{{--                    <li class="dropdown">--}}
+{{--                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">ПРОДАВНИЦА</a>--}}
+{{--                        <ul class="dropdown-menu">--}}
+{{--                            <li><a href="shop.html">Sidebar Shop</a></li>--}}
+{{--                            <li><a href="shop-detail.html">Shop Detail</a></li>--}}
+{{--                            <li><a href="cart.html">Cart</a></li>--}}
+{{--                            <li><a href="checkout.html">Checkout</a></li>--}}
+{{--                            <li><a href="my-account.html">My Account</a></li>--}}
+{{--                            <li><a href="wishlist.html">Wishlist</a></li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+                    <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">КОНТАКТ</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -126,7 +126,7 @@
                     <div class="footer-link">
                         <h4>Информации</h4>
                         <ul>
-                            <li><a href="#">За нас</a></li>
+                            <li><a href="{{ route('about') }}">За нас</a></li>
                             <li><a href="#">Политика на квалитет</a></li>
                             <li><a href="#">Информации за испорака</a></li>
                         </ul>

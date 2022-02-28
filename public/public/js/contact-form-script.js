@@ -2,7 +2,7 @@ $("#contactForm").validator().on("submit", function (event) {
     if (event.isDefaultPrevented()) {
         // handle the invalid form...
         formError();
-        submitMSG(false, "Did you fill in the form properly?");
+        submitMSG(false, "Ве молиме внесете ги сите полиња");
     } else {
         // everything looks good!
         event.preventDefault();
@@ -13,16 +13,19 @@ $("#contactForm").validator().on("submit", function (event) {
 
 function submitForm(){
     // Initiate Variables With Form Content
-    var name = $("#name").val();
-    var email = $("#email").val();
-    var msg_subject = $("#msg_subject").val();
-    var message = $("#message").val();
-
+    let name = $("#name").val();
+    let email = $("#email").val();
+    let title = $("#msg_subject").val();
+    let message = $("#message").val();
+    console.log('igor')
 
     $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         type: "POST",
-        url: "php/form-process.php",
-        data: "name=" + name + "&email=" + email + "&msg_subject=" + msg_subject + "&message=" + message,
+        url: "contact-us",
+        data: "name=" + name + "&email=" + email + "&title=" + title + "&message=" + message,
         success : function(text){
             if (text == "success"){
                 formSuccess();
@@ -36,7 +39,7 @@ function submitForm(){
 
 function formSuccess(){
     $("#contactForm")[0].reset();
-    submitMSG(true, "Message Submitted!")
+    submitMSG(true, "Пораката е испратена")
 }
 
 function formError(){

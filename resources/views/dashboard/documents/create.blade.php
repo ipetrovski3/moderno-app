@@ -111,7 +111,8 @@
                         html: "Успешно креиран документ!",
                         confirmButtonColor: '#198754'
                     })
-                    $('#invoiced_full').empty()
+                    console.log(data)
+                    // $('#invoiced_full').empty()
                 }
             })
 
