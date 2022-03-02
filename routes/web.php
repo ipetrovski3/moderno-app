@@ -64,6 +64,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/new', [ProductsController::class, 'store'])->name('product.create');
     Route::post('/activate', [ProductsController::class, 'active_deactive'])->name('activate.product');
     Route::post('/select-category', [ProductsController::class, 'select_category'])->name('select.category');
+    Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('edit.product');
+    Route::put('/update/{id}', [ProductsController::class, 'update'])->name('update.product');
   });
 
   Route::prefix('categories')->group(function () {

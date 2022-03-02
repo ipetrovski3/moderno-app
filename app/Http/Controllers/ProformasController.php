@@ -33,7 +33,6 @@ class ProformasController extends Controller
 
     public function store_proforma(Request $request)
     {
-
         $document = new Proforma;
         $company_id = $request->company_id;
         $company = Company::findOrFail($company_id);
@@ -49,7 +48,7 @@ class ProformasController extends Controller
         $document->total_price = $total_with_ddv;
         $document->vat = intval($total_with_ddv - $total_without_ddv);
         $document->without_vat = $total_without_ddv;
-
+        $document->uniqid = uniqid();
 
         $document_items = Cart::content();
 

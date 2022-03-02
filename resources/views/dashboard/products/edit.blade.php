@@ -1,0 +1,87 @@
+@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Измени {{ $product->name }}</h1>
+@stop
+
+@section('content')
+    <div class="col-6">
+        <form action="{{ route('update.product', $product->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group">
+                        <label class="form-label" for="category">Категорија</label>
+                        <select class="form-select" name="category" id="category">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" {{ $category->id == $product->category_id }}>{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="form-label" for="">Тарифа</label>
+                        <select name="tariff_id" class="form-select" id="">
+                            @foreach ($tariffs as $tariff )
+                                <option value="{{ $tariff->id }}" {{ $tariff->id == $product->tariff_id ? 'selected' : ''  }}>{{ $tariff->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="name">Назив на продуктот</label>
+                <input class="form-control" value="{{ $product->name }}" type="text" name="name">
+                @error('name')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="price">Цена на продуктот</label>
+                <input class="form-control" type="number" value="{{ $product->price }}" name="price" id="">
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" {{ $product->sizeable ? 'checked' : '' }} name="sizeable" type="checkbox" value="1" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">Димензија?</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="description">Опис</label>
+                <textarea class="form-control" name="description" id="">{{ $product->description }}</textarea>
+                @error('description')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="image">Слика</label>
+                <img src="{{ asset('storage/products/' . $product->image) }}" alt="">
+                <input class="form-control" type="file" name="image" id="">
+                @error('image')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+            <button type="submit" class="btn btn-success">Потврди</button>
+        </form>
+    </div>
+
+@stop
+
+
+@section('js')
+    @if (Session::has('message'))
+        <script>
+            $(document).Toasts('create', {
+                class: 'success',
+                title: 'Известување',
+                autohide: true,
+                delay: 1300,
+                body: '{{ session('message') }}'
+            })
+        </script>
+    @endif
+@stop

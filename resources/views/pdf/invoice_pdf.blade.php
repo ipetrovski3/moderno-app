@@ -147,16 +147,18 @@
     </table>
 
     <div
-        style="font-size: x-small; margin-bottom: 10px; text-align: center; width: 100%; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100; height: 50px; margin-right: 10px">
+        style="font-size: x-small; text-align: center; width: 100%; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100; height: 90px; margin-right: 10px">
 
-        <span style="padding: 20px; margin-right: 50px; border-top: 1px solid black;"
-            class="signatures">Примил</span>
-        <span style="padding: 20px; margin-right: 50px; border-top: 1px solid black;"
-            class="signatures">Предал</span>
-        <span style="padding: 20px; margin-right: 50px; border-top: 1px solid black;"
-            class="signatures">Контролирал</span>
-        <span style="padding: 20px; border-top: 1px solid black" class="signatures">Фактурирал</span>
-
+        <div style="margin-bottom: 50px">
+            <span style="padding: 40px; margin-right: 50px; border-top: 1px solid black;"
+                class="signatures">Примил</span>
+            <span style="padding: 40px; margin-right: 50px; border-top: 1px solid black;"
+                class="signatures">Предал</span>
+            <span style="padding: 20px; margin-right: 50px; border-top: 1px solid black;"
+                class="signatures">Контролирал</span>
+            <span style="padding: 20px; border-top: 1px solid black" class="signatures">Фактурирал</span>
+            <p style="float: right; font-size: xx-small; margin-top: 1px; padding-top: 2px">Лице овластено за фактури <br> Бојан Петровски</p>
+        </div>
         <hr class="divider">
 
         <p style="color: #666666; font-size: xx-small">Рекламации се примаат во рок од 3 дена од денот на приемот на стоката со уреден записник. Во случај

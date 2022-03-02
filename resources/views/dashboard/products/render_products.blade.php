@@ -7,6 +7,7 @@
           <td>{{ $product->stock }}</td>
           <td>{{ number_format($product->price, 2) }} ден</td>
           <td>{{ number_format($product->cost_price, 2) }} ден</td>
+          <td><a href="{{ route('edit.product', $product->id) }}" class="btn btn-secondary">Измени</a> </td>
           {{-- <td><img src="{{ asset('storage/products' . '/' . $product->image) }}"
                   style="max-height: 80px; max-width: 80px;" alt="hello"></td> --}}
           <td><button class="btn btn-warning img-open"
@@ -19,3 +20,4 @@
           </td>
       </tr>
   @endforeach
+

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Tariff;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -83,13 +84,23 @@ class ProductsController extends Controller
     public function edit($id)
     {
         $product = Product::findOrfail($id);
+        $categories = Category::all();
+        $tariffs = Tariff::all();
 
-        return view('products.edit', compact('product'));
+
+        return view('dashboard.products.edit', compact('product', 'categories', 'tariffs'));
     }
 
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            Storage::delete('/products/' . $product->image);
+            $request->file('image')->store('products', 'public');
+            $product->image = $request->file('image')->hashName();
+        }
+
         $product->update($request->all());
     }
 

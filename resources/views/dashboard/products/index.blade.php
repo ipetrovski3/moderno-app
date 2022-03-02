@@ -33,6 +33,7 @@
                 <th scope="col">Залиха</th>
                 <th scope="col">Прод. Цена</th>
                 <th scope="col">Набавна Цена</th>
+                <th scope="col">Акција</th>
                 <th scope="col">Слика</th>
                 <th scope="col">Активен</th>
             </tr>
