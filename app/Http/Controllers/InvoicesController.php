@@ -26,7 +26,7 @@ class InvoicesController extends Controller
 
     public function incoming_invoices()
     {
-        $invoices = IncomingInvoice::all();
+        $invoices = IncomingInvoice::all()->sortBy('date');
         return view('dashboard.invoices.incoming', compact('invoices'));
     }
 
