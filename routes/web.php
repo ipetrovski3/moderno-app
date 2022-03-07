@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarouselImagesController;
+use App\Http\Controllers\InvoicePaymentsController;
 use App\Http\Controllers\ProformasController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -92,8 +93,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
   Route::prefix('companies')->group(function () {
     Route::get('/', [CompaniesController::class, 'index'])->name('companies.index');
+    Route::get('/{id}', [CompaniesController::class, 'show'])->name('companies.show');
     Route::get('/create', [CompaniesController::class, 'create'])->name('companies.create');
     Route::post('/create', [CompaniesController::class, 'store'])->name('companies.store');
+    Route::get('/company-card/{company_id}', [CompaniesController::class, 'card'])->name('companies.card');
   });
 
   Route::prefix('images')->group(function () {
@@ -112,6 +115,11 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/incoming-invoice', [InvoicesController::class, 'create_incoming_invoice'])->name('create.incoming.invoice');
     Route::post('/store-incoming-invoice', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
     Route::post('/select-company', [InvoicesController::class, 'select_company'])->name('select.company');
+  });
+
+  Route::prefix('invoice-payments')->group(function () {
+      Route::post('/pay-partial', [InvoicePaymentsController::class, 'pay_partial'])->name('pay.partial');
+      Route::post('/pay-full', [InvoicePaymentsController::class, 'pay_full'])->name('pay.full');
   });
 
   Route::prefix('pdf')->group(function () {

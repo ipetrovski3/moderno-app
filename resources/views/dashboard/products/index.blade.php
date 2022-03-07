@@ -2,10 +2,6 @@
 
 @section('title', 'Dashboard')
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap4-toggle.css') }}">
-@stop
 
 @section('content_header')
     <h1>All Products</h1>
@@ -15,16 +11,8 @@
 
 
 @section('content')
-    <div class="col-4 float-right mb-2">
-        <label for="cat_id">Филтрирај по категорија</label>
-        <select class="form-select" name="cat_id" id="cat_id">
-            <option value="">Избери категорија..</option>
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-            @endforeach
-        </select>
-    </div>
-    <table class="table">
+
+    <table id="products_table" class="table">
         <thead>
             <tr>
                 <th scope="col">Шифра</th>
@@ -58,12 +46,33 @@
             </div>
         </div>
     </div>
+@stop
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/bootstrap4-toggle.min.js') }}"></script>
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#products_table').DataTable({
+                "language": {
+                    "lengthMenu": "Прикажи _MENU_ резултати по страна",
+                    "zeroRecords": "Нема резултати",
+                    "info": "Страна _PAGE_ од _PAGES_",
+                    "thousands":      ",",
+                    "infoEmpty": "нема инфо",
+                    "infoFiltered": "(филтрирано од _MAX_ вкупно резултати)",
+                    "search": "Пребарај",
+                    "paginate": {
+                        "first":      "Прва",
+                        "last":       "Последна",
+                        "next":       "Следна",
+                        "previous":   "Претходна"
+                    },
+                },
+            })
+        })
+    </script>
 
     <script>
+
         $(document).on('change', '#cat_id', function() {
             let cat_id = $(this).val()
             $.ajaxSetup({
@@ -89,7 +98,7 @@
             activate(route, status, id);
         })
 
-        $('.img-open').on('click', function() {
+        $(document).on('click', '.img-open', function() {
             let image = $(this).data('image')
             let title = $(this).data('product')
             $('#myModal').on('shown.bs.modal', function() {
@@ -100,4 +109,5 @@
         })
     </script>
     <script src="{{ asset('js/activate_deactivate.js') }}"></script>
-@stop
+
+@endsection

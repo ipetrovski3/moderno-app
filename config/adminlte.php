@@ -467,6 +467,21 @@ return [
                 ],
             ],
         ],
+        'Bootstrap Toggle' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/bootstrap4-toggle.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/bootstrap4-toggle.css',
+                ],
+            ],
+        ],
     ],
 
     /*

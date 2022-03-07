@@ -19,7 +19,7 @@ class InvoicesController extends Controller
 {
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::all()->sortBy('date');
 
         return view('dashboard.invoices.index', compact('invoices'));
     }
