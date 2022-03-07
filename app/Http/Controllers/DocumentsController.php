@@ -51,7 +51,12 @@ class DocumentsController extends Controller
         $document->total_price = $total_with_ddv;
         $document->vat = intval($total_with_ddv - $total_without_ddv);
         $document->without_vat = $total_without_ddv;
-        $document->balance = 0 - $total_with_ddv;
+        if ($doc_id == 3) {
+            $document->balance = $total_with_ddv;
+        } else {
+            $document->balance = 0 - $total_with_ddv;
+        }
+
         $document->uniqid = uniqid();
 
         $document_items = Cart::content();
