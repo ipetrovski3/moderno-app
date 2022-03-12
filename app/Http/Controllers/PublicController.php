@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\Route;
 class PublicController extends Controller
 {
     public function index() {
-        return view('landing.index-particles');
-        $products = Product::all()->random(4);
+
+//        return Cart::content()->first()->options->image;
+//        return view('landing.index-particles');
+        $products = Product::whereNotNull('option')->get();
         $categories = Category::where('active', true)->get();
         $images = CarouselImage::where('active', true)->get();
         return view('public.index', compact('categories', 'images', 'products'));
@@ -68,5 +70,21 @@ class PublicController extends Controller
     public function checkout()
     {
         return view('public.checkout');
+    }
+
+    public function update_cart_product(Request $request)
+    {
+        $rowId = $request->product_id;
+        $qty = $request->qty;
+        Cart::update($rowId, $qty);
+
+        $cart = Cart::get($rowId);
+        $cart_price = ($cart->price + $cart->tax) * $cart->qty;
+        $price = number_format($cart_price, 2, ',', '.');
+
+        $view = view('public.partials.summary_cart_partial')->render();
+
+        return ['view' => $view, 'price' => $price];
+
     }
 }

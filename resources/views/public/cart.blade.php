@@ -6,10 +6,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Cart</h2>
+                    <h2>Кошничка</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active">Cart</li>
+                        <li class="breadcrumb-item"><a href="#">Продавница</a></li>
+                        <li class="breadcrumb-item active">Кошничка</li>
                     </ul>
                 </div>
             </div>
@@ -20,7 +20,9 @@
     <!-- Start Cart  -->
     <div class="cart-box-main">
         <div class="container">
+
             <div class="row">
+
                 <div class="col-lg-12">
                     <div class="table-main table-responsive">
                         <table class="table">
@@ -41,6 +43,7 @@
                 </div>
             </div>
 
+
             <div class="row my-5">
                 <div class="col-lg-6 col-sm-6">
                     <div class="coupon-box">
@@ -52,11 +55,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-6">
-                    <div class="update-box">
-                        <input value="Освежи" type="submit">
-                    </div>
-                </div>
+            <div class="update-box">
+                <input value="Освежи" type="submit">
+            </div>
+
             </div>
 
             <div class="row my-5">
@@ -87,6 +89,25 @@
                     $('.summary').empty().html(data.summary_view)
                 }
             })
+        })
+
+        $(document).on('change', '.qty-box', function () {
+            let qty = $(this).val()
+            let product_id = $(this).data('id')
+            let next_elem = $(this).parent()
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: "{{ route('update_cart_product') }}",
+                data: { qty, product_id },
+                success: function (data) {
+                    next_elem.next().text(data.price)
+                    $('.summary').empty().html(data.view)
+                }
+            })
+
         })
     </script>
 @endsection

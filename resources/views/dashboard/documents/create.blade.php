@@ -17,14 +17,16 @@
         <div class="col-1">
             <input type="number" id="company_number" data-document="{{ $document_id }}" disabled class="form-control">
         </div>
-        <div class="col-6">
+
             <select id="company_name" class="js-example-basic-single" name="company">
                 <option value="" selected disabled>Избери коминтент...</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}">{{ $company->name }}</option>
                 @endforeach
             </select>
-        </div>
+
+
+            <input class="form-control input-sm" type="text">
         <label for="date">Датум:</label>
         <div class="col-2">
             <input type="input" id="datepicker" name="date" class="form-control">

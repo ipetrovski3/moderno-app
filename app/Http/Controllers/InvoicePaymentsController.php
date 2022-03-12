@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\InvoicePayment;
 use Carbon\Carbon;
@@ -23,12 +24,13 @@ class InvoicePaymentsController extends Controller
 
         $invoice->increment('balance', $payment->amount_paid);
 
-        if ($invoice->balance >= 0) {
+        $company = Company::findOrFail($invoice->company_id);
+        $invoices = $company->invoices;
+
+        if ($invoice->balance >= 0)
             $invoice->update(['is_paid' => true, 'date_paid' => $payment->paid_date]);
-            return ['paid_on' => $invoice->date_paid, 'status' => 'Платена'];
-        } else {
-            return ['paid_on' => $invoice->date_paid, 'status' => $invoice->balance];
-        }
+
+        return view('dashboard.companies.payments',  compact('invoices', 'company'))->render();
     }
 
     public function pay_full(Request $request)

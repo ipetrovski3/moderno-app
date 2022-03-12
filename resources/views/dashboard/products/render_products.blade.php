@@ -7,9 +7,7 @@
           <td>{{ $product->stock }}</td>
           <td>{{ number_format($product->price, 2, ',', '.') }} ден</td>
           <td>{{ number_format($product->cost_price, 2, ',', '.') }} ден</td>
-          <td><a href="{{ route('edit.product', $product->id) }}" class="btn btn-secondary">Измени</a> </td>
-          {{-- <td><img src="{{ asset('storage/products' . '/' . $product->image) }}"
-                  style="max-height: 80px; max-width: 80px;" alt="hello"></td> --}}
+          <td><a href="{{ route('edit.product', $product->id) }}" class="btn btn-secondary"><i class="fas fa-edit"></i></a> </td>
           <td><button class="btn btn-warning img-open"
                   data-image="{{ asset('storage/products' . '/' . $product->image) }}" data-product="{{ $product->name }}"><i
                       class="fas fa-eye"></i></button></td>
@@ -17,6 +15,14 @@
               <input class="toggle" type="checkbox" {{ $product->active ? 'checked' : '' }}
                   data-toggle="toggle" data-on="ДА" data-off="НЕ" data-onstyle="success" data-offstyle="danger"
                   data-id="{{ $product->id }}">
+          </td>
+          <td>
+              <select class="form-control" name="option" id="">
+                  <option value=""></option>
+                  @foreach ( $product->options as $key => $option)
+                  <option {{ $key == $product->option ? 'selected' : '' }} value="{{ $key }}">{{ $option }}</option>
+                  @endforeach
+              </select>
           </td>
       </tr>
   @endforeach

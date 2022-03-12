@@ -126,8 +126,8 @@ class ProductsController extends Controller
         $new_price = $product->price / ($ddv / 100 + 1);
         $size = $request->size ?? 0;
 
-        $cartItem = Cart::add($product->id, $product->name, $request->qty, $new_price, ['size' => $size], $ddv);
-        $cartItem->associate('Product');
+        $cartItem = Cart::add($product->id, $product->name, $request->qty, $new_price, ['size' => $size, 'image' => $product->image], $ddv);
+//        $cartItem->associate('Product');
         $view = view('public.sidemenu')->render();
 
         return response()->json(['count' => Cart::count(), 'view' => $view ]);

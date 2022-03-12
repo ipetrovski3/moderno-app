@@ -24,6 +24,7 @@
                 <th scope="col">Акција</th>
                 <th scope="col">Слика</th>
                 <th scope="col">Активен</th>
+                <th scope="col">Опции</th>
             </tr>
         </thead>
         <tbody id='render_products'>

@@ -42,8 +42,6 @@ class CompaniesController extends Controller
 
     public function card($company_id)
     {
-
-
         $company = Company::findOrFail($company_id);
         $finances = CardService::generate_card($company);
 

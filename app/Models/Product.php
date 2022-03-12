@@ -31,4 +31,10 @@ class Product extends Model
     {
         return $this->belongsTo(Tariff::class);
     }
+
+    public $options = [
+        '1' => 'Ново',
+        '2' => 'Промоција',
+        '3' => 'Најпродавани'
+    ];
 }

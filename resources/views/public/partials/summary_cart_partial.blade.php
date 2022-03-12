@@ -15,15 +15,15 @@
     </div>
     <div class="d-flex">
         <h4>Карго</h4>
-        <div class="ml-auto font-weight-bold"> 130 ден.</div>
+        <div class="ml-auto font-weight-bold"> {{ number_format(130, 2, ',', '.') }} ден.</div>
     </div>
     <hr>
     <div class="d-flex gr-total">
         <h5>Вкупно за наплата</h5>
         @php
-            $grand_total = floatval(str_replace(',' , '', Cart::total())) + 130
+            $grand_total = floatval(str_replace('.' , '', Cart::total())) + 130
         @endphp
-        <div class="ml-auto h5"> {{ number_format($grand_total, 2) }} ден.</div>
+        <div class="ml-auto h5"> {{ number_format($grand_total, 2, ',', '.') }} ден.</div>
     </div>
     <hr>
 </div>

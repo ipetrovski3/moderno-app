@@ -16,6 +16,7 @@
                 <th class="my-0 py-0">Фактура бр.</th>
                 <th class="my-0 py-0">Должи</th>
                 <th class="my-0 py-0">Побарува</th>
+                <th class="my-0 py-0">Салдо</th>
             </tr>
             </thead>
             <tbody>

@@ -60,13 +60,15 @@
                                                         <ul>
                                                             <li><a href="{{ route('product.show', $product->id) }}"  data-toggle="tooltip" data-placement="right" title="Преглед"><i class="fas fa-eye"></i></a></li>
                                                         </ul>
-                                                        <a class="cart add_to_cart" data-id="{{ $product->id }}" href="#">Додади во кошничка</a>
+{{--                                                        <a class="cart add_to_cart" data-id="{{ $product->id }}" href="#">Додади во кошничка</a>--}}
                                                     </div>
                                                 </div>
+                                            <a href="{{ route('product.show', $product->id) }}">
                                                 <div class="why-text">
                                                     <h4>{{ $product->name }}</h4>
                                                     <h5>{{ number_format($product->price, 2 , ',', '.') . ' ден.' }}</h5>
                                                 </div>
+                                            </a>
                                             </div>
                                         </div>
                                         @endforeach
@@ -89,12 +91,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                                <a href="{{ route('product.show', $product->id) }}" style=" :hover text-decoration: none !important;">
                                                 <div class="why-text full-width">
                                                     <h4>{{ $product->name }}</h4>
                                                     <h5>{{ number_format($product->price, 2 , ',', '.') . ' ден.' }}</h5>
                                                     <p>{{ $product->description }}</p>
-                                                    <a class="btn hvr-hover add_to_cart" data-id="{{ $product->id }}" href="">Додади во кошничка</a>
+{{--                                                    <a class="btn hvr-hover add_to_cart" data-id="{{ $product->id }}" href="">Додади во кошничка</a>--}}
                                                 </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

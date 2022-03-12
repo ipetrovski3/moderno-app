@@ -6,17 +6,40 @@
         <div class="container">
             <div class="row">
 				<div class="col-lg-6">
-                    <div class="banner-frame"> <img class="img-fluid" src="images/about-img.jpg" alt="" />
+                    <div class="banner-frame"> <img class="img-fluid" src="public/images/about-img.jpg" alt="" />
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h2 class="noo-sh-title-top">We are <span>Freshshop</span></h2>
-                    <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                        voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-                        sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-					<a class="btn hvr-hover" href="#">Read More</a>
+                    <h2 class="noo-sh-title-top">Ние сме <span>модерно</span></h2>
+                    <p>     Креирај го твојот свет со модерно
+                        Се што ви треба за вас или вашата компанија на едно место
+                        Модерно ГРОУП ДОО е брокерска компанија која нуди коплетно и идеално решение за успешна промоција на вашата компанија во соработка со сите поголеми печатници и увозници во државата.
+                        <br>
+                        Го нудиме следново:
+                        <br>
+                        -маркетинг услуги
+                        <br>
+                        -потикнување на продажба
+                        <br>
+                        -изработка и дизајн на рекламен флаер
+                        <br>
+                        -изработка на лого
+                        <br>
+                        -он лајн маркетиг
+                        <br>
+                        -он лајн продажба
+                        <br>
+                        -печатарски услуги
+                        <br>
+                        -канцелариски материјали
+                        <br>
+                        -хо.ре.ка. услуги и производи
+
+                       </p>
+                    <p> Располагаме со широка палета на производи кои би придонеле за успешно промоција на вашиот бизнис
+                        Модерно Гроуп е официјален дистрибутер и увозник на ПП торбите за пазарење
+                        Се на едно место
+                        Секогаш Најдобар Избор за Вас и Вашата Компанија</p>
                 </div>
             </div>
             <div class="row my-5">

@@ -36,6 +36,7 @@ Route::get('/cart', [PublicController::class, 'show_cart'])->name('show.cart');
 Route::post('/confirm_order', [OrdersController::class, 'store'])->name('store.order');
 Route::get('/products/{id}', [ProductsController::class, 'show'])->name('product.show');
 Route::post('/remove-from-cart', [PublicController::class, 'remove_from_cart'])->name('remove_from_cart');
+Route::post('/update_cart_product', [PublicController::class, 'update_cart_product'])->name('update_cart_product');
 Route::post('/clear-cart', [PublicController::class, 'clear_cart'])->name('clear_cart');
 Route::get('checkout', [PublicController::class, 'checkout'])->name('checkout');
 Route::get('/about_as', function () {
@@ -93,10 +94,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
   Route::prefix('companies')->group(function () {
     Route::get('/', [CompaniesController::class, 'index'])->name('companies.index');
-    Route::get('/{id}', [CompaniesController::class, 'show'])->name('companies.show');
     Route::get('/create', [CompaniesController::class, 'create'])->name('companies.create');
     Route::post('/create', [CompaniesController::class, 'store'])->name('companies.store');
     Route::get('/company-card/{company_id}', [CompaniesController::class, 'card'])->name('companies.card');
+    Route::get('/{id}', [CompaniesController::class, 'show'])->name('companies.show');
   });
 
   Route::prefix('images')->group(function () {
