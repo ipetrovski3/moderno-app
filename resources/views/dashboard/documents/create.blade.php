@@ -13,20 +13,20 @@
     </div>
 
     <div class="row">
+
         <label for="seller">{{ $document_id == 3 ? 'ОД:' : 'ДО:' }}</label>
         <div class="col-1">
             <input type="number" id="company_number" data-document="{{ $document_id }}" disabled class="form-control">
         </div>
-
             <select id="company_name" class="js-example-basic-single" name="company">
                 <option value="" selected disabled>Избери коминтент...</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}">{{ $company->name }}</option>
                 @endforeach
             </select>
-
-
-            <input class="form-control input-sm" type="text">
+        <div class="col-3">
+            <input class="form-control" name="extra" id="extra" type="text">
+        </div>
         <label for="date">Датум:</label>
         <div class="col-2">
             <input type="input" id="datepicker" name="date" class="form-control">
@@ -99,6 +99,7 @@
             let date = $("#datepicker").val()
             let company_id = $('#company_number').val()
             let doc_id = $('#company_number').data('document')
+            let extra = $('#extra').val()
             console.log('')
             $.ajax({
                 type: "POST",
@@ -106,7 +107,8 @@
                 data: {
                     company_id,
                     doc_id,
-                    date
+                    date,
+                    extra
                 },
                 success: function (data) {
                     Swal.fire({

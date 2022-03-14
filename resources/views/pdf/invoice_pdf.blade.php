@@ -77,7 +77,7 @@
             <td><strong>До:</strong></td>
         </tr>
         <tr>
-            <td>{{ $invoice->company->name }}</td>
+            <td>{{ $invoice->company->name }}  {{ $invoice->extra ?? '' }}</td>
         </tr>
         <tr>
             <td>{{ $invoice->company->address }}</td>
