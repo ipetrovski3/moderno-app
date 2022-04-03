@@ -41,8 +41,8 @@ class DocumentsController extends Controller
         $class_name = get_class($document);
         $instance = new \ReflectionClass($class_name);
         $all = $instance->newInstance()->all();
-        $document->invoice_number = 100;
-//        $document->invoice_number = $all->last()->invoice_number + 1 ?? intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
+//        $document->invoice_number = 100;
+        $document->invoice_number = $all->last()->invoice_number + 1 ?? intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
 
 //        $document->invoice_number = $this->generate_document_number($document, $document->id);
 
