@@ -269,10 +269,21 @@ return [
                     'route' => 'companies.index',
                     'icon' => 'far fa-building'
                 ],
+            ]
+        ],
+        [
+            'text' => 'Физички Лица',
+            'icon' => 'far fa-user',
+            'submenu' => [
                 [
-                    'text' => 'Нов Коминтент',
-                    'route' => 'companies.create',
-                    'icon' => 'far fa-plus-square'
+                    'text' => 'Креирај Нов',
+                    'route' => 'customer.create',
+                    'icon' => 'far fa-user'
+                ],
+                [
+                    'text' => 'Фактури',
+                    'route' => 'customer.invoices',
+                    'icon' => 'far fa-document'
                 ]
 
             ]

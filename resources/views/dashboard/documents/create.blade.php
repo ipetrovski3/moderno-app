@@ -21,7 +21,7 @@
             <select id="company_name" class="js-example-basic-single" name="company">
                 <option value="" selected disabled>Избери коминтент...</option>
                 @foreach($companies as $company)
-                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                    <option value="{{ $company->id }}">{{ $company->name != '' ? $company->name : $company->full_name() }}</option>
                 @endforeach
             </select>
         <div class="col-3">

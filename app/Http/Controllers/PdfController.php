@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerInvoice;
 use App\Models\Order;
 use App\Models\Invoice;
 use App\Models\Proforma;
@@ -42,6 +43,29 @@ class PdfController extends Controller
             'vats' => $vats
         ])->setPaper('a4');
         $name = 'Faktura-' . $invoice->invoice_number . '.pdf';
+        return $pdf->download($name);
+    }
+
+    public function create_cus_invoice($id)
+    {
+        $invoice = CustomerInvoice::findOrFail($id);
+        $customer = $invoice->customer;
+        $html = 'pdf.cus_invoice';
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+        $pdf = App::make('dompdf.wrapper');
+        $products = $invoice->articles;
+
+        $vats = $this->separate_vat($products);
+        $due_date = Carbon::parse($invoice->date)->addDays($customer->due_days)->format('d.m.Y');
+        // return $products;
+        $pdf->loadView($html, [
+            'invoice' => $invoice,
+            'products' => $products,
+            'customer' => $customer,
+            'due_date' => $due_date,
+            'vats' => $vats
+        ])->setPaper('a4');
+        $name = 'FakturaFL-' . $invoice->invoice_number . '.pdf';
         return $pdf->download($name);
     }
 

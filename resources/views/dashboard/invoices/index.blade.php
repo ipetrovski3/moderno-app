@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     @foreach ($invoices as $invoice)
-                        <tr>
+                        <tr class="tr">
                             <th scope="row" class="py-auto">{{ $loop->iteration }}</th>                            {{-- <td class="py-auto">{{ $invoice->date->format('d.m.Y') }}</td> --}}
                             <td class="py-auto">{{ date('d.m.Y', strtotime($invoice->date)) }}</td>
 
@@ -46,6 +46,10 @@
                                         class="btn btn-success text-white"><i class="fas fa-file-invoice"></i></a>
                                     <a href="{{ route('invoice.pdf', $invoice->uniqid) }}"
                                         class="btn btn-info text-white"><i class="fas fa-print"></i></a>
+                                    <button data-id="{{$invoice->id}}" data-inv_type="outgoing"
+                                            class="btn delete-invoice btn-danger" type="button" title="Избриши"><i
+                                            class="fa fa-times"></i></button>
+
                                 </div>
                             </td>
                             <td><a href="{{ route('invoice.cost', $invoice->id) }}">Набавни цени</a> </td>
@@ -70,3 +74,38 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap4-toggle.css') }}">
 
 @stop
+
+@section('js')
+    <script>
+        $(document).on('click', '.delete-invoice', function () {
+            let doc_id = $(this).data('id')
+            let doc_type = $(this).data('inv_type')
+            let parent_elem = $(this).parents('.tr')
+            console.log(parent_elem)
+
+            if (confirm('Дали си сигурен?')) {
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('remove.document') }}",
+                    data: {
+                        doc_id, doc_type
+                    },
+                    success: function (data) {
+                        parent_elem.remove()
+                        Swal.fire({
+                            html: data.success,
+                            confirmButtonColor: '#b0b435'
+                        })
+
+                    }
+                })
+            }
+        })
+    </script>
+@endsection

@@ -38,6 +38,8 @@ class ProformasController extends Controller
         $company = Company::findOrFail($company_id);
         $document->company_id = $company->id;
         $document->date = date('Y-m-d', strtotime($request->date));
+        $document->uniqid = uniqid();
+
         $document->save();
 
         $document->proforma_number = $this->generate_document_number($document->id);
@@ -48,7 +50,6 @@ class ProformasController extends Controller
         $document->total_price = $total_with_ddv;
         $document->vat = intval($total_with_ddv - $total_without_ddv);
         $document->without_vat = $total_without_ddv;
-        $document->uniqid = uniqid();
 
         $document_items = Cart::content();
 

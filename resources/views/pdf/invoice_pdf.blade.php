@@ -77,7 +77,10 @@
             <td><strong>До:</strong></td>
         </tr>
         <tr>
-            <td>{{ $invoice->company->name }}  {{ $invoice->extra ?? '' }}</td>
+            <td>{{ $invoice->company->name != '' ? $invoice->company->name : $invoice->company->full_name() }}</td>
+        </tr>
+        <tr>
+            <td> {{ $invoice->extra ?? '' }}</td>
         </tr>
         <tr>
             <td>{{ $invoice->company->address }}</td>
@@ -96,7 +99,7 @@
 
     <br />
 
-    <table width="100%" style="margin-top: 5mm;">
+    <table width="100%" style="margin-top: 15mm;">
         <thead style="background-color: lightgray;">
             <tr>
                 <th>Рб</th>
@@ -116,9 +119,9 @@
                     <td align="right">{{ sprintf("%'04d", $product->id) }}</td>
                     <td>{{ $product->name }}</td>
                     <td align="right">{{ number_format($product->pivot->qty) }}</td>
-                    <td align="right">{{ number_format($product->pivot->single_price, 2) }}</td>
+                    <td align="right">{{ number_format($product->pivot->single_price, 2, ',', '.') }}</td>
                     <td align="center">{{ $product->tariff->value }}</td>
-                    <td align="right">{{ number_format($product->pivot->single_price * $product->pivot->qty, 2) }}
+                    <td align="right">{{ number_format($product->pivot->single_price * $product->pivot->qty, 2, ',', '.') }}
                     <td align="right">
                         {{ number_format($product->pivot->single_price + ($product->pivot->single_price * $product->tariff->value) / 100, 2) }}
                     </td>

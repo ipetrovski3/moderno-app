@@ -90,6 +90,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [CustomersController::class, 'index'])->name('customers.index');
     Route::post('/', [CustomersController::class, 'contact_customer'])->name('contact_customer');
     Route::post('/email_all', [CustomersController::class, 'email_all'])->name('email_all');
+    Route::get('/create', [CustomersController::class, 'create'])->name('customer.create');
+    Route::get('/customer-invoices', [CustomersController::class, 'customer_invoices'])->name('customer.invoices');
+    Route::post('/store', [CustomersController::class, 'store'])->name('customer.store');
   });
 
   Route::prefix('companies')->group(function () {
@@ -116,6 +119,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/incoming-invoice', [InvoicesController::class, 'create_incoming_invoice'])->name('create.incoming.invoice');
     Route::post('/store-incoming-invoice', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
     Route::post('/select-company', [InvoicesController::class, 'select_company'])->name('select.company');
+    Route::post('/remove-document', [InvoicesController::class, 'remove_document'])->name('remove.document');
   });
 
   Route::prefix('invoice-payments')->group(function () {
@@ -127,6 +131,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/label/{id}', [PdfController::class, 'create_label'])->name('label');
     Route::get('/invoice-create/{uniqid}', [PdfController::class, 'create_invoice'])->name('invoice.pdf');
     Route::get('/proforma-create/{id}', [PdfController::class, 'create_proforma'])->name('proforma.pdf');
+    Route::get('/cus_invoice-create/{id}', [PdfController::class, 'create_cus_invoice'])->name('customer_invoice.pdf');
   });
 
     Route::prefix('proformas')->group(function() {

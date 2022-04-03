@@ -41,9 +41,10 @@ class DocumentsController extends Controller
         $class_name = get_class($document);
         $instance = new \ReflectionClass($class_name);
         $all = $instance->newInstance()->all();
-        $document->invoice_number = $all->last()->invoice_number;
+        $document->invoice_number = 100;
+//        $document->invoice_number = $all->last()->invoice_number + 1 ?? intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
 
-        $document->invoice_number = $this->generate_document_number($document, $document->id);
+//        $document->invoice_number = $this->generate_document_number($document, $document->id);
 
         $total_without_ddv = floatval(str_replace('.', '', Cart::subtotal()));
         $total_with_ddv = floatval(str_replace('.', '', Cart::total()));
@@ -56,14 +57,16 @@ class DocumentsController extends Controller
         $document->total_price = $total_with_ddv;
         $document->vat = intval($total_with_ddv - $total_without_ddv);
         $document->without_vat = $total_without_ddv;
-        if ($doc_id == 3) {
-            $document->balance = $total_with_ddv;
-        } else {
-            $document->balance = 0 - $total_with_ddv;
-        }
+        if ($doc_id != 2) {
+            if ($doc_id == 3) {
+                $document->balance = $total_with_ddv;
+            } else {
+                $document->balance = 0 - $total_with_ddv;
+            }
 
-        if ($doc_id == 1) {
-            $document->extra = $request->extra;
+            if ($doc_id == 1) {
+                $document->extra = $request->extra;
+            }
         }
 
 
@@ -152,7 +155,7 @@ class DocumentsController extends Controller
                 return 'Фактура';
                 break;
             case 2:
-                return 'Готовинска Фактура';
+                return 'Фактура - Физичко Лице';
                 break;
             case 3:
                 return 'Фактура од Добавувач (Влез)';
@@ -224,7 +227,7 @@ class DocumentsController extends Controller
         $instance = new \ReflectionClass($class_name);
         $all = $instance->newInstance()->all();
         $count = $all->count();
-        return $all->last()->invoice_number + 1;
+        return $all->last()->invoice_number + 1 ?? intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
 
 //        if ($count == 1) {
 //            return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));

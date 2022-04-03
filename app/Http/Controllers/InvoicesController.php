@@ -30,7 +30,35 @@ class InvoicesController extends Controller
         return view('dashboard.invoices.incoming', compact('invoices'));
     }
 
+    public function remove_document(Request $request)
+    {
+        if ($request->doc_type == 'incoming')
+        {
+            $document = IncomingInvoice::findOrFail($request->doc_id);
+            $stock_type = 'decrement';
+        } else {
+            $document = Invoice::findOrFail($request->doc_id);
+            $stock_type = 'increment';
+        }
 
+        $articles = $document->articles;
+        $this->set_stock($articles, $stock_type);
+        $document->articles()->detach();
+        $document->delete();
+        return response()->json(['success' => 'Документот е успешно избришан']);
+    }
+
+    private function set_stock($articles, $stock_type)
+    {
+        foreach ($articles as $article)
+        {
+
+//            $product = Product::findOrFail($article->product_id);
+//            return $product->stock;
+
+            $article->$stock_type('stock', $article->pivot->qty);
+        }
+    }
 
     public function store_customer_invoice(Request $request)
     {
