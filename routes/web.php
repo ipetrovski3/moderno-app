@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarouselImagesController;
 use App\Http\Controllers\InvoicePaymentsController;
 use App\Http\Controllers\ProformasController;
+use App\Http\Controllers\ReverseInvoiceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoriesController;
@@ -120,6 +121,11 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/store-incoming-invoice', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
     Route::post('/select-company', [InvoicesController::class, 'select_company'])->name('select.company');
     Route::post('/remove-document', [InvoicesController::class, 'remove_document'])->name('remove.document');
+  });
+
+  Route::prefix('reverse-invoice')->group(function () {
+      Route::get('/select', [ReverseInvoiceController::class, 'select_invoice'])->name('select.invoice');
+      Route::get('/reverse', [ReverseInvoiceController::class, 'open_selected'])->name('open.selected');
   });
 
   Route::prefix('invoice-payments')->group(function () {

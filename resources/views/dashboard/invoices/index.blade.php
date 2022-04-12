@@ -13,6 +13,7 @@
     <div class="card">
         <div class="card-body">
             <a href="{{ route('incoming.invoices') }}" class="btn btn-warning">Влезни Фактури</a>
+            <a href="{{ route('select.invoice') }}" class="btn btn-outline-dark">Сторно Фактура</a>
         </div>
     </div>
 
@@ -39,7 +40,7 @@
 
                             <td class="py-auto">{{ $invoice->company->name }}</td>
                             <td class="py-auto">{{ $invoice->invoice_number }}</td>
-                            <td class="py-auto">{{ number_format($invoice->total_price, 2) }} ден</td>
+                            <td class="py-auto">{{ number_format($invoice->total_price, 2, ',', '.') }} ден</td>
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ route('invoices.show', $invoice->uniqid) }}"

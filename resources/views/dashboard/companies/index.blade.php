@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Компании</h1>
+    <a href="{{ route('companies.create') }}" class="btn btn-success">Креирај нов</a>
 @stop
 
 @section('content')

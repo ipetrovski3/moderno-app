@@ -19,6 +19,7 @@
             <th scope="col">Набавна Вредност</th>
             <th scope="col">Назив</th>
             <th scope="col">Количина</th>
+            <th scope="col">Вк Вредност</th>
         </tr>
         </thead>
         <tbody>
@@ -26,9 +27,10 @@
         <tr>
             <th scope="row">{{ $loop->iteration }}</th>
             <td>{{ $product->id }}</td>
-            <td>{{ $product->cost_price }}</td>
+            <td>{{ number_format($product->cost_price, 2, ',', '.') }}</td>
             <td>{{ $product->name }}</td>
-            <td>{{ $product->pivot->qty }}</td>
+            <td>{{ number_format($product->pivot->qty, 2, ',', '.') }}</td>
+            <td>{{ number_format($product->pivot->qty * $product->cost_price, 2, ',', '.') }}</td>
         </tr>
         @endforeach
         </tbody>
