@@ -80,7 +80,7 @@ class DocumentsController extends Controller
             $product = Product::findOrFail($item->id);
             if ($doc_id == 3) {
                 $product->increment('stock', $item->qty);
-                $product->update(['cost_price' => $item->price * 1.18]);
+                $product->update(['cost_price' => $item->price]);
             } else {
                 $product->decrement('stock', $item->qty);
             }
