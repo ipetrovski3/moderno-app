@@ -9,8 +9,8 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <h1> Вкупен промет: {{ number_format($total_money, 2) . ' ден' }}</h1>
-            <h3> Влезни Фактури износ: {{ number_format($total_owed, 2) . ' ден' }}</h3>
+            <h1> Вкупен промет: {{ number_format($invoices_amount, 2, ',', '.') . ' ден' }}</h1>
+            <h3> Влезни Фактури износ: {{ number_format($incoming_invoices_amount, 2, ',', '.') . ' ден' }}</h3>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">

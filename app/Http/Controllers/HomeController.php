@@ -27,20 +27,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $total_invoices = Invoice::all()->pluck('total_price')->toArray();
-        $total_incoming = IncomingInvoice::all()->pluck('total_price')->toArray();
-        $money_owed = array_sum($total_incoming);
-        $money = array_sum($total_invoices);
-        $newArr = [];
+        $invoices_amount = Invoice::all()->pluck('total_price')->sum();
+        $incoming_invoices_amount = IncomingInvoice::all()->pluck('total_price')->sum();
+
         $orders_total_price = Order::where('status', 'completed')->pluck('total_price');
-        foreach ($orders_total_price as $price) {
-            $newArr[] += str_replace(',', '', $price);
-        };
-        $total_sum = array_sum($newArr);
-        $total_money = number_format($total_sum, 2, ',', '.');
-        $za_viceto = (( $total_sum * 10 ) / 100);
+        $orders_total_price->map(function($price) {
+            return intval(str_replace(',', '', $price));
+        });
 
-
+        $total_money = number_format($orders_total_price->sum(), 2, ',', '.');
+        $za_viceto = (( $orders_total_price->sum() * 10 ) / 100);
         $data = [];
 
         for ($month = 1; $month <= 12; $month++) {
@@ -57,16 +53,15 @@ class HomeController extends Controller
 
         $incoming = Invoice::all();
 
-
-        // return $data;
-
         return view('home')->with([
             'data' => $data,
-            'total_sum' => $total_sum,
+            'total_sum' => $orders_total_price->sum(),
             'za_viceto' => $za_viceto,
             'incoming' => $incoming,
-            'total_money' => $money,
-            'total_owed' => $money_owed
+            'incoming_invoices_amount' => $incoming_invoices_amount,
+            'invoices_amount' => $invoices_amount,
+            'total_money' => $total_money
+
         ]);
     }
 }

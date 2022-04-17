@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Services\Documents\DocumentsService;
 use Carbon\Carbon;
 use App\Models\Company;
 use App\Models\Customer;
@@ -25,8 +26,7 @@ class DocumentsController extends Controller
     public function create_material_document(Request $request)
     {
         $doc_id = $request->doc_id;
-        $document = $this->material_document_model($doc_id);
-//        return $document;
+        $document = DocumentsService::material_document_model($doc_id);
 
         $company_id = $request->company_id;
         if($doc_id == 2){
@@ -37,22 +37,9 @@ class DocumentsController extends Controller
             $document->company_id = $company->id;
         }
         $document->date = date('Y-m-d', strtotime($request->date));
-
-        $class_name = get_class($document);
-        $instance = new \ReflectionClass($class_name);
-        $all = $instance->newInstance()->all();
-//        $document->invoice_number = 100;
-        $document->invoice_number = $all->last()->invoice_number + 1 ?? intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
-
-//        $document->invoice_number = $this->generate_document_number($document, $document->id);
-
+        $document->invoice_number = DocumentsService::generate_document_number($document, $doc_id);
         $total_without_ddv = floatval(str_replace('.', '', Cart::subtotal()));
         $total_with_ddv = floatval(str_replace('.', '', Cart::total()));
-
-//        return [ Cart::subtotal(), Cart::total()];
-//        return [$total_without_ddv, $total_with_ddv];
-
-
 
         $document->total_price = $total_with_ddv;
         $document->vat = intval($total_with_ddv - $total_without_ddv);
@@ -63,17 +50,13 @@ class DocumentsController extends Controller
             } else {
                 $document->balance = 0 - $total_with_ddv;
             }
-
             if ($doc_id == 1) {
                 $document->extra = $request->extra;
             }
         }
 
-
         $document->uniqid = uniqid();
-
         $document_items = Cart::content();
-
         $document->save();
 
         foreach ($document_items as $item) {
@@ -85,11 +68,13 @@ class DocumentsController extends Controller
                 $product->decrement('stock', $item->qty);
             }
             $document->articles()->attach([
-                $item->id => ['qty' => $item->qty, 'single_price' => $item->price]
+                $item->id => [
+                    'qty' => $item->qty,
+                    'single_price' => $item->price
+                ]
             ]);
         }
 
-        $document->save();
         Cart::destroy();
         return route('home');
     }
@@ -97,7 +82,7 @@ class DocumentsController extends Controller
     public function select_document(Request $request)
     {
         $document = $request->document;
-        $document_name = $this->material_document_type($document);
+        $document_name = DocumentsService::material_document_type($document);
         $products = Product::all();
         if ($document == 2) {
             $companies = Customer::all();
@@ -130,37 +115,6 @@ class DocumentsController extends Controller
                 'total' => $total,
                 'subtotal' => $subtotal
             ])->render();
-    }
-
-    private function material_document_model($number)
-    {
-        switch ($number) {
-
-            case 1:
-                return new Invoice;
-                break;
-            case 2:
-                return new CustomerInvoice;
-                break;
-            case 3:
-                return new IncomingInvoice;
-                break;
-        }
-    }
-
-    private function material_document_type($number)
-    {
-        switch ($number) {
-            case 1:
-                return 'Фактура';
-                break;
-            case 2:
-                return 'Фактура - Физичко Лице';
-                break;
-            case 3:
-                return 'Фактура од Добавувач (Влез)';
-                break;
-        }
     }
 
     public function select_company(Request $request)
@@ -196,8 +150,8 @@ class DocumentsController extends Controller
         }
         $product = Product::findOrFail($request->product_id);
 
-        $set_price = $this->handle_ddv($product, $ddv, $price);
-//        return $set_price;
+        $set_price = DocumentsService::handle_ddv($product, $ddv, $price);
+
         Cart::add(
             $product->id,
             $product->name,
@@ -221,44 +175,16 @@ class DocumentsController extends Controller
             ])->render();
     }
 
-    private function generate_document_number($document, $doc_id)
-    {
-        $class_name = get_class($document);
-        $instance = new \ReflectionClass($class_name);
-        $all = $instance->newInstance()->all();
-        $count = $all->count();
-        return $all->last()->invoice_number + 1 ?? intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
-
-//        if ($count == 1) {
-//            return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $doc_id)));
-//        } else {
-//        }
-    }
-
-    private function generate_pdf($invoice, $customer, $doc_id)
-    {
-        $html = 'pdf.invoice_pdf';
-        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
-        $pdf = App::make('dompdf.wrapper');
-        $products = $invoice->articles;
-        $pdf->loadView($html, ['invoice' => $invoice, 'products' => $products, 'customer' => $customer])->setPaper('a4');
-        $pdf->download($doc_id .'/faktura' . $invoice->invoice_number);
-    }
-
-    private function handle_ddv($product, $ddv, $price)
-    {
-        $math = ($product->tariff->value / 100) + 1;
-        if ($ddv == 1) {
-            return floatval($price) / floatval($math);
-        } else {
-            return $price;
-        }
-    }
 
     public function cost_price_per_invoice($id)
     {
         $invoice = Invoice::findOrFail($id);
 
-        return view('dashboard.documents.invoice_cost_price', compact('invoice'));
+        $total_cost_price = $invoice->articles->map(function ($article) {
+            return $article->cost_price * $article->pivot->qty;
+        })->sum();
+
+        return view('dashboard.documents.invoice_cost_price',
+            compact('invoice', 'total_cost_price'));
     }
 }
