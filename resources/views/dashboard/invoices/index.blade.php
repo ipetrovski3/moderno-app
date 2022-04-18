@@ -1,11 +1,16 @@
 @extends('adminlte::page')
 
+
 @section('title', 'Dashboard')
 
 @section('content_header')
     <h1>Фактури</h1>
 @stop
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap4-toggle.css') }}">
+@stop
 
 @section('content')
 
@@ -19,8 +24,14 @@
 
     <div class="card">
         <div class="card-body">
-
-            <table class="table">
+            <form class="form-inline mb-3" id="date_filter" method="POST" action="{{ route('filter.invoices.date') }}">
+                <label for="from_date">ОД:</label>
+                <input type="date" class="form-control mr-2" id="from_date" name="from_date">
+                <label for="to_date">ДО:</label>
+                <input type="date" class="form-control mr-2" id="to_date" name="to_date">
+                <button class="btn btn-success" type="submit">Филтер по датум</button>
+            </form>
+            <table class="table" id="invoices_table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -32,30 +43,8 @@
                         <th scope="col">Наб. цени</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($invoices as $invoice)
-                        <tr class="tr">
-                            <th scope="row" class="py-auto">{{ $loop->iteration }}</th>                            {{-- <td class="py-auto">{{ $invoice->date->format('d.m.Y') }}</td> --}}
-                            <td class="py-auto">{{ date('d.m.Y', strtotime($invoice->date)) }}</td>
-
-                            <td class="py-auto">{{ $invoice->company->name }}</td>
-                            <td class="py-auto">{{ $invoice->invoice_number }}</td>
-                            <td class="py-auto">{{ number_format($invoice->total_price, 2, ',', '.') }} ден</td>
-                            <td>
-                                <div class="btn-group">
-                                    <a href="{{ route('invoices.show', $invoice->uniqid) }}"
-                                        class="btn btn-success text-white"><i class="fas fa-file-invoice"></i></a>
-                                    <a href="{{ route('invoice.pdf', $invoice->uniqid) }}"
-                                        class="btn btn-info text-white"><i class="fas fa-print"></i></a>
-                                    <button data-id="{{$invoice->id}}" data-inv_type="outgoing"
-                                            class="btn delete-invoice btn-danger" type="button" title="Избриши"><i
-                                            class="fa fa-times"></i></button>
-
-                                </div>
-                            </td>
-                            <td><a href="{{ route('invoice.cost', $invoice->id) }}">Набавни цени</a> </td>
-                        </tr>
-                    @endforeach
+                <tbody id="render_invoices">
+                    @include('dashboard.invoices.partials.invoices_list')
                 </tbody>
             </table>
         </div>
@@ -70,13 +59,10 @@
 
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap4-toggle.css') }}">
 
-@stop
 
 @section('js')
+
     <script>
         $(document).on('click', '.delete-invoice', function () {
             let doc_id = $(this).data('id')
@@ -108,5 +94,45 @@
                 })
             }
         })
+    </script>
+    <script>
+        $(document).on('submit', '#date_filter', function (e) {
+            e.preventDefault()
+            let data = $(this).serialize()
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('filter.invoices.date') }}",
+                data: data,
+                success: function (view) {
+                    $('#render_invoices').empty()
+                    $('#render_invoices').html(view)
+                }
+            })
+        })
+    </script>
+    <script>
+
+            $('#invoices_table').DataTable({
+                "language": {
+                    "lengthMenu": "Прикажи _MENU_ резултати по страна",
+                    "zeroRecords": "Нема резултати",
+                    "info": "Страна _PAGE_ од _PAGES_",
+                    "thousands":      ",",
+                    "infoEmpty": "нема инфо",
+                    "infoFiltered": "(филтрирано од _MAX_ вкупно резултати)",
+                    "search": "Пребарај",
+                    "paginate": {
+                        "first":      "Прва",
+                        "last":       "Последна",
+                        "next":       "Следна",
+                        "previous":   "Претходна"
+                    },
+                },
+            })
     </script>
 @endsection

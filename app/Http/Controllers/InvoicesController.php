@@ -24,6 +24,12 @@ class InvoicesController extends Controller
         return view('dashboard.invoices.index', compact('invoices'));
     }
 
+    public function filter_invoices_date(Request $request)
+    {
+        $invoices = Invoice::whereBetween('date', [$request->from_date, $request->to_date])->get();
+        return view('dashboard.invoices.partials.invoices_list', compact('invoices'))->render();
+    }
+
     public function incoming_invoices()
     {
         $invoices = IncomingInvoice::all()->sortBy('date');

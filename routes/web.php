@@ -121,6 +121,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('/store-incoming-invoice', [InvoicesController::class, 'store_incoming_invoice'])->name('store.incoming.invoice');
     Route::post('/select-company', [InvoicesController::class, 'select_company'])->name('select.company');
     Route::post('/remove-document', [InvoicesController::class, 'remove_document'])->name('remove.document');
+    Route::post('/filter-by-date', [InvoicesController::class, 'filter_invoices_date'])->name('filter.invoices.date');
   });
 
   Route::prefix('reverse-invoice')->group(function () {
