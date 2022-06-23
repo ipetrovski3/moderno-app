@@ -60,7 +60,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="{{ route('homepage') }}"><img src="{{ asset('/images/official_logo.png') }}" style="width: 108px" class="logo" alt=""></a>
+                <a class="navbar-brand" href="{{ route('homepage') }}"><img src="{{ asset('/images/newlogo.png') }}" style="width: 108px" class="logo" alt=""></a>
             </div>
             <!-- End Header Navigation -->
 
