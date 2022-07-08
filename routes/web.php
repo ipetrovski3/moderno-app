@@ -28,6 +28,9 @@ use App\Models\Invoice;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test', function () {
+    return view('new_design.index');
+});
 
 Route::post('subscribe', [PublicController::class, 'subscribe'])->name('subscribe');
 Route::get('/', [PublicController::class, 'index'])->name('homepage');
