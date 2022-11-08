@@ -14,7 +14,7 @@
 
     <div class="row">
 
-        <label for="seller">{{ $document_id == 3 ? 'ОД:' : 'ДО:' }}</label>
+        <label for="seller">{{ $document_id == 3 || $document_id == 4 ? 'ОД:' : 'ДО:' }}</label>
         <div class="col-1">
             <input type="number" id="company_number" data-document="{{ $document_id }}" disabled class="form-control">
         </div>

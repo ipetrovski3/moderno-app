@@ -19,6 +19,15 @@ class PublicController extends Controller
         $categories = Category::where('active', true)->get();
         $images = CarouselImage::where('active', true)->get();
         return view('public.index', compact('categories', 'images', 'products'));
+
+        //        return Cart::content();
+//        return Cart::content()->first()->options->image;
+//        return view('landing.index-particles');
+//        $products = Product::where('option', 1)->get()->take(12);
+////        return $products;
+//        $categories = Category::where('active', true)->get();
+//        $images = CarouselImage::where('active', true)->get();
+//        return view('new_design.index', compact('categories', 'images', 'products'));
     }
 
     public function show($id) {
@@ -27,6 +36,13 @@ class PublicController extends Controller
         $categories = Category::where('active', true)->get();
 
         return view('public.shop', compact('products', 'category', 'categories'));
+    }
+
+    public function front_categories()
+    {
+        $products = Product::with('category')->paginate(15);
+        $categories = Category::all();
+        return view('new_design.categories.index', compact('products', 'categories'));
     }
 
     public function show_cart() {
@@ -40,7 +56,7 @@ class PublicController extends Controller
         $cart_tax = Cart::tax();
 
         // return $cart_items;
-        return view('public.cart', compact('cart_items'));
+        return view('new_design.cart.cart', compact('cart_items'));
     }
 
     public function remove_from_cart(Request $request) {

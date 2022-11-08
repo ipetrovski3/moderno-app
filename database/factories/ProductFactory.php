@@ -26,7 +26,9 @@ class ProductFactory extends Factory
             'price' => $this->faker->numberBetween(10, 2000),
             'category_id' => $this->faker->numberBetween(1, 4),
             'description' => $this->faker->realTextBetween(20, 100),
-            'image' => 'category_img_02.jpg'
+            'image' => 'https://picsum.photos/200/300',
+            'active' => true,
+            'option' => 1,
         ];
     }
 }

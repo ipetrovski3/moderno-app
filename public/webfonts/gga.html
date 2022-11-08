@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+
+        <div
+        class="col-md-7 col-lg-6 text-md-start text-center py-6 hero-text"
+      >
+        <h4 class="fw-bold mb-3 text-hero">Најдобра понуда!</h4>
+        <h1 class="hero-title">
+          Секогаш ПРВ дознавај за сите попусти и промоции!
+        </h1>
+        <p class="mb-4 fw-medium">Внеси го твојот телефонски број!</p>
+
+        <form id="sample_form" class="row g-3 align-items-center">
+          <div class="col-sm">
+            <div class="input-group-icon">
+              <input
+                id="telefon"
+                class="form_data form-control form-little-squirrel-control "
+                type="tel"
+                name="telefon"
+                placeholder="070 xxx xxx"
+              />
+              <span id="name_error" class="text-danger"></span>
+              <!-- <img class="input-box-icon" src="assets/img/cta/mail.svg" width="17" alt="mail"/> -->
+            </div>
+          </div>
+          <div class="col-sm-auto">
+            <button type="button" name="submit" id="submit" onclick="save_data(); return false"  class="btn btn-primary btn-lg border-0 btn-submit">
+              Аплицирај
+            </button>
+          </div>
+        </form>
+         <div id="message"></div>
+<!--        <span id="message"></span>-->
+      </div>
+
+
+        <script src="" async defer></script>
+        <script>
+
+            function save_data()
+            {
+                let form_element = document.getElementsByClassName('form_data');
+
+                let form_data = new FormData();
+
+                for(let count = 0; count < form_element.length; count++)
+                {
+                    form_data.append(form_element[count].name, form_element[count].value);
+                }
+
+                document.getElementById('submit').disabled = true;
+
+                let ajax_request = new XMLHttpRequest();
+
+                ajax_request.open('POST', 'process_data.php');
+
+                ajax_request.send(form_data);
+
+                ajax_request.onreadystatechange = function()
+                {
+                    if(ajax_request.readyState == 4 && ajax_request.status == 200)
+                    {
+                        document.getElementById('submit').disabled = false;
+
+                        let response = JSON.parse(ajax_request.responseText);
+
+                        if(response.success != '')
+                        {
+                            document.getElementById('sample_form').reset();
+
+                            document.getElementById('message').innerHTML = response.success;
+
+                            setTimeout(function(){
+
+                                document.getElementById('message').innerHTML = '';
+
+                            }, 5000);
+
+                            document.getElementById('name_error').innerHTML = '';
+                        }
+                        else
+                        {
+                            //display validation error
+                            document.getElementById('name_error').innerHTML = response.phone_error;
+
+                        }
+
+
+                    }
+                }
+            }
+
+
+        </script>
+
+    </body>
+</html>

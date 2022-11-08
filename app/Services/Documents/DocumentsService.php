@@ -5,6 +5,7 @@ namespace App\Services\Documents;
 use App\Models\CustomerInvoice;
 use App\Models\IncomingInvoice;
 use App\Models\Invoice;
+use App\Models\Returned;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
@@ -12,6 +13,8 @@ class DocumentsService
 {
     public static function generate_document_number($document, $doc_id)
     {
+        $count = $document::count() + 1;
+        return intval(strval(Carbon::now()->format('y')) . strval(sprintf("%'03d", $count)));
         $class_name = get_class($document);
         $instance = new \ReflectionClass($class_name);
         $all = $instance->newInstance()->all();
@@ -42,6 +45,8 @@ class DocumentsService
             case 3:
                 return new IncomingInvoice;
                 break;
+            case 4:
+                return new Returned;
         }
     }
 
@@ -56,6 +61,9 @@ class DocumentsService
                 break;
             case 3:
                 return 'Фактура од Добавувач (Влез)';
+                break;
+            case 4:
+                return 'Повратница';
                 break;
         }
     }

@@ -36,7 +36,10 @@ class DocumentsController extends Controller
             $company = Company::findOrFail($company_id);
             $document->company_id = $company->id;
         }
-        $document->date = date('Y-m-d', strtotime($request->date));
+        if ($doc_id != 4 ) {
+            $document->date = date('Y-m-d', strtotime($request->date));
+            $document->uniqid = uniqid();
+        }
         $document->invoice_number = DocumentsService::generate_document_number($document, $doc_id);
         $total_without_ddv = floatval(str_replace('.', '', Cart::subtotal()));
         $total_with_ddv = floatval(str_replace('.', '', Cart::total()));
@@ -45,23 +48,25 @@ class DocumentsController extends Controller
         $document->vat = intval($total_with_ddv - $total_without_ddv);
         $document->without_vat = $total_without_ddv;
         if ($doc_id != 2) {
-            if ($doc_id == 3) {
-                $document->balance = $total_with_ddv;
-            } else {
-                $document->balance = 0 - $total_with_ddv;
-            }
-            if ($doc_id == 1) {
-                $document->extra = $request->extra;
+            if($doc_id != 4) {
+                if ($doc_id == 3) {
+                    $document->balance = $total_with_ddv;
+                } else {
+                    $document->balance = 0 - $total_with_ddv;
+                }
+                if ($doc_id == 1) {
+                    $document->extra = $request->extra;
+                }
             }
         }
 
-        $document->uniqid = uniqid();
+
         $document_items = Cart::content();
         $document->save();
 
         foreach ($document_items as $item) {
             $product = Product::findOrFail($item->id);
-            if ($doc_id == 3) {
+            if ($doc_id == 3 || $doc_id == 4) {
                 $product->increment('stock', $item->qty);
                 $product->update(['cost_price' => $item->price]);
             } else {

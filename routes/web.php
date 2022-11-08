@@ -32,17 +32,19 @@ Route::get('/test', function () {
     return view('new_design.index');
 });
 
+Route::get('categories', [PublicController::class, 'front_categories'])->name('all.categories');
 Route::post('subscribe', [PublicController::class, 'subscribe'])->name('subscribe');
 Route::get('/', [PublicController::class, 'index'])->name('homepage');
 Route::get('categories/{slug}', [PublicController::class, 'show'])->name('categories.show');
 Route::post('/add_to_card', [ProductsController::class, 'add_to_cart'])->name('add_to_cart');
 Route::get('/cart', [PublicController::class, 'show_cart'])->name('show.cart');
+Route::get('/checkout', [OrdersController::class, 'new'])->name('checkout');
 Route::post('/confirm_order', [OrdersController::class, 'store'])->name('store.order');
 Route::get('/products/{id}', [ProductsController::class, 'show'])->name('product.show');
 Route::post('/remove-from-cart', [PublicController::class, 'remove_from_cart'])->name('remove_from_cart');
 Route::post('/update_cart_product', [PublicController::class, 'update_cart_product'])->name('update_cart_product');
 Route::post('/clear-cart', [PublicController::class, 'clear_cart'])->name('clear_cart');
-Route::get('checkout', [PublicController::class, 'checkout'])->name('checkout');
+//Route::get('checkout', [PublicController::class, 'checkout'])->name('checkout');
 Route::get('/about_as', function () {
   return view('public.about');
 })->name('about');

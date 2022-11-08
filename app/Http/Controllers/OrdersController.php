@@ -28,6 +28,11 @@ class OrdersController extends Controller
         return view('dashboard.orders.index', compact('orders'));
     }
 
+    public function new()
+    {
+        return view('new_design.checkout.new');
+    }
+
     public function store(CustomersService $customer_service, Request $request)
     {
         $request->validate([
@@ -47,7 +52,7 @@ class OrdersController extends Controller
         ]);
 
         if (Cart::count() < 1) {
-            return redirect()->back()->with(['errors' => 'Вашата кошничка е празна']);
+            return redirect()->route('homepage');
         }
         if (is_null(Customer::where('email', $request->email)->get()->first())) {
             $customer = $customer_service->store_customer($request->all());

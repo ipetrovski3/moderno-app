@@ -21,6 +21,7 @@
                             <option value="1">1.) Фактура</option>
                             <option value="2">2.) Купувач Во Готово</option>
                             <option value="3">3.) Влезна Фактура од Добавувач</option>
+                            <option value="4">4.) Повратница</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success">Понатаму</button>
