@@ -66,6 +66,10 @@ Auth::routes(['register' => false, 'verfiy' => true]);
 
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
+  Route::prefix('returned')->group(function () {
+      Route::get('/', [\App\Http\Controllers\ReturnedController::class, 'index'])->name('returned.index');
+  });
+
   Route::prefix('products')->group(function () {
     Route::get('/', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/new', [ProductsController::class, 'create'])->name('products.create');

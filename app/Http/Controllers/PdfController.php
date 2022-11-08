@@ -6,7 +6,9 @@ use App\Models\CustomerInvoice;
 use App\Models\Order;
 use App\Models\Invoice;
 use App\Models\Proforma;
+use App\Models\Returned;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class PdfController extends Controller
@@ -25,7 +27,13 @@ class PdfController extends Controller
 
     public function create_invoice($uniqid)
     {
+
         $invoice = Invoice::where('uniqid', $uniqid)->first();
+        $name = 'Фактура';
+        if (!$invoice) {
+            $invoice = Returned::findOrFail($uniqid);
+            $name = 'Повратница';
+        }
         $customer = $invoice->company;
         $html = 'pdf.invoice_pdf';
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
@@ -36,6 +44,7 @@ class PdfController extends Controller
         $due_date = Carbon::parse($invoice->date)->addDays($customer->due_days)->format('d.m.Y');
         // return $products;
         $pdf->loadView($html, [
+            'name' => $name,
             'invoice' => $invoice,
             'products' => $products,
             'customer' => $customer,

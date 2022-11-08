@@ -17,4 +17,9 @@ class Returned extends Model
             ->withPivot('single_price')
             ->withTimestamps();
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

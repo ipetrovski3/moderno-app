@@ -307,6 +307,11 @@ return [
             'icon' => 'fas fa-file-invoice',
             'route' => 'invoices.index',
         ],
+        [
+            'text' => 'Повратници',
+            'icon' => 'fas fa-file-invoice',
+            'route' => 'returned.index',
+        ],
 
         ['header' => 'НАСЛОВНА СТРАНА'],
         [

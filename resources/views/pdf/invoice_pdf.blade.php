@@ -71,7 +71,7 @@
         </tr>
     </table>
     <hr class="divider">
-    <h4 style="text-align: center; margin: 0em; padding: 0em;">Фактура Бр. {{ $invoice->invoice_number }}</h4>
+    <h4 style="text-align: center; margin: 0em; padding: 0em;">{{ $name }} Бр. {{ $invoice->invoice_number }}</h4>
     <table class="customer" width="40%">
         <tr>
             <td><strong>До:</strong></td>
